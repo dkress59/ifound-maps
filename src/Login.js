@@ -5,8 +5,8 @@ const LoginPage = (props) => {
 
 	const [alertMsg, setAlertMsg] = useState({
 		alert: 0,
-		message: ''}
-	)
+		message: ''
+	})
 
 	const alert = () => {
 		const colour = (!alertMsg.alert)
@@ -31,6 +31,9 @@ const LoginPage = (props) => {
 		const password = e.target.password.value
 		fetch('https://ifound-rest.herokuapp.com/api/users/login', {
 			method: 'post',
+			headers: {
+				'Content-Type': 'application/json',
+			},
 			body: {
 				"email": email,
 				"password": password
@@ -53,7 +56,11 @@ const LoginPage = (props) => {
 			}
 		})
 		.catch(err => {
-			setAlertMsg({alert:1, message:err.message})
+			setAlertMsg({
+				alert: 1,
+				message: 'Login fehlgeschlagen'
+				//message: err.message
+			})
 		})
 	}
 
