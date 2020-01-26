@@ -6,8 +6,8 @@ import L from 'leaflet'
 
 const FoundMap = (props) => {
 
-	const [center, setCenter] = useState({ lat: 60.000, lng: 0.000 })
-	const [coords, setCoords] = useState({ lat: 60.000, lng: 0.000 })
+	const [center, setCenter] = useState({ lat: 51.2423, lng: 6.7822 })
+	const [coords, setCoords] = useState({ lat: 51.2423, lng: 6.7822 })
 
 	const fileRef = useRef(null)
 
@@ -29,13 +29,13 @@ const FoundMap = (props) => {
 
 
 	const handleMouseMove = (e) => {
-		//console.log(e)
 		const coords = e.latlng
 		window.mouseCoords = coords
 	}
 
 	const handleClick = (e) => {
-		setCoords(window.mouseCoords)
+		const pos = e.latlng
+		setCoords(pos)
 	}
 
 	const handleSubmit = (e) => {
@@ -102,8 +102,10 @@ const FoundMap = (props) => {
 			//ref="bigMap"
 			zoom="13"
 			center={center}
-			onClick={handleClick}
-			onMousemove={handleMouseMove}
+			//onClick={handleClick}
+			onTouchend={handleClick}
+			onMousedown={handleClick}
+			//onMousemove={handleMouseMove}
 		>
 			<TileLayer
 				attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
