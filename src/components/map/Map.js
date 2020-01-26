@@ -6,8 +6,8 @@ import L from 'leaflet'
 
 const FoundMap = (props) => {
 
-	const [center, setCenter] = useState({ lat: 60.000, lng: 0.000 })
-	const [coords, setCoords] = useState({ lat: 60.000, lng: 0.000 })
+	const [center, setCenter] = useState({ lat: 51.2432, lng: 6.7822 })
+	const [coords, setCoords] = useState({ lat: 51.2432, lng: 6.7822 })
 
 	const fileRef = useRef(null)
 
