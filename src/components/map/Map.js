@@ -6,8 +6,8 @@ import L from 'leaflet'
 
 const FoundMap = (props) => {
 
-	const [center, setCenter] = useState({ lat: 51.2423, lng: 6.7822 })
-	const [coords, setCoords] = useState({ lat: 51.2423, lng: 6.7822 })
+	const [center, setCenter] = useState({ lat: 60.000, lng: 0.000 })
+	const [coords, setCoords] = useState({ lat: 60.000, lng: 0.000 })
 
 	const fileRef = useRef(null)
 
@@ -29,13 +29,12 @@ const FoundMap = (props) => {
 
 
 	const handleMouseMove = (e) => {
-		const coords = e.latlng
-		window.mouseCoords = coords
+		const pos = e.latlng
+		window.mouseCoords = pos
 	}
 
 	const handleClick = (e) => {
-		const pos = e.latlng
-		setCoords(pos)
+		setCoords(window.mouseCoords)
 	}
 
 	const handleSubmit = (e) => {
@@ -56,7 +55,7 @@ const FoundMap = (props) => {
 	}
 
 	const myIcon = L.icon({
-		iconUrl: 'http://ifoundone.projecd.org/marker.png',
+		iconUrl: 'https://ifoundone.projecd.org/marker.png',
 		iconSize: [50, 81],
 		iconAnchor: [22, 94],
 		popupAnchor: [-3, -76],
@@ -71,7 +70,7 @@ const FoundMap = (props) => {
 			const pos = { lat: place.lat, lng: place.lng }
 			const img = () => {
 				if (place.photos.length > 0)
-					return <img className="thumbnail" src={"http://ifoundone.projecd.org/view/" + place.photos[0]} alt="" />
+					return <img className="thumbnail" src={"https://ifoundone.projecd.org/view/" + place.photos[0]} alt="" />
 			}
 			const name = () => {
 				if (place.name && place.name !== undefined)
@@ -102,10 +101,9 @@ const FoundMap = (props) => {
 			//ref="bigMap"
 			zoom="13"
 			center={center}
-			//onClick={handleClick}
-			onTouchend={handleClick}
-			onMousedown={handleClick}
-			//onMousemove={handleMouseMove}
+			onClick={handleClick}
+			//onMousedown={handleClick}
+			onMousemove={handleMouseMove}
 		>
 			<TileLayer
 				attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
