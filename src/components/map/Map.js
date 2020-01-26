@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
 import './Map.css'
+import L from 'leaflet'
 
 
 const FoundMap = (props) => {
@@ -45,35 +46,49 @@ const FoundMap = (props) => {
 		formBody.append('lat', coords.lat)
 		formBody.append('lng', coords.lng)
 		formBody.append('photoData', fileRef.current.files[0])
-		fetch('http://ifound-rest.herokuapp.com/api/places', {
+		fetch('https://ifound-rest.herokuapp.com/api/places', {
 			method: 'post',
-			/* headers: {
-				//'Content-Type': 'application/json',
-				'Content-Type': 'multipart/form-data',
-				//'Origin': 'http://ifoundone.projecd.org',
-			}, */
-			/* body: JSON.stringify({
-				'name': e.target.name.value,
-				'author': e.target.author.value,
-				'photoData': fileRef.current.files[0],
-				'lat': coords.lat,
-				'lng': coords.lng,
-			}) */
 			body: formBody
 		})
-		.then(res => {
-			console.log(res)
-		})
+			.then(res => {
+				console.log(res)
+			})
 	}
 
+	const myIcon = L.icon({
+		iconUrl: 'http://ifoundone.projecd.org/marker.png',
+		iconSize: [50, 81],
+		iconAnchor: [22, 94],
+		popupAnchor: [-3, -76],
+		//shadowUrl: 'my-icon-shadow.png',
+		//shadowSize: [68, 95],
+		//shadowAnchor: [22, 94]
+	});
+
 	const loadPlaces = () => {
-		if (props.places.length < 1) return
+		if (!props.places || props.places.length < 1) return
 		return props.places.map(place => {
 			const pos = { lat: place.lat, lng: place.lng }
+			const img = () => {
+				if (place.photos.length > 0)
+					return <img className="thumbnail" src={"http://ifoundone.projecd.org/view/" + place.photos[0]} alt="" />
+			}
+			const name = () => {
+				if (place.name && place.name !== undefined)
+					return <h4 className="mb-0">{place.name}</h4>
+			}
+			const author = () => {
+				if (place.author && place.author !== undefined)
+					return <p className="m-0"><small>von </small>{place.author}</p>
+			}
 			return (
 				<Marker position={pos} key={'marker-' + place._id}>
-					<Popup>
-						A pretty CSS3 popup. <br /> Easily customizable.
+					<Popup minWidth="160" maxWidth="320">
+						<div className="text-center m-0">
+							{img()}
+							{name()}
+							{author()}
+						</div>
 					</Popup>
 				</Marker>
 			)
@@ -94,8 +109,8 @@ const FoundMap = (props) => {
 				attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 			/>
-			<Marker position={coords} key="newPlace">
-				<Popup>
+			<Marker position={coords} key="newPlace" icon={myIcon}>
+				<Popup minWidth="240" maxWidth="480">
 					<form onSubmit={handleSubmit}>
 						<div className="form-group text-center">
 							<input name="lat" type="hidden" value={coords.lat} />

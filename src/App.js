@@ -7,7 +7,7 @@ const App = () => {
 	const [places, setPlaces] = useState([])
 
 	useEffect(() => {
-		fetch('http://ifound-rest.herokuapp.com/api/places/')
+		fetch('https://ifound-rest.herokuapp.com/api/places/')
 			.then((res => res.json()))
 			.then((res) => {
 				//console.log('Places', res)
