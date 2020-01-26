@@ -12,3 +12,17 @@
 	width: 100%;
 	height: auto;
 }
+
+/*.leaflet-popup-content */
+.leaflet-popup-content-wrapper {
+	position: relative;
+}
+
+.leaflet-popup-content .trash {
+	width: 24px;
+	height: 24px;
+	position: absolute;
+	top: 4px;
+	right: -32px;
+	cursor: pointer;
+}

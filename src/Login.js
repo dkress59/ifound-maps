@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useRef, useState, useContext, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
+import AuthContext from './context/AuthContext'
 
 const LoginPage = (props) => {
 
+	const formRef = useRef(null)
+	const auth = useContext(AuthContext)
 	const [alertMsg, setAlertMsg] = useState({
 		alert: 0,
 		message: ''
 	})
+	let removeTimer
 
 	const alert = () => {
 		const colour = (!alertMsg.alert)
@@ -34,35 +38,51 @@ const LoginPage = (props) => {
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: {
+			body: JSON.stringify({
 				"email": email,
 				"password": password
-			}
+			})
 		})
-		//.then(res => { res.json() })
+		.then(res => { return res.json() })
 		.then(response => {
-			if (response.status === 200) {
-				console.log('Logged in', response)
+			console.log(response)
+			if (response.token && response.token !== '') {
+				console.log('Logged in', response.message)
 				setAlertMsg({
 					alert: 0,
 					message: 'Erfolgreich eingeloggt!'
 				})
+				auth.set(response.token)
+				formRef.current.email.value = ''
+				formRef.current.password.value = ''
+				removeTimer = setTimeout(() => { setAlertMsg({alert:0, message:''}) }, 6000 )
 			} else {
 				console.log('Login failed', response.message)
 				setAlertMsg({
 					alert: 1,
-					message: 'Login fehlgeschlagen'
+					message: response.message
 				})
+				formRef.current.email.value = ''
+				formRef.current.password.value = ''
+				removeTimer = setTimeout(() => { setAlertMsg({alert:0, message:''}) }, 6000 )
 			}
+			return response
 		})
 		.catch(err => {
 			setAlertMsg({
 				alert: 1,
-				message: 'Login fehlgeschlagen'
-				//message: err.message
+				//message: 'Login fehlgeschlagen'
+				message: err.message
 			})
+			formRef.current.email.value = ''
+			formRef.current.password.value = ''
+			removeTimer = setTimeout(() => { setAlertMsg({alert:0, message:''}) }, 6000 )
 		})
 	}
+
+	useEffect(() => {
+		clearTimeout(removeTimer)
+	})
 
 
 	return (
@@ -85,7 +105,7 @@ const LoginPage = (props) => {
 			<main className="row mt-4 mb-4">
 				<div className="col-md-4 offset-md-4">
 					{alert()}
-					<form className="form-signin" onSubmit={handleSubmit}>
+					<form ref={formRef} key="login-form" className="form-signin" onSubmit={handleSubmit}>
 						<h1 className="h3 mb-3 font-weight-normal">Hi, Pete!</h1>
 						<label htmlFor="inputEmail" className="sr-only">E-Mail</label>
 						<input type="email" name="email" id="inputEmail" className="form-control" placeholder="E-Mail" required autoFocus />

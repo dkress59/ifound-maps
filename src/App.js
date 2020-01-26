@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { NavLink } from 'react-router-dom'
 import FoundMap from './components/map/Map'
 import './App.css'
+import AuthContext from './context/AuthContext'
 
 const App = () => {
 
 	const [places, setPlaces] = useState([])
+	const auth = useContext(AuthContext)
 
 	useEffect(() => {
 		fetch('https://ifound-rest.herokuapp.com/api/places/')

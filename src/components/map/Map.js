@@ -1,7 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext, forceUpdate } from 'react'
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
 import './Map.css'
 import L from 'leaflet'
+import trashIcon from '../../assets/trash-2.svg'
+import AuthContext from '../../context/AuthContext'
 
 
 const FoundMap = (props) => {
@@ -10,6 +12,7 @@ const FoundMap = (props) => {
 	const [coords, setCoords] = useState({ lat: 51.2432, lng: 6.7822 })
 
 	const fileRef = useRef(null)
+	const auth = useContext(AuthContext)
 
 
 	useEffect(() => {
@@ -54,6 +57,29 @@ const FoundMap = (props) => {
 			})
 	}
 
+	const deletePlace = (id) => {
+		if (!id) return false
+		fetch('https://ifound-rest.herokuapp.com/api/places/'+id, {
+			method: 'delete',
+			header: {
+				//'Content-Type': 'application/json',
+				'Authorization': 'Bearer ' + auth.token
+			},
+			/* body: {
+				token: auth.token
+			} */
+		})
+		.then(res => {
+			console.log(res)
+			if (res.status === 200) {
+				auth.set(auth.token)//dirty refresh
+			}
+		})
+		.catch(err => {
+			console.error(err)
+		})
+	}
+
 	const myIcon = L.icon({
 		iconUrl: 'https://ifoundone.projecd.org/marker.png',
 		iconSize: [50, 81],
@@ -88,6 +114,7 @@ const FoundMap = (props) => {
 							{name()}
 							{author()}
 						</div>
+						{auth.token !== 'false' && <img className="trash feather" src={trashIcon} alt="delete" onMouseUp={() => deletePlace(place._id)} />}
 					</Popup>
 				</Marker>
 			)
