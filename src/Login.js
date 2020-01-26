@@ -3,18 +3,21 @@ import { NavLink } from 'react-router-dom'
 
 const LoginPage = (props) => {
 
-	const [alertMsg, setAlertMsg] = useState({alert:0, message:''})
+	const [alertMsg, setAlertMsg] = useState({
+		alert: 0,
+		message: ''}
+	)
 
-	const Alert = (props) => {
-		const colour = (props.alert)
-			? 'alert-warning'
-			: 'alert-success'
-		if (!props.msg || props.msg === '')
+	const alert = () => {
+		const colour = (!alertMsg.alert)
+			? 'alert-success'
+			: 'alert-warning'
+		if (!alertMsg.message || alertMsg.message === '')
 			return ''
 		else
 			return (
 				<div className={"alert " + colour + " alert-dismissible fade show"} role="alert">
-					{props.msg}
+					{alertMsg.message}
 					<button type="button" className="close" data-dismiss="alert" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -26,17 +29,28 @@ const LoginPage = (props) => {
 		e.preventDefault()
 		const email = e.target.email.value
 		const password = e.target.password.value
-		fetch('https://ifound-rest.herokuapp.com/api/login', {
+		fetch('https://ifound-rest.herokuapp.com/api/users/login', {
 			method: 'post',
 			body: {
 				"email": email,
 				"password": password
 			}
 		})
-		.then(res => { res.json() })
+		//.then(res => { res.json() })
 		.then(response => {
-			console.log('Logged in?', response)
-			setAlertMsg({alert:0, message:'Erfolgreich eingeloggt!'})
+			if (response.status === 200) {
+				console.log('Logged in', response)
+				setAlertMsg({
+					alert: 0,
+					message: 'Erfolgreich eingeloggt!'
+				})
+			} else {
+				console.log('Login failed', response.message)
+				setAlertMsg({
+					alert: 1,
+					message: 'Login fehlgeschlagen'
+				})
+			}
 		})
 		.catch(err => {
 			setAlertMsg({alert:1, message:err.message})
@@ -63,7 +77,7 @@ const LoginPage = (props) => {
 			</header>
 			<main className="row mt-4 mb-4">
 				<div className="col-md-4 offset-md-4">
-					<Alert msg={alertMsg.message} />
+					{alert()}
 					<form className="form-signin" onSubmit={handleSubmit}>
 						<h1 className="h3 mb-3 font-weight-normal">Hi, Pete!</h1>
 						<label htmlFor="inputEmail" className="sr-only">E-Mail</label>
