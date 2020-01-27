@@ -22,7 +22,7 @@ const LoginPage = (props) => {
 			return (
 				<div className={"alert " + colour + " alert-dismissible fade show"} role="alert">
 					{alertMsg.message}
-					<button type="button" className="close" data-dismiss="alert" aria-label="Close">
+					<button type="button" className="close" data-dismiss="alert" aria-label="Close" onMouseUp={(e) => { clearTimeout(removeTimer) }}>
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
@@ -81,7 +81,9 @@ const LoginPage = (props) => {
 	}
 
 	useEffect(() => {
-		clearTimeout(removeTimer)
+		setTimeout(() => {
+			clearTimeout(removeTimer)
+		}, 100)
 	})
 
 

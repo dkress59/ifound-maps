@@ -8,8 +8,11 @@ import AuthContext from '../../context/AuthContext'
 
 const FoundMap = (props) => {
 
+	//const pp = (props.places.length > 0) ? props.places : []
 	const [center, setCenter] = useState({ lat: 51.2432, lng: 6.7822 })
 	const [coords, setCoords] = useState({ lat: 51.2432, lng: 6.7822 })
+	//const [update, force] = useState(false)
+	const [places, setPlaces] = useState([])
 
 	const fileRef = useRef(null)
 	const auth = useContext(AuthContext)
@@ -29,6 +32,10 @@ const FoundMap = (props) => {
 			})
 		}
 	}, [])
+	useEffect(() => {
+		if (places !== props.places)
+			setPlaces(props.places)
+	}, [props.places])
 
 
 	const handleMouseMove = (e) => {
@@ -52,33 +59,32 @@ const FoundMap = (props) => {
 			method: 'post',
 			body: formBody
 		})
+			.then(res => { return res.json() })
 			.then(res => {
 				console.log(res)
+				setPlaces([ ...places, res.newPlace ])
 			})
 	}
 
 	const deletePlace = (id) => {
+		//console.log('delete token', auth.token)
 		if (!id) return false
 		fetch('https://ifound-rest.herokuapp.com/api/places/'+id, {
+			headers: { 'Authorization': 'Bearer ' + auth.token },
 			method: 'delete',
-			header: {
-				//'Content-Type': 'application/json',
-				'Authorization': 'Bearer ' + auth.token
-			},
-			/* body: {
-				token: auth.token
-			} */
 		})
 		.then(res => {
 			console.log(res)
 			if (res.status === 200) {
-				auth.set(auth.token)//dirty refresh
+				//force(!update)//dirty refresh
+				setPlaces(places.filter((el) => id !== el._id))
 			}
 		})
 		.catch(err => {
 			console.error(err)
 		})
 	}
+	//useEffect(() => {}, [update])//dirty refresh
 
 	const myIcon = L.icon({
 		iconUrl: 'https://ifoundone.projecd.org/marker.png',
@@ -91,8 +97,8 @@ const FoundMap = (props) => {
 	});
 
 	const loadPlaces = () => {
-		if (!props.places || props.places.length < 1) return
-		return props.places.map(place => {
+		if (!places || places.length < 1) return
+		return places.map(place => {
 			const pos = { lat: place.lat, lng: place.lng }
 			const img = () => {
 				if (place.photos.length > 0)
