@@ -5,6 +5,12 @@ import L from 'leaflet'
 import trashIcon from '../../assets/trash-2.svg'
 import AuthContext from '../../context/AuthContext'
 
+import MapBoxGLLayer from './GLLayerBox'
+//import MapBoxSearch from './SearchBox'
+import MapBoxSearch from 'react-leaflet-search'
+
+import MapInputBox from './InputBox'
+
 
 const FoundMap = (props) => {
 
@@ -31,6 +37,14 @@ const FoundMap = (props) => {
 				})
 			})
 		}
+
+		fetch('https://ifound-rest.herokuapp.com/api/places/')
+			//fetch('http://localhost:5000/api/places/')//dev
+			.then((res => res.json()))
+			.then((res) => {
+				//console.log('Places', res)
+				setPlaces(res.places)
+			})
 	}, [])
 	useEffect(() => {
 		if (places !== props.places)
@@ -56,7 +70,7 @@ const FoundMap = (props) => {
 		formBody.append('lat', coords.lat)
 		formBody.append('lng', coords.lng)
 		formBody.append('photoData', fileRef.current.files[0])
-			fetch('https://ifound-rest.herokuapp.com/api/places', {
+		fetch('https://ifound-rest.herokuapp.com/api/places', {
 			//fetch('http://localhost:5000/api/places', {//dev
 			method: 'post',
 			body: formBody
@@ -64,28 +78,28 @@ const FoundMap = (props) => {
 			.then(res => { return res.json() })
 			.then(res => {
 				console.log(res)
-				setPlaces([ ...places, res.newPlace ])
+				setPlaces([...places, res.newPlace])
 			})
 	}
 
 	const deletePlace = (id) => {
 		//console.log('delete token', auth.token)
 		if (!id) return false
-			fetch('https://ifound-rest.herokuapp.com/api/places/'+id, {
+		fetch('https://ifound-rest.herokuapp.com/api/places/' + id, {
 			//fetch('http://localhost:5000/api/places/'+id, {//dev
 			headers: { 'Authorization': 'Bearer ' + auth.token },
 			method: 'delete',
 		})
-		.then(res => {
-			console.log('after delete send', res)
-			if (res.status === 200) {
-				//force(!update)//dirty refresh
-				setPlaces(places.filter((el) => id !== el._id))
-			}
-		})
-		.catch(err => {
-			console.error(err)
-		})
+			.then(res => {
+				console.log('after delete send', res)
+				if (res.status === 200) {
+					//force(!update)//dirty refresh
+					setPlaces(places.filter((el) => id !== el._id))
+				}
+			})
+			.catch(err => {
+				console.error(err)
+			})
 	}
 	//useEffect(() => {}, [update])//dirty refresh
 
@@ -133,7 +147,8 @@ const FoundMap = (props) => {
 
 	return (
 		<Map
-			id={props.id}
+			//id={props.id}
+			id="map"
 			//ref="bigMap"
 			zoom="13"
 			center={center}
@@ -141,12 +156,13 @@ const FoundMap = (props) => {
 			onMousedown={handleClick}
 			//onMousemove={handleMouseMove}
 		>
-			<TileLayer
-				attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+			<MapBoxGLLayer
+				accessToken="pk.eyJ1IjoiaWZvdW5kb25lIiwiYSI6ImNrNXkwM2RvbjAwZ2oza29mbWt5NTZzZDcifQ.cUZALi58JclCJ_NY0tb80g"
+				style="mapbox://styles/ifoundone/ck5y0ubst3ift1ilouqadsyec"
+				attribution='<a href="http://openstreetmap.org" rel="nofollow">OSM</a>'
 			/>
 			<Marker position={coords} key="newPlace" icon={myIcon}>
-				<Popup minWidth="240" maxWidth="480">
+				{/* <Popup minWidth="240" maxWidth="480">
 					<form onSubmit={handleSubmit}>
 						<div className="form-group text-center">
 							<input name="lat" type="hidden" value={coords.lat} />
@@ -184,9 +200,23 @@ const FoundMap = (props) => {
 							<button type="submit" className="btn btn-sm btn-dark w-100">Senden</button>
 						</div>
 					</form>
-				</Popup>
+				</Popup> */}
 			</Marker>
 			{loadPlaces()}
+			<MapBoxSearch
+				className="mapSearchBox"
+				//position="topleft"
+				//inputPlaceholder="The default text in the search bar"
+				//search={[]} // Setting this to [lat, lng] gives initial search input to the component and map flies to that coordinates, its like search from props not from user
+				zoom={16} // Default value is 10
+				showMarker={true}
+				showPopup={false}
+				//openSearchOnLoad={false} // By default there's a search icon which opens the input when clicked. Setting this to true opens the search by default.
+				closeResultsOnClick={true} // By default, the search results remain when you click on one, and the map flies to the location of the result. But you might want to save space on your map by closing the results when one is clicked. The results are shown again (without another search) when focus is returned to the search input.
+				//providerOptions={{ searchBounds: [] }} // The BingMap and OpenStreetMap providers both accept bounding coordinates in [se,nw] format. Note that in the case of OpenStreetMap, this only weights the results and doesn't exclude things out of bounds.
+				//customProvider={undefined | { search: (searchString) => { } }} // see examples to usage details until docs are ready
+			/>
+			<MapInputBox places={places} setPlaces={setPlaces} />
 		</Map>
 	)
 
