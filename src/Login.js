@@ -99,6 +99,9 @@ const LoginPage = (props) => {
 							<NavLink exact to="/" className="nav-link" activeClassName="active">Karte</NavLink>
 						</li>
 						<li className="nav-item">
+							<NavLink exact to="/gallery" className="nav-link" activeClassName="active">Galerie</NavLink>
+						</li>
+						<li className="nav-item">
 							<NavLink exact to="/login" className="nav-link" activeClassName="active">Login</NavLink>
 						</li>
 					</ul>

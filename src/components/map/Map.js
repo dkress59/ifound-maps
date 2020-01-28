@@ -44,7 +44,8 @@ const FoundMap = (props) => {
 	}
 
 	const handleClick = (e) => {
-		setCoords(window.mouseCoords)
+		const pos = e.latlng
+		setCoords(pos)
 	}
 
 	const handleSubmit = (e) => {
@@ -55,7 +56,8 @@ const FoundMap = (props) => {
 		formBody.append('lat', coords.lat)
 		formBody.append('lng', coords.lng)
 		formBody.append('photoData', fileRef.current.files[0])
-		fetch('https://ifound-rest.herokuapp.com/api/places', {
+			fetch('https://ifound-rest.herokuapp.com/api/places', {
+			//fetch('http://localhost:5000/api/places', {//dev
 			method: 'post',
 			body: formBody
 		})
@@ -69,12 +71,13 @@ const FoundMap = (props) => {
 	const deletePlace = (id) => {
 		//console.log('delete token', auth.token)
 		if (!id) return false
-		fetch('https://ifound-rest.herokuapp.com/api/places/'+id, {
+			fetch('https://ifound-rest.herokuapp.com/api/places/'+id, {
+			//fetch('http://localhost:5000/api/places/'+id, {//dev
 			headers: { 'Authorization': 'Bearer ' + auth.token },
 			method: 'delete',
 		})
 		.then(res => {
-			console.log(res)
+			console.log('after delete send', res)
 			if (res.status === 200) {
 				//force(!update)//dirty refresh
 				setPlaces(places.filter((el) => id !== el._id))
@@ -134,9 +137,9 @@ const FoundMap = (props) => {
 			//ref="bigMap"
 			zoom="13"
 			center={center}
-			onClick={handleClick}
-			//onMousedown={handleClick}
-			onMousemove={handleMouseMove}
+			//onClick={handleClick}
+			onMousedown={handleClick}
+			//onMousemove={handleMouseMove}
 		>
 			<TileLayer
 				attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

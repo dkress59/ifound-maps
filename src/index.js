@@ -5,7 +5,7 @@ import App from './App'
 import Login from './Login'
 import * as serviceWorker from './serviceWorker'
 import { Route } from 'react-router'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Switch } from 'react-router-dom'
 import AuthContext from './context/AuthContext'
 
 const Router = (props) => {
@@ -13,8 +13,10 @@ const Router = (props) => {
 	return (
 		<BrowserRouter>
 			<AuthContext.Provider value={{ token:auth, set: setAuth }}>
-				<Route exact path='/' component={App}/>
-				<Route path='/login' component={Login}/>
+				<Switch>
+					<Route exact path='/login' component={Login}/>
+					<Route path='/' component={App}/>
+				</Switch>
 			</AuthContext.Provider>
 		</BrowserRouter>
 	)
