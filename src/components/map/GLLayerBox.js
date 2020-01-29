@@ -19,7 +19,8 @@ GLLayerBox.propTypes = {
 }
 
 GLLayerBox.defaultProps = {
-	style: "mapbox://styles/mapbox/outdoors-v11"
+	style: 'mapbox://styles/ifoundone/ck5y0ubst3ift1ilouqadsyec',
+	accessToken: 'pk.eyJ1IjoiaWZvdW5kb25lIiwiYSI6ImNrNXkwM2RvbjAwZ2oza29mbWt5NTZzZDcifQ.cUZALi58JclCJ_NY0tb80g'
 }
 
 export default withLeaflet(GLLayerBox) 

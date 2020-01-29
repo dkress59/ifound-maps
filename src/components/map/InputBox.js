@@ -1,5 +1,7 @@
 import './InputBox.css'
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useContext, useEffect } from 'react'
+import MapContext from '../../context/MapContext'
+import ReactDOM from 'react-dom'
 
 
 const UserIcon = props => {
@@ -33,7 +35,7 @@ const NameIcon = (props) => {
 			viewBox="0 0 24 24"
 			fill="none"
 			stroke="currentColor"
-			stroke-width="2"
+			strokeWidth="2"
 			strokeLinecap="round"
 			strokeLinejoin="round"
 			style={props.style}
@@ -64,19 +66,39 @@ const MinimiseIcon = (props) => {
 		</svg>
 	)
 }
+const AddIcon = (props) => {
+	const addClass = props.className && ' ' + props.className
+	return (
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			width="24"
+			height="24"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			strokeWidth="2"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			className={"feather feather-plus" + addClass}
+		>
+			<line x1="12" y1="5" x2="12" y2="19" />
+			<line x1="5" y1="12" x2="19" y2="12" />
+		</svg>
+	)
+}
 
 const InputBox = (props) => {
-
-	const [coords, setCoords] = useState({ lat: 51.2432, lng: 6.7822 })
+	//const [coords, setCoords] = useState({ lat: 51.2432, lng: 6.7822 })
 	const fileRef = useRef(null)
+	const context = useContext(MapContext)
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
 		const formBody = new FormData()
 		formBody.append('name', e.target.name.value)
 		formBody.append('author', e.target.author.value)
-		formBody.append('lat', coords.lat)
-		formBody.append('lng', coords.lng)
+		formBody.append('lat', context.coords.lat)
+		formBody.append('lng', context.coords.lng)
 		formBody.append('photoData', fileRef.current.files[0])
 		fetch('https://ifound-rest.herokuapp.com/api/places', {
 			//fetch('http://localhost:5000/api/places', {//dev
@@ -90,26 +112,50 @@ const InputBox = (props) => {
 			})
 	}
 
+	// !! maybe move this to jquery later !!
+	const [boxSize, setBoxSize] = useState({w:0,h:0})
+	const bodyRef = useRef(null)
+	const [isCollapsed, collapse] = useState(props.collapsed||false)
+	const className = () => {
+		const paren = props.className || ''
+		const defaul = 'card shadow '
+		const collaps = isCollapsed ? ' collapsed' : ''
+		return defaul + paren + collaps
+	}
+	useEffect(() => {
+		const w = ReactDOM.findDOMNode(bodyRef.current).clientWidth
+		const h = ReactDOM.findDOMNode(bodyRef.current).clientHeight
+		if (boxSize.w < w || boxSize.h < h) setBoxSize({w:w,h:h})
+	}, [boxSize.w, boxSize.h])
+	const setSize = () => {
+		if (!isCollapsed && boxSize.h && boxSize.w)
+			return { width: boxSize.w+'px', height: boxSize.h+'px' }
+	}
+
 	return (
 		<section
 			id="mapInputBox"
-			className="card shadow"
+			className={className()}
 		>
-			<div className="card-header text-right">
-				<a className="btn btn-sm btn-outline-primary text-primary text-hover-white">
-					<MinimiseIcon />
-				</a>
+			<div className="card-header text-right bg-primary text-white">
+				<button
+					onMouseDown={() => { collapse(!isCollapsed) }}
+					className="btn btn-sm btn-outline-light text-white text-hover-primary"
+				>
+					{!isCollapsed && <MinimiseIcon />}
+					{isCollapsed && <AddIcon />}
+				</button>
 			</div>
-			<div className="card-body">
-				<form onSubmit={handleSubmit} clssName="form-group">
-					<input name="lat" type="hidden" value={coords.lat} />
-					<input name="lng" type="hidden" value={coords.lng} />
-					{/* <label htmlFor="author">
-						<h6 className="card-subtitle m-0">Dein Name:</h6>
-					</label> */}
-					<div class="input-group mb-3">
-						<div class="input-group-prepend">
-							<span class="input-group-text" id="authorInputPrepend">
+
+			<div ref={bodyRef} className="card-body" style={setSize()}>
+				<form onSubmit={handleSubmit} className="form-group">
+
+					<input name="lat" type="hidden" value={context.coords.lat} />
+					<input name="lng" type="hidden" value={context.coords.lng} />
+
+					<div className="input-group mb-3">
+						<div className="input-group-prepend">
+							<span className="input-group-text" id="authorInputPrepend">
 								<UserIcon />
 							</span>
 						</div>
@@ -125,12 +171,10 @@ const InputBox = (props) => {
 							id="author"
 						/>
 					</div>
-					{/* <label htmlFor="name">
-						<h6 className="card-subtitle m-0">Fundstelle:</h6>
-					</label> */}
-					<div class="input-group mb-3">
-						<div class="input-group-prepend">
-							<span class="input-group-text" id="nameInputPrepend">
+
+					<div className="input-group mb-3">
+						<div className="input-group-prepend">
+							<span className="input-group-text" id="nameInputPrepend">
 								<NameIcon />
 							</span>
 						</div>
@@ -146,18 +190,22 @@ const InputBox = (props) => {
 							id="name"
 						/>
 					</div>
+
 					<label htmlFor="photoData">
 						<h6 className="card-subtitle m-0">Zeig' uns dein Foto!</h6>
 					</label>
 					<input
 						type="file"
 						className="form-control-file mb-3"
+						aria-label="file input"
 						name="photoData"
 						id="photoData"
 						ref={fileRef}
 					/>
+
 					<button type="submit" className="btn btn-dark btn-sm w-100">Senden</button>
 				</form>
+
 			</div>
 		</section>
 	)
