@@ -32,4 +32,4 @@ const Router = () => {
 ReactDOM.render((<Router />), document.getElementById('root'))
 
 
-//serviceWorker.unregister()//caching on: register(), off: unregister()
+serviceWorker.unregister()//caching on: register(), off: unregister()

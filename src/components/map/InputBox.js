@@ -2,6 +2,7 @@ import './InputBox.css'
 import React, { useState, useRef, useContext, useEffect } from 'react'
 import MapContext from '../../context/MapContext'
 import ReactDOM from 'react-dom'
+import { isMobile } from 'react-device-detect'
 
 
 const UserIcon = props => {
@@ -86,10 +87,51 @@ const AddIcon = (props) => {
 		</svg>
 	)
 }
+const CameraIcon = (props) => {
+	const addClass = props.className && ' ' + props.className
+	return (
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			width="24"
+			height="24"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			strokeWidth="2"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			className={"feather feather-camera" + addClass}
+		>
+			<path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+			<circle cx="12" cy="13" r="4" />
+		</svg>
+	)
+}
+const FileIcon = (props) => {
+	const addClass = props.className && ' ' + props.className
+	return (
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			width="24"
+			height="24"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			strokeWidth="2"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			className={"feather feather-file" + addClass}
+		>
+			<path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" />
+			<polyline points="13 2 13 9 20 9" />
+		</svg>
+	)
+}
 
 const InputBox = (props) => {
 	//const [coords, setCoords] = useState({ lat: 51.2432, lng: 6.7822 })
 	const fileRef = useRef(null)
+	const cameraRef = useRef(null)
 	const context = useContext(MapContext)
 
 	const handleSubmit = (e) => {
@@ -100,8 +142,8 @@ const InputBox = (props) => {
 		formBody.append('lat', context.coords.lat)
 		formBody.append('lng', context.coords.lng)
 		formBody.append('photoData', fileRef.current.files[0])
-		fetch('https://ifound-rest.herokuapp.com/api/places', {
-			//fetch('http://localhost:5000/api/places', {//dev
+		formBody.append('photoData', cameraRef.current.files[0])
+		fetch(process.env.REACT_APP_REST_URL + '/api/places', {
 			method: 'post',
 			body: formBody
 		})
@@ -127,6 +169,10 @@ const InputBox = (props) => {
 		const h = ReactDOM.findDOMNode(bodyRef.current).clientHeight
 		if (boxSize.w < w || boxSize.h < h) setBoxSize({w:w,h:h})
 	}, [boxSize.w, boxSize.h])
+	useEffect(() => {
+		if (isMobile) collapse(true)
+	}, [])
+
 	const setSize = () => {
 		if (!isCollapsed && boxSize.h && boxSize.w)
 			return { width: boxSize.w+'px', height: boxSize.h+'px' }
@@ -191,16 +237,32 @@ const InputBox = (props) => {
 						/>
 					</div>
 
-					<label htmlFor="photoData">
-						<h6 className="card-subtitle m-0">Zeig' uns dein Foto!</h6>
+					{isMobile && <label htmlFor="cameraData" style={{ width: 'calc(50% - .125em)'}} className="mr-1">
+						<span className="btn btn-primary mt-1 mb-3 w-100"><CameraIcon /></span>
+					</label>}
+					<input
+						type="file"
+						accept="image/*"
+						capture="camera"
+						className="form-control-file mb-3"
+						aria-label="camera input"
+						name="cameraData"
+						id="cameraData"
+						ref={cameraRef}
+						style={{ display: 'none' }}
+					/>
+					<label htmlFor="photoData" style={{ width: 'calc(50% - .125em)'}}>
+						<span className="btn btn-primary mt-1 mb-3 w-100"><FileIcon /></span>
 					</label>
 					<input
 						type="file"
+						accept="image/*"
 						className="form-control-file mb-3"
 						aria-label="file input"
 						name="photoData"
 						id="photoData"
 						ref={fileRef}
+						style={{ display: 'none' }}
 					/>
 
 					<button type="submit" className="btn btn-dark btn-sm w-100">Senden</button>

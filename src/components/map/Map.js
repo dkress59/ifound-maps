@@ -38,7 +38,7 @@ const FoundMap = (props) => {
 			})
 		}
 
-		fetch('https://ifound-rest.herokuapp.com/api/places/')
+		fetch(process.env.REACT_APP_REST_URL + '/api/places/')
 			//fetch('http://localhost:5000/api/places/')//dev
 			.then((res => res.json()))
 			.then((res) => {
@@ -63,8 +63,7 @@ const FoundMap = (props) => {
 
 	const deletePlace = (id) => {
 		if (!id) return false
-		fetch('https://ifound-rest.herokuapp.com/api/places/' + id, {
-			//fetch('http://localhost:5000/api/places/'+id, {//dev
+		fetch(process.env.REACT_APP_REST_URL + '/api/places/' + id, {
 			headers: { 'Authorization': 'Bearer ' + auth.token },
 			method: 'delete',
 		})
