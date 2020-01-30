@@ -1,6 +1,6 @@
 import React, { useRef, useState, useContext, useEffect } from 'react'
 import { Redirect } from 'react-router-dom'
-import AuthContext from './context/AuthContext'
+import AuthContext from '../context/AuthContext'
 
 const LoginPage = (props) => {
 

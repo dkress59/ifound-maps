@@ -82,7 +82,7 @@ const FoundMap = (props) => {
 		preloadImages(photos)
 	}, [places])
 
-	useEffect(() => {
+	useEffect(() => {// !! this picks up external marker addings (doesnt it?) !! // onlayeradd?
 		if (!isMobile) setCenter(coords)
 	}, [coords])
 
@@ -93,9 +93,9 @@ const FoundMap = (props) => {
 		iconSize: [64, 64],
 		iconAnchor: [10, 64],
 		popupAnchor: [-3, -76],
-		//shadowUrl: 'my-icon-shadow.png',
-		//shadowSize: [68, 95],
-		//shadowAnchor: [22, 94]
+		shadowUrl: 'clover-shadow.svg',
+		shadowSize: [64, 56],
+		shadowAnchor: [10, 56]
 	});
 
 	const handleClick = (e) => {// !! Bubblin like damn !! //

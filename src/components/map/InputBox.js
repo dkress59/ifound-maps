@@ -3,6 +3,7 @@ import React, { useState, useRef, useContext, useEffect } from 'react'
 import MapContext from '../../context/MapContext'
 import ReactDOM from 'react-dom'
 import { isMobile } from 'react-device-detect'
+import './InputRange.css'
 
 
 const UserIcon = props => {
@@ -254,7 +255,7 @@ const InputBox = (props) => {
 					<label htmlFor="formControlRange" className="text-center w-100 h6 subtitle">
 						Umkreis{context.range > 0 ? ': '+context.range+'m' : null}
 					</label>
-					<input type="range" className="form-control-range mb-2" id="formControlRange" initial="20" onChange={e => {context.setRange(e.target.value)}} />
+					<input type="range" className="form-control-range mb-2 mt-2" id="formControlRange" initial="20" onChange={e => {context.setRange(e.target.value)}} />
 
 					{isMobile && <label htmlFor="cameraData" style={{ width: 'calc(50% - .125em)' }} className="mr-1">
 						<span className="btn btn-primary mt-2 pb-2 mb-3 w-100"><CameraIcon /></span>

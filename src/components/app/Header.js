@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 
 const Header = (props) => {
 	return (
-		<header className="mt-2 mb-2 navbar-expand-md">
+		<header className="mt-2 mt-3 mb-2 navbar-expand-md">
 			<nav className="navbar navbar-expand-lg navbar-dark bg-primary">
 				<a className="navbar-brand" href="/">
 					<h1 className="h3">iFound.one!</h1>
