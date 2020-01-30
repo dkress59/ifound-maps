@@ -4,9 +4,6 @@ import './App.css'
 
 const App = (props) => {
 
-	console.log('REST_',process.env.REST_URL)
-	console.log('REACT_',process.env.REACT_APP_REST_URL)
-
 	return (
 		<>
 			<Header />

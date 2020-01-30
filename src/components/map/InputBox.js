@@ -218,7 +218,7 @@ const InputBox = (props) => {
 						/>
 					</div>
 
-					<div className="input-group mb-3">
+					<div className="input-group mb-2">
 						<div className="input-group-prepend">
 							<span className="input-group-text" id="nameInputPrepend">
 								<NameIcon />
@@ -236,6 +236,8 @@ const InputBox = (props) => {
 							id="name"
 						/>
 					</div>
+					<label htmlFor="formControlRange" className="text-center w-100 h6 subtitle">Entfernung</label>
+					<input type="range" className="form-control-range mb-2" id="formControlRange" />
 
 					{isMobile && <label htmlFor="cameraData" style={{ width: 'calc(50% - .125em)'}} className="mr-1">
 						<span className="btn btn-primary mt-2 pb-2 mb-3 w-100"><CameraIcon /></span>
