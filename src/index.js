@@ -10,6 +10,7 @@ import * as serviceWorker from './serviceWorker'
 import { Route } from 'react-router'
 import { BrowserRouter, Switch } from 'react-router-dom'
 import AuthContext from './context/AuthContext'
+import './assets/custom-bootstrap.css'
 
 const Router = () => {
 	const [auth, setAuth] = useState('false')

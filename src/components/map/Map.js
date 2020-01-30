@@ -11,6 +11,7 @@ import MapBoxSearch from 'react-leaflet-search'
 
 import MapInputBox from './InputBox'
 import MapContext from '../../context/MapContext'
+//import fetch from 'cross-fetch'
 
 
 const FoundMap = (props) => {
@@ -37,20 +38,26 @@ const FoundMap = (props) => {
 					lng: pos.coords.longitude
 				})
 			})
-		}
-
-		fetch(process.env.REACT_APP_REST_URL + '/api/places/')
-			//fetch('http://localhost:5000/api/places/')//dev
-			.then((res => res.json()))
-			.then((res) => {
-				setPlaces(res.places)
-			})
+		}	
 	}, [])
-	/* useEffect(() => {
-		if (places !== props.places)
-			setPlaces(props.places)
-	}, [props.places])
- */
+
+	useEffect(() => {
+
+		window.placeInterval = setInterval(() => {
+			console.log('Reloading places...')
+			fetch(process.env.REACT_APP_REST_URL + '/api/places/')
+				.then((res => res.json()))
+				.then((res) => {
+					setPlaces(res.places)
+				})
+		}, 6666)
+
+		return () => {
+			clearInterval(window.placeInterval)
+		}
+		
+	})
+
 	useEffect(() => {
 		//let photos = {}
 		let photos = []
@@ -66,6 +73,18 @@ const FoundMap = (props) => {
 		})
 		preloadImages(photos)
 	}, [places])
+
+
+
+	const myIcon = L.icon({
+		iconUrl: 'https://ifoundone.projecd.org/marker.png',
+		iconSize: [50, 81],
+		iconAnchor: [22, 94],
+		popupAnchor: [-3, -76],
+		//shadowUrl: 'my-icon-shadow.png',
+		//shadowSize: [68, 95],
+		//shadowAnchor: [22, 94]
+	});
 
 	/* const handleMouseMove = (e) => {
 		const pos = e.latlng
@@ -84,26 +103,22 @@ const FoundMap = (props) => {
 			method: 'delete',
 		})
 			.then(res => {
-				if (res.status === 200) {
+				/* if (res.status === 200) {
 					//force(!update)//dirty refresh
 					setPlaces(places.filter((el) => id !== el._id))
-				}
+				} */
+				console.log(res)
+				fetch(process.env.REACT_APP_REST_URL + '/api/places/')
+					.then(nu => nu.json())
+					.then(nu => {
+						setPlaces(nu.places)
+					})
 			})
 			.catch(err => {
 				console.error(err)
 			})
 	}
 	//useEffect(() => {}, [update])//dirty refresh
-
-	const myIcon = L.icon({
-		iconUrl: 'https://ifoundone.projecd.org/marker.png',
-		iconSize: [50, 81],
-		iconAnchor: [22, 94],
-		popupAnchor: [-3, -76],
-		//shadowUrl: 'my-icon-shadow.png',
-		//shadowSize: [68, 95],
-		//shadowAnchor: [22, 94]
-	});
 
 	const loadPlaces = () => {
 		if (!places || places.length < 1) return null
@@ -114,7 +129,7 @@ const FoundMap = (props) => {
 					return <img
 						alt="document"
 						className="thumbnail"
-						src={img.src = 'https://ifoundone.projecd.org/view/' + place.photos[0]}
+						src={new Image().src = 'https://ifoundone.projecd.org/view/' + place.photos[0]}
 					/>
 				}
 			}
@@ -147,8 +162,9 @@ const FoundMap = (props) => {
 			console.log('onLayerAdd', layer)
 	}
 
+
 	return (
-		<MapContext.Provider value={{ coords: coords, setCoords: setCoords }}>
+		<MapContext.Provider value={{ coords: coords, setCoords: setCoords, places: places, setPlaces: setPlaces }}>
 			<Map
 				id="map"
 				ref={mapRef}
@@ -177,7 +193,7 @@ const FoundMap = (props) => {
 				//customProvider={undefined | { search: (searchString) => { } }} // see examples to usage details until docs are ready
 				/>
 			</Map>
-			<MapInputBox places={places} setPlaces={setPlaces} />
+			<MapInputBox />
 		</MapContext.Provider>
 	)
 

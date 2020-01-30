@@ -133,9 +133,11 @@ const InputBox = (props) => {
 	const fileRef = useRef(null)
 	const cameraRef = useRef(null)
 	const context = useContext(MapContext)
+	const [isSending, setIsSending] = useState(0)
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
+		if (isSending) return false
 		const formBody = new FormData()
 		formBody.append('name', e.target.name.value)
 		formBody.append('author', e.target.author.value)
@@ -143,6 +145,7 @@ const InputBox = (props) => {
 		formBody.append('lng', context.coords.lng)
 		formBody.append('photoData', fileRef.current.files[0])
 		formBody.append('photoData', cameraRef.current.files[0])
+		setIsSending(1)
 		fetch(process.env.REACT_APP_REST_URL + '/api/places', {
 			method: 'post',
 			body: formBody
@@ -150,14 +153,19 @@ const InputBox = (props) => {
 			.then(res => { return res.json() })
 			.then(res => {
 				console.log(res)
-				if (props.places) props.setPlaces([...props.places, res.newPlace])
+				setIsSending(0)
+				if (context.places) context.setPlaces([...context.places, res.newPlace])
+			})
+			.catch(err => {
+				console.error(err)
+				setIsSending(0)
 			})
 	}
 
 	// !! maybe move this to jquery later !!
-	const [boxSize, setBoxSize] = useState({w:0,h:0})
+	const [boxSize, setBoxSize] = useState({ w: 0, h: 0 })
 	const bodyRef = useRef(null)
-	const [isCollapsed, collapse] = useState(props.collapsed||false)
+	const [isCollapsed, collapse] = useState(props.collapsed || false)
 	const className = () => {
 		const paren = props.className || ''
 		const defaul = 'card shadow '
@@ -167,7 +175,7 @@ const InputBox = (props) => {
 	useEffect(() => {
 		const w = ReactDOM.findDOMNode(bodyRef.current).clientWidth
 		const h = ReactDOM.findDOMNode(bodyRef.current).clientHeight
-		if (boxSize.w < w || boxSize.h < h) setBoxSize({w:w,h:h})
+		if (boxSize.w < w || boxSize.h < h) setBoxSize({ w: w, h: h })
 	}, [boxSize.w, boxSize.h])
 	useEffect(() => {
 		if (isMobile) collapse(true)
@@ -175,7 +183,7 @@ const InputBox = (props) => {
 
 	const setSize = () => {
 		if (!isCollapsed && boxSize.h && boxSize.w)
-			return { width: boxSize.w+'px', height: boxSize.h+'px' }
+			return { width: boxSize.w + 'px', height: boxSize.h + 'px' }
 	}
 
 	return (
@@ -184,6 +192,9 @@ const InputBox = (props) => {
 			className={className()}
 		>
 			<div className="card-header text-right bg-primary text-white">
+				{isSending ? <div className="progress float-left mt-2" style={{width: 'calc(100% - 4em)'}}>
+					<div className="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-label="saving" aria-valuenow="1" style={{width: '100%'}}></div>
+				</div> : null}
 				<button
 					onMouseDown={() => { collapse(!isCollapsed) }}
 					className="btn btn-sm btn-outline-light text-white text-hover-primary"
@@ -236,10 +247,12 @@ const InputBox = (props) => {
 							id="name"
 						/>
 					</div>
-					<label htmlFor="formControlRange" className="text-center w-100 h6 subtitle">Entfernung</label>
+					<label htmlFor="formControlRange" className="text-center w-100 h6 subtitle">
+						Umkreis
+					</label>
 					<input type="range" className="form-control-range mb-2" id="formControlRange" />
 
-					{isMobile && <label htmlFor="cameraData" style={{ width: 'calc(50% - .125em)'}} className="mr-1">
+					{isMobile && <label htmlFor="cameraData" style={{ width: 'calc(50% - .125em)' }} className="mr-1">
 						<span className="btn btn-primary mt-2 pb-2 mb-3 w-100"><CameraIcon /></span>
 					</label>}
 					<input
@@ -253,11 +266,11 @@ const InputBox = (props) => {
 						ref={cameraRef}
 						style={{ display: 'none' }}
 					/>
-					{isMobile && <label htmlFor="photoData" style={{ width: 'calc(50% - .125em)'}}>
+					{isMobile && <label htmlFor="photoData" style={{ width: 'calc(50% - .125em)' }}>
 						<span className="btn btn-primary mt-2 pb-2 mb-3 w-100"><FileIcon /></span>
 					</label>}
 					{!isMobile && <label htmlFor="photoData" className="">
-						<span className="btn btn-primary mt-2 pb-2 mb-3 mr-2"><FileIcon /></span> Datei auswählen
+						<span className="btn btn-primary mt-2 pb-2 mb-3 mr-2"><FileIcon /></span> Foto auswählen
 					</label>}
 					<input
 						type="file"
@@ -270,7 +283,7 @@ const InputBox = (props) => {
 						style={{ display: 'none' }}
 					/>
 
-					<button type="submit" className="btn btn-dark btn-sm w-100">Senden</button>
+					<button type="submit" className={"btn btn-dark btn-sm w-100" + (isSending ? ' disabled' : '')}>Senden{isSending ? '…' : null}</button>
 				</form>
 
 			</div>

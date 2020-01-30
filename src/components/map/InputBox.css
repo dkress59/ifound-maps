@@ -34,3 +34,6 @@
 	transform-origin: center right;
 	transition: transform .4s ease, width .4s ease, height .4s ease, padding .4s ease, margin .4s ease;
 }
+.btn.disabled {
+	cursor: not-allowed;
+}

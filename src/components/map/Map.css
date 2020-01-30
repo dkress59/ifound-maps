@@ -12,6 +12,8 @@
 .thumbnail {
 	width: 100%;
 	height: auto;
+	text-align: center;
+	line-height: 200%;
 }
 
 /*.leaflet-popup-content */
