@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from 'react'
-import { Map, Marker, Popup } from 'react-leaflet'
+import { Map, Marker, Popup, Circle } from 'react-leaflet'
 import './Map.css'
 import L from 'leaflet'
 import trashIcon from '../../assets/trash-2.svg'
@@ -11,6 +11,7 @@ import MapBoxSearch from 'react-leaflet-search'
 
 import MapInputBox from './InputBox'
 import MapContext from '../../context/MapContext'
+import { isMobile } from 'react-device-detect'
 //import fetch from 'cross-fetch'
 
 
@@ -20,6 +21,8 @@ const FoundMap = (props) => {
 	const [coords, setCoords] = useState({ lat: 51.2432, lng: 6.7822 })
 	const [places, setPlaces] = useState([])
 	const [images, preloadImages] = useState([])
+	const [range, setRange] = useState(0)
+	const [zoomX, setZoomX] = useState(16)
 
 	const auth = useContext(AuthContext)
 
@@ -38,7 +41,12 @@ const FoundMap = (props) => {
 					lng: pos.coords.longitude
 				})
 			})
-		}	
+		}
+		fetch(process.env.REACT_APP_REST_URL + '/api/places/')
+			.then((res => res.json()))
+			.then((res) => {
+				setPlaces(res.places)
+			})
 	}, [])
 
 	useEffect(() => {
@@ -55,7 +63,7 @@ const FoundMap = (props) => {
 		return () => {
 			clearInterval(window.placeInterval)
 		}
-		
+
 	})
 
 	useEffect(() => {
@@ -74,24 +82,23 @@ const FoundMap = (props) => {
 		preloadImages(photos)
 	}, [places])
 
+	useEffect(() => {
+		if (!isMobile) setCenter(coords)
+	}, [coords])
+
 
 
 	const myIcon = L.icon({
-		iconUrl: 'https://ifoundone.projecd.org/marker.png',
-		iconSize: [50, 81],
-		iconAnchor: [22, 94],
+		iconUrl: 'clover.svg',
+		iconSize: [64, 64],
+		iconAnchor: [10, 64],
 		popupAnchor: [-3, -76],
 		//shadowUrl: 'my-icon-shadow.png',
 		//shadowSize: [68, 95],
 		//shadowAnchor: [22, 94]
 	});
 
-	/* const handleMouseMove = (e) => {
-		const pos = e.latlng
-		window.mouseCoords = pos
-	} */
-
-	const handleClick = (e) => {
+	const handleClick = (e) => {// !! Bubblin like damn !! //
 		const pos = e.latlng
 		setCoords(pos)
 	}
@@ -103,10 +110,6 @@ const FoundMap = (props) => {
 			method: 'delete',
 		})
 			.then(res => {
-				/* if (res.status === 200) {
-					//force(!update)//dirty refresh
-					setPlaces(places.filter((el) => id !== el._id))
-				} */
 				console.log(res)
 				fetch(process.env.REACT_APP_REST_URL + '/api/places/')
 					.then(nu => nu.json())
@@ -118,7 +121,6 @@ const FoundMap = (props) => {
 				console.error(err)
 			})
 	}
-	//useEffect(() => {}, [update])//dirty refresh
 
 	const loadPlaces = () => {
 		if (!places || places.length < 1) return null
@@ -133,25 +135,20 @@ const FoundMap = (props) => {
 					/>
 				}
 			}
-			const name = () => {
-				if (place.name && place.name !== undefined)
-					return <h4 className="mb-0">{place.name}</h4>
-			}
-			const author = () => {
-				if (place.author && place.author !== undefined)
-					return <p className="m-0"><small>von </small>{place.author}</p>
-			}
 			return (
-				<Marker position={pos} key={'marker-' + place._id} dataSaved>
-					<Popup minWidth="160" maxWidth="320">
-						<div className="text-center m-0">
-							{img()}
-							{name()}
-							{author()}
-						</div>
-						{auth.token !== 'false' && <img className="trash feather" src={trashIcon} alt="delete" onMouseUp={() => deletePlace(place._id)} />}
-					</Popup>
-				</Marker>
+				<div key={'circleMarker-' + place._id}>
+					{(place.range && place.range > 0) && <Circle center={[pos.lat, pos.lng]} radius={place.range} />}
+					<Marker icon={myIcon} position={pos} dataSaved>
+						<Popup minWidth="160" maxWidth="320">
+							<div className="text-center m-0">
+								{img()}
+								{(place.name && place.name !== undefined) && <h4 className="mb-0">{place.name}</h4>}
+								{(place.author && place.author !== undefined) && <p className="m-0"><small>von </small>{place.author}</p>}
+							</div>
+							{auth.token !== 'false' && <img className="trash feather" src={trashIcon} alt="delete" onMouseUp={() => deletePlace(place._id)} />}
+						</Popup>
+					</Marker>
+				</div>
 			)
 		})
 	}
@@ -164,21 +161,30 @@ const FoundMap = (props) => {
 
 
 	return (
-		<MapContext.Provider value={{ coords: coords, setCoords: setCoords, places: places, setPlaces: setPlaces }}>
+		<MapContext.Provider value={{
+			coords: coords,
+			setCoords: setCoords,
+			places: places,
+			setPlaces: setPlaces,
+			range: range,
+			setRange: setRange
+		}}>
 			<Map
 				id="map"
 				ref={mapRef}
-				zoom="13"
+				zoom={zoomX}
 				center={center}
 				onMousedown={handleClick}
 				onLayeradd={onLayerAdd}
 				onbaselayerchange={(e) => { console.log(e) }}
+				onZoomEnd={e => {setZoomX(e.target._zoom)}}
 			>
 				<MapBoxGLLayer
 					attribution='<a href="http://openstreetmap.org" rel="nofollow">OSM</a>'
 				/>
-				<Marker position={coords} key="newPlace" icon={myIcon} />
 				{loadPlaces()}
+				{range > 0 ? <Circle center={[coords.lat, coords.lng]} radius={range} /> : null}
+				<Marker position={coords} key="newPlace" />
 				<MapBoxSearch
 					className="mapSearchBox"
 					//position="topleft"
@@ -189,8 +195,8 @@ const FoundMap = (props) => {
 					showPopup={false}
 					//openSearchOnLoad={false} // By default there's a search icon which opens the input when clicked. Setting this to true opens the search by default.
 					closeResultsOnClick={true} // By default, the search results remain when you click on one, and the map flies to the location of the result. But you might want to save space on your map by closing the results when one is clicked. The results are shown again (without another search) when focus is returned to the search input.
-				//providerOptions={{ searchBounds: [] }} // The BingMap and OpenStreetMap providers both accept bounding coordinates in [se,nw] format. Note that in the case of OpenStreetMap, this only weights the results and doesn't exclude things out of bounds.
-				//customProvider={undefined | { search: (searchString) => { } }} // see examples to usage details until docs are ready
+					//providerOptions={{ searchBounds: [] }} // The BingMap and OpenStreetMap providers both accept bounding coordinates in [se,nw] format. Note that in the case of OpenStreetMap, this only weights the results and doesn't exclude things out of bounds.
+					//customProvider={undefined | { search: (searchString) => { } }} // see examples to usage details until docs are ready
 				/>
 			</Map>
 			<MapInputBox />

@@ -134,6 +134,7 @@ const InputBox = (props) => {
 	const cameraRef = useRef(null)
 	const context = useContext(MapContext)
 	const [isSending, setIsSending] = useState(0)
+	const formRef = useRef(null)
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
@@ -143,6 +144,7 @@ const InputBox = (props) => {
 		formBody.append('author', e.target.author.value)
 		formBody.append('lat', context.coords.lat)
 		formBody.append('lng', context.coords.lng)
+		formBody.append('range', context.range)
 		formBody.append('photoData', fileRef.current.files[0])
 		formBody.append('photoData', cameraRef.current.files[0])
 		setIsSending(1)
@@ -153,8 +155,10 @@ const InputBox = (props) => {
 			.then(res => { return res.json() })
 			.then(res => {
 				console.log(res)
-				setIsSending(0)
 				if (context.places) context.setPlaces([...context.places, res.newPlace])
+				setIsSending(0)
+				formRef.current.reset()
+				context.setRange(0)
 			})
 			.catch(err => {
 				console.error(err)
@@ -205,7 +209,7 @@ const InputBox = (props) => {
 			</div>
 
 			<div ref={bodyRef} className="card-body" style={setSize()}>
-				<form onSubmit={handleSubmit} className="form-group">
+				<form ref={formRef} onSubmit={handleSubmit} className="form-group">
 
 					<input name="lat" type="hidden" value={context.coords.lat} />
 					<input name="lng" type="hidden" value={context.coords.lng} />
@@ -248,9 +252,9 @@ const InputBox = (props) => {
 						/>
 					</div>
 					<label htmlFor="formControlRange" className="text-center w-100 h6 subtitle">
-						Umkreis
+						Umkreis{context.range > 0 ? ': '+context.range+'m' : null}
 					</label>
-					<input type="range" className="form-control-range mb-2" id="formControlRange" />
+					<input type="range" className="form-control-range mb-2" id="formControlRange" initial="20" onChange={e => {context.setRange(e.target.value)}} />
 
 					{isMobile && <label htmlFor="cameraData" style={{ width: 'calc(50% - .125em)' }} className="mr-1">
 						<span className="btn btn-primary mt-2 pb-2 mb-3 w-100"><CameraIcon /></span>
