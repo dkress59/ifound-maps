@@ -150,7 +150,7 @@ const InputBox = (props) => {
 			.then(res => { return res.json() })
 			.then(res => {
 				console.log(res)
-				props.setPlaces([...props.places, res.newPlace])
+				if (props.places) props.setPlaces([...props.places, res.newPlace])
 			})
 	}
 
@@ -238,7 +238,7 @@ const InputBox = (props) => {
 					</div>
 
 					{isMobile && <label htmlFor="cameraData" style={{ width: 'calc(50% - .125em)'}} className="mr-1">
-						<span className="btn btn-primary mt-1 mb-3 w-100"><CameraIcon /></span>
+						<span className="btn btn-primary mt-2 pb-2 mb-3 w-100"><CameraIcon /></span>
 					</label>}
 					<input
 						type="file"
@@ -251,9 +251,12 @@ const InputBox = (props) => {
 						ref={cameraRef}
 						style={{ display: 'none' }}
 					/>
-					<label htmlFor="photoData" style={{ width: 'calc(50% - .125em)'}}>
-						<span className="btn btn-primary mt-1 mb-3 w-100"><FileIcon /></span>
-					</label>
+					{isMobile && <label htmlFor="photoData" style={{ width: 'calc(50% - .125em)'}}>
+						<span className="btn btn-primary mt-2 pb-2 mb-3 w-100"><FileIcon /></span>
+					</label>}
+					{!isMobile && <label htmlFor="photoData" className="">
+						<span className="btn btn-primary mt-2 pb-2 mb-3 mr-2"><FileIcon /></span> Datei auswählen
+					</label>}
 					<input
 						type="file"
 						accept="image/*"

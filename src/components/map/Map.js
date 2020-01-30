@@ -18,6 +18,7 @@ const FoundMap = (props) => {
 	const [center, setCenter] = useState({ lat: 51.2432, lng: 6.7822 })
 	const [coords, setCoords] = useState({ lat: 51.2432, lng: 6.7822 })
 	const [places, setPlaces] = useState([])
+	const [images, preloadImages] = useState([])
 
 	const auth = useContext(AuthContext)
 
@@ -50,6 +51,21 @@ const FoundMap = (props) => {
 			setPlaces(props.places)
 	}, [props.places])
  */
+	useEffect(() => {
+		//let photos = {}
+		let photos = []
+		if (places && places.length > 0) places.map(place => {
+			const img = new Image()
+			img.key = place._id
+			img.alt = 'Photo document'
+			img.className = 'thumbnail'
+			img.src = 'https://ifoundone.projecd.org/view/' + place.photos[0]
+			//photos = {...photos, [place._id]: img.src}//works, but unallowed
+			photos.push(img)
+			return null
+		})
+		preloadImages(photos)
+	}, [places])
 
 	/* const handleMouseMove = (e) => {
 		const pos = e.latlng
@@ -68,7 +84,6 @@ const FoundMap = (props) => {
 			method: 'delete',
 		})
 			.then(res => {
-				console.log('after delete send', res)
 				if (res.status === 200) {
 					//force(!update)//dirty refresh
 					setPlaces(places.filter((el) => id !== el._id))
@@ -91,12 +106,17 @@ const FoundMap = (props) => {
 	});
 
 	const loadPlaces = () => {
-		if (!places || places.length < 1) return
+		if (!places || places.length < 1) return null
 		return places.map(place => {
 			const pos = { lat: place.lat, lng: place.lng }
 			const img = () => {
-				if (place.photos.length > 0)
-					return <img className="thumbnail" src={"https://ifoundone.projecd.org/view/" + place.photos[0]} alt="" />
+				if (place.photos.length > 0) {
+					return <img
+						alt="document"
+						className="thumbnail"
+						src={img.src = 'https://ifoundone.projecd.org/view/' + place.photos[0]}
+					/>
+				}
 			}
 			const name = () => {
 				if (place.name && place.name !== undefined)
@@ -124,7 +144,7 @@ const FoundMap = (props) => {
 	const onLayerAdd = ({ layer }) => {// !! should only exec if [places] changes !!
 		const mCoords = layer._latlng
 		if (!layer.options.dataSaved) setCoords(mCoords) &&
-		console.log('onLayerAdd', layer)
+			console.log('onLayerAdd', layer)
 	}
 
 	return (
@@ -136,7 +156,7 @@ const FoundMap = (props) => {
 				center={center}
 				onMousedown={handleClick}
 				onLayeradd={onLayerAdd}
-				onbaselayerchange={(e) => {console.log(e) }}
+				onbaselayerchange={(e) => { console.log(e) }}
 			>
 				<MapBoxGLLayer
 					attribution='<a href="http://openstreetmap.org" rel="nofollow">OSM</a>'
