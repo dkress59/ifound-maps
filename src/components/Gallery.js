@@ -6,36 +6,35 @@ const GalleryView = (props) => {
 
 	const [photos, setPhotos] = useState([])
 
+	const galleryInterval = setInterval(() => {
+		console.log('Reloading photos...')
+		fetch(process.env.REACT_APP_REST_URL + '/api/photos/')
+			.then((res => res.json()))
+			.then((res) => {
+				if (res.photos.length != photos.length) setPhotos(shuffle(res.photos))// !! check for duplicates !! //
+			})
+	}, 6666)
+
 	useEffect(() => {
 		fetch(process.env.REACT_APP_REST_URL + '/api/photos/')
 			.then((res => res.json()))
 			.then((res) => {
-				setPhotos(res.photos)
+				if (res.photos.length != photos.length) setPhotos(shuffle(res.photos))// !! check for duplicates !! //
 			})
 	}, [])
 
 	useEffect(() => {
 
-		window.galleryInterval = setInterval(() => {
-			console.log('Reloading photos...')
-			fetch(process.env.REACT_APP_REST_URL + '/api/photos/')
-				.then((res => res.json()))
-				.then((res) => {
-					setPhotos(res.photos)
-					console.log(res.photos)
-				})
-		}, 6666)
-
 		return () => {
-			clearInterval(window.galleryInterval)
+			clearInterval(galleryInterval)
 		}
 
 	})
 
 	const loadPhotos = () => {
-		return photos.map(photo => {
+		return photos.map(photo => {// also use index for multiple grids of 12
 			return (
-				<figure>
+				<figure key={"photo-" + photo._id}>
 					<img src={photo.url} alt="This is a descriptive subtitle." className="photo" />
 					<figcaption>
 							<h3 className="display-4">Title</h3>
@@ -45,6 +44,19 @@ const GalleryView = (props) => {
 			)
 		})
 	}
+
+	const shuffle = (a) => {
+		var j, x, i;
+		for (i = a.length - 1; i > 0; i--) {
+			j = Math.floor(Math.random() * (i + 1));
+			x = a[i];
+			a[i] = a[j];
+			a[j] = x;
+		}
+		return a;
+	}
+
+	if (!photos.length) return (<p>Loading...</p>)
 
 	return (
 		<div className="gallery">

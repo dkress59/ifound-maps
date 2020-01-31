@@ -225,10 +225,12 @@ const InputBox = (props) => {
 							required
 							type="text"
 							//placeholder="Dein Name"
-							className="form-control "
+							className={"form-control"}
+							disabled={isSending}
 							aria-label="Dein Name"
 							placeholder="Name"
 							aria-describedby="authorInputPrepend"
+							title="name"
 							name="author"
 							id="author"
 						/>
@@ -244,10 +246,12 @@ const InputBox = (props) => {
 							required
 							type="text"
 							//placeholder="Fundstelle"
-							className="form-control "
+							className={"form-control"}
+							disabled={isSending}
 							aria-label="Dein Fundort"
 							placeholder="Fundort"
 							aria-describedby="nameInputPrepend"
+							title="place"
 							name="name"
 							id="name"
 						/>
@@ -255,10 +259,17 @@ const InputBox = (props) => {
 					<label htmlFor="formControlRange" className="text-center w-100 h6 subtitle">
 						Umkreis{context.range > 0 ? ': '+context.range+'m' : null}
 					</label>
-					<input type="range" className="form-control-range mb-2 mt-2" id="formControlRange" initial="20" onChange={e => {context.setRange(e.target.value)}} />
+					<input
+						type="range"
+						className={"form-control-range mb-2 mt-2"}
+						disabled={isSending}
+						id="formControlRange"
+						initial="20"
+						onChange={e => {context.setRange(e.target.value)}}
+					/>
 
 					{isMobile && <label htmlFor="cameraData" style={{ width: 'calc(50% - .125em)' }} className="mr-1">
-						<span className="btn btn-primary mt-2 pb-2 mb-3 w-100"><CameraIcon /></span>
+						<span className={"btn btn-primary mt-2 pb-2 mb-3 w-100" + ((isSending) ? ' disabled' : '')}><CameraIcon /></span>
 					</label>}
 					<input
 						type="file"
@@ -272,10 +283,10 @@ const InputBox = (props) => {
 						style={{ display: 'none' }}
 					/>
 					{isMobile && <label htmlFor="photoData" style={{ width: 'calc(50% - .125em)' }}>
-						<span className="btn btn-primary mt-2 pb-2 mb-3 w-100"><FileIcon /></span>
+						<span className={"btn btn-primary mt-2 pb-2 mb-3 w-100" + ((isSending) ? ' disabled' : '')}><FileIcon /></span>
 					</label>}
 					{!isMobile && <label htmlFor="photoData" className="">
-						<span className="btn btn-primary mt-2 pb-2 mb-3 mr-2"><FileIcon /></span> Foto auswählen
+						<span className={"btn btn-primary mt-2 pb-2 mb-3 mr-2" + ((isSending) ? ' disabled' : '')}><FileIcon /></span> Foto auswählen
 					</label>}
 					<input
 						type="file"
@@ -288,7 +299,7 @@ const InputBox = (props) => {
 						style={{ display: 'none' }}
 					/>
 
-					<button type="submit" className={"btn btn-dark btn-sm w-100" + (isSending ? ' disabled' : '')}>Senden{isSending ? '…' : null}</button>
+					<button type="submit" className={"btn btn-dark btn-sm w-100" + ((isSending) ? ' disabled' : '')}>Senden{isSending ? '…' : null}</button>
 				</form>
 
 			</div>

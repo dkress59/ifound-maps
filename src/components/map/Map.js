@@ -28,6 +28,8 @@ const FoundMap = (props) => {
 
 	const mapRef = useRef(null)
 
+	const indexRef = useRef(null)
+
 
 	useEffect(() => {
 		if (navigator.geolocation) {
@@ -47,6 +49,9 @@ const FoundMap = (props) => {
 			.then((res) => {
 				setPlaces(res.places)
 			})
+			
+		if (indexRef.current) indexRef.current.leafletElement.fire('click')
+
 	}, [])
 
 	useEffect(() => {
@@ -126,6 +131,7 @@ const FoundMap = (props) => {
 		if (!places || places.length < 1) return null
 		return places.map(place => {
 			const pos = { lat: place.lat, lng: place.lng }
+			const ref = (place._id == '5e335628ab9c170017fbe2ed') ? indexRef : null
 			const img = () => {
 				if (place.photos.length > 0) {
 					return <img
@@ -138,8 +144,8 @@ const FoundMap = (props) => {
 			return (
 				<div key={'circleMarker-' + place._id}>
 					{(place.range && place.range > 0) && <Circle center={[pos.lat, pos.lng]} radius={place.range} />}
-					<Marker icon={myIcon} position={pos} dataSaved>
-						<Popup minWidth="160" maxWidth="320">
+					<Marker icon={myIcon} position={pos} ref={ref} dataSaved>
+						<Popup minWidth="160" maxWidth="320" closeButton="false">
 							<div className="text-center m-0">
 								{img()}
 								{(place.name && place.name !== undefined) && <h4 className="mb-0">{place.name}</h4>}
