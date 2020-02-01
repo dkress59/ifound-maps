@@ -36,8 +36,10 @@ const LoginPage = (props) => {
 		const password = e.target.password.value
 		fetch(process.env.REACT_APP_REST_URL + '/api/users/login', {
 			method: 'post',
+			//credentials: 'include',
 			headers: {
 				'Content-Type': 'application/json',
+				//'xhrFields': { withCredentials: true }
 			},
 			body: JSON.stringify({
 				"email": email,
@@ -48,7 +50,7 @@ const LoginPage = (props) => {
 			.then(response => {
 				console.log(response)
 				if (response.token && response.token !== '') {
-					console.log('Logged in', response.message)
+					console.log('Logged in', response.message, response)
 					setAlertMsg({
 						alert: 0,
 						message: 'Erfolgreich eingeloggt!'
@@ -57,6 +59,7 @@ const LoginPage = (props) => {
 					formRef.current.email.value = ''
 					formRef.current.password.value = ''
 					removeTimer = setTimeout(() => { setAlertMsg({ alert: 0, message: '' }) }, 6000)
+					//window.location='/'
 					setTimeout(() => { setGotoMap(<Redirect to="/" />) }, 1800)
 				} else {
 					console.log('Login failed', response.message)

@@ -1,6 +1,7 @@
 import './Gallery.css'
 import React, { useState, useEffect } from 'react'
-import NavLink from 'react-router'
+//import NavLink from 'react-router'
+import { NavLink, Link } from 'react-router-dom'
 
 const GalleryView = (props) => {
 
@@ -35,15 +36,18 @@ const GalleryView = (props) => {
 		return photos.map(photo => {// also use index for multiple grids of 12
 			return (
 				<figure key={"photo-" + photo._id}>
-					<img src={photo.url} alt="This is a descriptive subtitle." className="photo" />
-					<figcaption>
+					<Link to={"/?place=" + photo.place}>
+						<img src={photo.url} alt="This is a descriptive subtitle." className="photo" />
+						<figcaption>
 							<h3 className="display-4">Title</h3>
 							<p className="h2">This is a descriptive subtitle.</p>
-					</figcaption>
+						</figcaption>
+					</Link>
 				</figure>
 			)
 		})
 	}
+	console.log('gal', props)
 
 	const shuffle = (a) => {
 		var j, x, i;

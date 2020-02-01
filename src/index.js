@@ -7,13 +7,13 @@ import App from './App'
 import Login from './components/Login'
 import Map from './components/map/Map'
 import * as serviceWorker from './serviceWorker'
-import { Route } from 'react-router'
-import { BrowserRouter, Switch } from 'react-router-dom'
+//import { Route } from 'react-router'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import AuthContext from './context/AuthContext'
 import './assets/custom-bootstrap.css'
 import GalleryView from './components/Gallery'
 
-const Router = () => {
+const Router = (props) => {
 	const [auth, setAuth] = useState('false')
 	return (
 		<BrowserRouter>
@@ -25,6 +25,12 @@ const Router = () => {
 					<Route exact path='/gallery'>
 						<App><GalleryView /></App>
 					</Route>
+					{/* <Route path='/places/:placeID'>
+						<App><Map /></App>
+					</Route>
+					<Route path='/places'>
+						<App><Map /></App>
+					</Route> */}
 					<Route path='/'>
 						<App><Map /></App>
 					</Route>

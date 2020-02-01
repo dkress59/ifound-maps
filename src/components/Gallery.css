@@ -61,9 +61,11 @@
 	max-width: 80%;
 }
 
-.gallery figure:nth-of-type(n+7) {/* !! */
+
+.gallery figure:nth-of-type(6) ~ figure {/* !! */
 	display: none;
 }
+
 .gallery figure:nth-of-type(6n + 1) {
 	grid-column: 1 / span 2;
 	grid-row: 1 / span 2;

@@ -6,13 +6,14 @@ import trashIcon from '../../assets/trash-2.svg'
 import AuthContext from '../../context/AuthContext'
 
 import MapBoxGLLayer from './GLLayerBox'
-//import MapBoxSearch from './SearchBox'
 import MapBoxSearch from 'react-leaflet-search'
 
 import MapInputBox from './InputBox'
 import MapContext from '../../context/MapContext'
 import { isMobile } from 'react-device-detect'
 //import fetch from 'cross-fetch'
+
+import qs from 'query-string'
 
 
 const FoundMap = (props) => {
@@ -30,10 +31,14 @@ const FoundMap = (props) => {
 
 	const indexRef = useRef(null)
 
+	const index = (qs.parse(window.location.search).place)
+		? qs.parse(window.location.search).place : (props.index)
+			? props.index : 0
+
 
 	useEffect(() => {
 		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition((pos) => {
+			navigator.geolocation.getCurrentPosition((pos) => {// !! check for URL & file !! //
 				setCenter({
 					lat: pos.coords.latitude,
 					lng: pos.coords.longitude
@@ -49,8 +54,6 @@ const FoundMap = (props) => {
 			.then((res) => {
 				setPlaces(res.places)
 			})
-			
-		if (indexRef.current) indexRef.current.leafletElement.fire('click')
 
 	}, [])
 
@@ -61,7 +64,7 @@ const FoundMap = (props) => {
 			fetch(process.env.REACT_APP_REST_URL + '/api/places/')
 				.then((res => res.json()))
 				.then((res) => {
-					setPlaces(res.places)
+					(res.places.length != places.length) && setPlaces(res.places)
 				})
 		}, 6666)
 
@@ -85,6 +88,7 @@ const FoundMap = (props) => {
 			return null
 		})
 		preloadImages(photos)
+		if (indexRef.current) indexRef.current.leafletElement.fire('click')
 	}, [places])
 
 	useEffect(() => {// !! this picks up external marker addings (doesnt it?) !! // onlayeradd?
@@ -93,12 +97,12 @@ const FoundMap = (props) => {
 
 
 
-	const myIcon = L.icon({
-		iconUrl: 'clover.svg',
+	const cloverIcon = L.icon({
+		iconUrl: './clover.svg',
 		iconSize: [64, 64],
 		iconAnchor: [10, 64],
 		popupAnchor: [-3, -76],
-		shadowUrl: 'clover-shadow.svg',
+		shadowUrl: './clover-shadow.svg',
 		shadowSize: [64, 56],
 		shadowAnchor: [10, 56]
 	});
@@ -131,7 +135,7 @@ const FoundMap = (props) => {
 		if (!places || places.length < 1) return null
 		return places.map(place => {
 			const pos = { lat: place.lat, lng: place.lng }
-			const ref = (place._id == '5e335628ab9c170017fbe2ed') ? indexRef : null
+			const ref = (place._id === index) ? indexRef : null
 			const img = () => {
 				if (place.photos.length > 0) {
 					return <img
@@ -144,12 +148,12 @@ const FoundMap = (props) => {
 			return (
 				<div key={'circleMarker-' + place._id}>
 					{(place.range && place.range > 0) && <Circle center={[pos.lat, pos.lng]} radius={place.range} />}
-					<Marker icon={myIcon} position={pos} ref={ref} dataSaved>
+					<Marker icon={cloverIcon} position={pos} ref={ref} riseOnHover dataSaved>
 						<Popup minWidth="160" maxWidth="320" closeButton="false">
 							<div className="text-center m-0">
 								{img()}
-								{(place.name && place.name !== undefined) && <h4 className="mb-0">{place.name}</h4>}
-								{(place.author && place.author !== undefined) && <p className="m-0"><small>von </small>{place.author}</p>}
+								{(place.name && place.name !== undefined) ? <h4 className="mb-0">{place.name}</h4> : ''}
+								{(place.author && place.author !== undefined) ? <p className="m-0"><small>von </small>{place.author}</p> : ''}
 							</div>
 							{auth.token !== 'false' && <img className="trash feather" src={trashIcon} alt="delete" onMouseUp={() => deletePlace(place._id)} />}
 						</Popup>
@@ -181,15 +185,15 @@ const FoundMap = (props) => {
 				zoom={zoomX}
 				center={center}
 				onMousedown={handleClick}
+				onBaselayerChange={e => console.log('baselayerchange', e)}
 				onLayeradd={onLayerAdd}
-				onbaselayerchange={(e) => { console.log(e) }}
-				onZoomEnd={e => {setZoomX(e.target._zoom)}}
+				onZoomEnd={ e => setZoomX(e.target._zoom) }
 			>
 				<MapBoxGLLayer
 					attribution='<a href="http://openstreetmap.org" rel="nofollow">OSM</a>'
 				/>
 				{loadPlaces()}
-				{range > 0 ? <Circle center={[coords.lat, coords.lng]} radius={range} /> : null}
+				{range > 0 ? <Circle center={[coords.lat, coords.lng]} radius={range} /> : ''}
 				<Marker position={coords} key="newPlace" />
 				<MapBoxSearch
 					className="mapSearchBox"
@@ -197,7 +201,7 @@ const FoundMap = (props) => {
 					//inputPlaceholder="The default text in the search bar"
 					//search={[]} // Setting this to [lat, lng] gives initial search input to the component and map flies to that coordinates, its like search from props not from user
 					zoom={16} // Default value is 10
-					showMarker={true}
+					showMarker={false}
 					showPopup={false}
 					//openSearchOnLoad={false} // By default there's a search icon which opens the input when clicked. Setting this to true opens the search by default.
 					closeResultsOnClick={true} // By default, the search results remain when you click on one, and the map flies to the location of the result. But you might want to save space on your map by closing the results when one is clicked. The results are shown again (without another search) when focus is returned to the search input.
