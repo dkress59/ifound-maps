@@ -98,7 +98,7 @@ const FoundMap = (props) => {
 
 
 	const cloverIcon = L.icon({
-		iconUrl: './clover.svg',
+		iconUrl: './clover-2.svg',
 		iconSize: [64, 64],
 		iconAnchor: [10, 64],
 		popupAnchor: [-3, -76],
@@ -132,7 +132,7 @@ const FoundMap = (props) => {
 	}
 
 	const loadPlaces = () => {
-		if (!places || places.length < 1) return null
+		if (!places || places.length < 1) return ''
 		return places.map(place => {
 			const pos = { lat: place.lat, lng: place.lng }
 			const ref = (place._id === index) ? indexRef : null

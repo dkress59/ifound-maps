@@ -136,6 +136,7 @@ const InputBox = (props) => {
 	const context = useContext(MapContext)
 	const [isSending, setIsSending] = useState(0)
 	const formRef = useRef(null)
+	const [pickGPS, setPickGPS] = useState(0)
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
@@ -160,6 +161,7 @@ const InputBox = (props) => {
 				setIsSending(0)
 				formRef.current.reset()
 				context.setRange(0)
+				if (res.newPlace.gps) setPickGPS(1)
 			})
 			.catch(err => {
 				console.error(err)
@@ -197,9 +199,6 @@ const InputBox = (props) => {
 			className={className()}
 		>
 			<div className="card-header text-right bg-primary text-white">
-				{isSending ? <div className="progress float-left mt-2" style={{width: 'calc(100% - 4em)'}}>
-					<div className="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-label="saving" aria-valuenow="1" style={{width: '100%'}}></div>
-				</div> : null}
 				<button
 					onMouseDown={() => { collapse(!isCollapsed) }}
 					className="btn btn-sm btn-outline-light text-white text-hover-primary"
@@ -226,7 +225,7 @@ const InputBox = (props) => {
 							type="text"
 							//placeholder="Dein Name"
 							className={"form-control"}
-							disabled={isSending}
+							disabled={isSending || pickGPS}
 							aria-label="Dein Name"
 							placeholder="Name"
 							aria-describedby="authorInputPrepend"
@@ -247,7 +246,7 @@ const InputBox = (props) => {
 							type="text"
 							//placeholder="Fundstelle"
 							className={"form-control"}
-							disabled={isSending}
+							disabled={isSending || pickGPS}
 							aria-label="Dein Fundort"
 							placeholder="Fundort"
 							aria-describedby="nameInputPrepend"
@@ -256,42 +255,46 @@ const InputBox = (props) => {
 							id="name"
 						/>
 					</div>
-					<label htmlFor="formControlRange" className="text-center w-100 h6 subtitle">
+					<label htmlFor="formControlRange" className="text-center w-100 subtitle">
 						Umkreis{context.range > 0 ? ': '+context.range+'m' : null}
 					</label>
 					<input
 						type="range"
 						className={"form-control-range mb-2 mt-2"}
-						disabled={isSending}
+						disabled={isSending || pickGPS}
 						id="formControlRange"
 						initial="20"
 						onChange={e => {context.setRange(e.target.value)}}
 					/>
 
 					{isMobile && <label htmlFor="cameraData" style={{ width: 'calc(50% - .125em)' }} className="mr-1">
-						<span className={"btn btn-primary mt-2 pb-2 mb-3 w-100" + ((isSending) ? ' disabled' : '')}><CameraIcon /></span>
+						<span className={"btn btn-primary mt-2 pb-2 mb-1 w-100" + ((isSending || pickGPS) ? ' disabled' : '')}><CameraIcon /></span>
 					</label>}
 					<input
 						type="file"
 						accept="image/*"
 						capture="camera"
-						className="form-control-file mb-3"
+						className="form-control-file mb-1"
 						aria-label="camera input"
 						name="cameraData"
 						id="cameraData"
 						ref={cameraRef}
 						style={{ display: 'none' }}
 					/>
-					{isMobile && <label htmlFor="photoData" style={{ width: 'calc(50% - .125em)' }}>
-						<span className={"btn btn-primary mt-2 pb-2 mb-3 w-100" + ((isSending) ? ' disabled' : '')}><FileIcon /></span>
-					</label>}
-					{!isMobile && <label htmlFor="photoData" className="">
-						<span className={"btn btn-primary mt-2 pb-2 mb-3 mr-2" + ((isSending) ? ' disabled' : '')}><FileIcon /></span> Foto auswählen
-					</label>}
+					{isMobile && (
+						<label htmlFor="photoData" style={{ width: 'calc(50% - .125em)' }}>
+							<span className={"btn btn-primary mt-2 mb-1 w-100" + ((isSending || pickGPS) ? ' disabled' : '')}><FileIcon /></span>
+						</label>
+					)}
+					{!isMobile && (
+						<label htmlFor="photoData" className="">
+							<span className={"btn btn-primary mt-2 mb-1 mr-2" + ((isSending || pickGPS) ? ' disabled' : '')}><FileIcon /></span> Foto auswählen
+						</label>
+					)}
 					<input
 						type="file"
 						accept="image/*"
-						className="form-control-file mb-3"
+						className="form-control-file mb-1"
 						aria-label="file input"
 						name="photoData"
 						id="photoData"
@@ -299,7 +302,17 @@ const InputBox = (props) => {
 						style={{ display: 'none' }}
 					/>
 
-					<button type="submit" className={"btn btn-dark btn-sm w-100" + ((isSending) ? ' disabled' : '')}>Senden{isSending ? '…' : null}</button>
+					{pickGPS ? (<>
+						<label htmlFor="GPSgroup" className="text-center w-100 subtitle">
+							GPS-Quelle
+						</label>
+						<div id="GPSgroup" class="btn-group w-100 mb-4" role="group" aria-label="Pick the GPS source">
+							<button type="button" className="btn btn-sm btn-primary" onClick={e => setPickGPS(0)}><NameIcon className="mb-1" /> Position</button>
+							<button type="button" className="btn btn-sm btn-secondary" onClick={e => setPickGPS(0)}><CameraIcon className="mb-1 mr-1" />Foto&shy;daten</button>
+						</div>
+					</>) : null}
+
+					<button type="submit" className={"btn btn-dark btn-sm mt-2 w-100" + ((isSending || pickGPS) ? ' disabled' : '')}>{isSending ? <span className="spinner-border spinner-border-sm text-white" role="status" aria-hidden="true" /> : null}Senden{isSending ? '…' : null}</button>
 				</form>
 
 			</div>
