@@ -212,14 +212,18 @@ const InputBox = (props) => {
 		setCenter(nuGPS)
 		fetch(process.env.REACT_APP_REST_URL + '/api/places/' + nuGPS.placeID, {
 			method: 'PATCH',
-			//headers: {	'Authorization': 'Bearer ' + token	},
-			body: { //...nuGPS.newPlace,
+			headers: {
+				'Content-Type': 'application/json',
+				//'Authorization': 'Bearer ' + token
+			},
+			body: JSON.stringify({ //...nuGPS.newPlace,
 				lat: nuGPS.lat,
 				lng: nuGPS.lng
-			}
+			})
 		})
 			.then(res => {
-				console.log('PATCH', nuGPS, res)
+				console.log('PATCH', [ ...places, res.updatedPlace ])
+				//setPlaces([ ...places, res.updatedPlace ])
 			})
 			.catch(err => console.error(err))
 	}

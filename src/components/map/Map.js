@@ -64,7 +64,7 @@ const FoundMap = (props) => {
 			fetch(process.env.REACT_APP_REST_URL + '/api/places/')
 				.then((res => res.json()))
 				.then((res) => {
-					(res.places.length !== places.length) && setPlaces(res.places)
+					(res.places && res.places.length !== places.length) && setPlaces(res.places)
 				})
 		}, 26666)
 
@@ -119,7 +119,7 @@ const FoundMap = (props) => {
 		if (!id) return false
 		fetch(process.env.REACT_APP_REST_URL + '/api/places/' + id, {
 			headers: { 'Authorization': 'Bearer ' + token },
-			method: 'delete',
+			method: 'DELETE',
 		})
 			.then(res => {
 				console.log(res)
@@ -162,9 +162,7 @@ const FoundMap = (props) => {
 								{(place.name && place.name !== undefined) ? <h4 className="mb-0">{place.name}</h4> : null}
 								{(place.author && place.author !== undefined) ? <p className="m-0"><small>von </small>{place.author}</p> : null}
 							</div>
-							{token !== 'false' && <img className="trash feather" src={trashIcon} alt="delete" onClick={(e) => {
-								deletePlace(place._id)
-							}} />}
+							{token !== 'false' && <img className="trash feather" src={trashIcon} alt="delete" onClick={(e) => deletePlace(place._id)} />}
 						</Popup>
 					</Marker>
 				</div>
@@ -193,7 +191,7 @@ const FoundMap = (props) => {
 				ref={mapRef}
 				zoom={zoomX}
 				center={center}
-				onMouseUp={handleClick}
+				onClick={handleClick}
 				//onBaselayerChange={e => console.log('baselayerchange', e)}
 				//onLayeradd={onLayerAdd}
 				onZoomEnd={ e => setZoomX(e.target._zoom) }
