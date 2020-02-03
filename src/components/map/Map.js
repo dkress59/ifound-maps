@@ -12,18 +12,21 @@ import MapInputBox from './InputBox'
 import MapContext from '../../context/MapContext'
 import { isMobile } from 'react-device-detect'
 //import fetch from 'cross-fetch'
+import PhotoContext from '../../context/PhotoContext'
 
 import qs from 'query-string'
 
 
 const FoundMap = (props) => {
 
-	const [center, setCenter] = useState({ lat: 51.2432, lng: 6.7822 })
+	/* const [center, setCenter] = useState({ lat: 51.2432, lng: 6.7822 })
 	const [coords, setCoords] = useState({ lat: 51.2432, lng: 6.7822 })
 	const [places, setPlaces] = useState([])
-	const [, preloadImages] = useState([])
-	const [range, setRange] = useState(0)
+	//const [preloaded, preloadImages] = useState([])
+	const [range, setRange] = useState(0) */
 	const [zoomX, setZoomX] = useState(16)
+	const { photos, setPhotos } = useContext(PhotoContext)
+	const { coords, setCoords, center, setCenter, places, setPlaces, range, setRange } = useContext(MapContext)
 
 	const { token } = useContext(AuthContext)
 
@@ -76,8 +79,8 @@ const FoundMap = (props) => {
 
 	useEffect(() => {
 		//let photos = {}
-		let photos = []
-		if (places && places.length > 0) places.map(place => {
+		/* let photos = []
+		if (places) places.map(place => {
 			const img = new Image()
 			img.key = place._id
 			img.alt = 'Photo document'
@@ -85,10 +88,18 @@ const FoundMap = (props) => {
 			img.src = 'https://ifoundone.projecd.org/view/' + place.photos[0]
 			//photos = {...photos, [place._id]: img.src}//works, but unallowed
 			photos.push(img)
+			console.log('img',img)
 			return null
+		}) */
+		/* const photos = places.map(plc => {
+			const img = new Image()
+			img.alt = 'Photo document'
+			img.className = 'thumbnail'
+			img.src = 'https://ifoundone.projecd.org/view/' + plc.photos[0]
+			return img
 		})
-		preloadImages(photos)
-		if (indexRef.current) indexRef.current.leafletElement.fire('click')
+		preloadImages(photos) */
+		if (indexRef.current) indexRef.current.leafletElement.fire('click')// !! ?? !! //
 	}, [places])
 
 	useEffect(() => {// !! this picks up external marker addings (doesnt it?) !! // onlayeradd?
@@ -155,7 +166,7 @@ const FoundMap = (props) => {
 						icon={cloverIcon}
 						position={pos}
 						ref={ref}
-					dataSaved>
+						dataSaved>
 						<Popup minWidth="160" maxWidth="320" closeButton="false">
 							<div className="text-center m-0">
 								{img()}
@@ -178,14 +189,7 @@ const FoundMap = (props) => {
 
 
 	return (
-		<MapContext.Provider value={{
-			coords: coords,
-			setCoords: setCoords,
-			places: places,
-			setPlaces: setPlaces,
-			range: range,
-			setRange: setRange
-		}}>
+		<>
 			<Map
 				id="map"
 				ref={mapRef}
@@ -194,7 +198,7 @@ const FoundMap = (props) => {
 				onClick={handleClick}
 				//onBaselayerChange={e => console.log('baselayerchange', e)}
 				//onLayeradd={onLayerAdd}
-				onZoomEnd={ e => setZoomX(e.target._zoom) }
+				onZoomEnd={e => setZoomX(e.target._zoom)}
 			>
 				<MapBoxGLLayer
 					//onMouseDown={e => console.log('tile', e)}
@@ -216,15 +220,15 @@ const FoundMap = (props) => {
 					showPopup={false}
 					//openSearchOnLoad={false} // By default there's a search icon which opens the input when clicked. Setting this to true opens the search by default.
 					closeResultsOnClick={true} // By default, the search results remain when you click on one, and the map flies to the location of the result. But you might want to save space on your map by closing the results when one is clicked. The results are shown again (without another search) when focus is returned to the search input.
-					//providerOptions={{ searchBounds: [] }} // The BingMap and OpenStreetMap providers both accept bounding coordinates in [se,nw] format. Note that in the case of OpenStreetMap, this only weights the results and doesn't exclude things out of bounds.
-					//customProvider={undefined | { search: (searchString) => { } }} // see examples to usage details until docs are ready
+				//providerOptions={{ searchBounds: [] }} // The BingMap and OpenStreetMap providers both accept bounding coordinates in [se,nw] format. Note that in the case of OpenStreetMap, this only weights the results and doesn't exclude things out of bounds.
+				//customProvider={undefined | { search: (searchString) => { } }} // see examples to usage details until docs are ready
 				/>
 			</Map>
 			<MapInputBox
 				setCenter={setCenter}
 				setCoords={setCoords}
 			/>
-		</MapContext.Provider>
+		</>
 	)
 
 }
