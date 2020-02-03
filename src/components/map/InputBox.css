@@ -9,14 +9,20 @@
 	max-height: 75%;
 	width: auto;
 }
+/*#mapInputBox.collapsed,
+#mapInputBox.collapsed .card-header,*/
+#mapInputBox.collapsed .card-header:first-child {
+	border-radius: calc(.25rem - 1px);
+}
 #mapInputBox.collapsed .card-body {
 	width: 0;
 	height: 0;
 	transform: scale(0);
 	padding: 0;
 	margin: 0;
-	border-top-color: transparent;
+	border: none !important;
 	/*position: absolute;*/
+	transition: transform .6s ease, width .4s ease, height .4s ease, padding .4s ease, margin .4s ease;
 }
 
 .btn.text-hover-white:hover {
@@ -30,7 +36,7 @@
 	width: 16rem;
 	max-width: 100%;
 	transform: scale(1);
-	transform-origin: center right;
+	transform-origin: top right;
 	transition: transform .4s ease, width .4s ease, height .4s ease, padding .4s ease, margin .4s ease;
 	overflow: auto;
 }

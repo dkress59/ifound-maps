@@ -1,13 +1,11 @@
 import './Gallery.css'
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 //import NavLink from 'react-router'
 import { Link } from 'react-router-dom'
-import PhotoContext from '../context/PhotoContext'
 
 const GalleryView = (props) => {
 
 	const [photos, setPhotos] = useState([])
-	//const {photos, setPhotos} = useContext(PhotoContext)
 
 	const galleryInterval = setInterval(() => {
 		console.log('Reloading photos...')
@@ -49,7 +47,7 @@ const GalleryView = (props) => {
 			)
 		})
 	}
-	console.log('gal', photos)
+	console.log('gal', props)
 
 	const shuffle = (a) => {
 		var j, x, i;
