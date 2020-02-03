@@ -1,7 +1,7 @@
 //import 'core-js/es/map'//polyfills
 //import 'core-js/es/set'//polyfills
 import './index.css'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 import Login from './components/Login'
@@ -13,11 +13,21 @@ import AuthContext from './context/AuthContext'
 import './assets/custom-bootstrap.css'
 import GalleryView from './components/Gallery'
 
+import Cookies from 'universal-cookie'
+const cookies = new Cookies()
+
 const Router = (props) => {
 	const [auth, setAuth] = useState('false')
+
+	useEffect(() => {
+		if (cookies.get('token')) setAuth(cookies.get('token'))
+	}, [])
 	return (
 		<BrowserRouter>
-			<AuthContext.Provider value={{ token:auth, set: setAuth }}>
+			<AuthContext.Provider value={{
+				token:auth,
+				setToken: setAuth
+				}}>
 				<Switch>
 					<Route exact path='/login'>
 						<App><Login /></App>

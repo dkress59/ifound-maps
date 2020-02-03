@@ -1,7 +1,7 @@
 import './Gallery.css'
 import React, { useState, useEffect } from 'react'
 //import NavLink from 'react-router'
-import { NavLink, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const GalleryView = (props) => {
 
@@ -12,7 +12,7 @@ const GalleryView = (props) => {
 		fetch(process.env.REACT_APP_REST_URL + '/api/photos/')
 			.then((res => res.json()))
 			.then((res) => {
-				if (res.photos.length != photos.length) setPhotos(shuffle(res.photos))// !! check for duplicates !! //
+				if (res.photos.length !== photos.length) setPhotos(shuffle(res.photos))// !! check for duplicates !! //
 			})
 	}, 6666)
 
@@ -20,7 +20,7 @@ const GalleryView = (props) => {
 		fetch(process.env.REACT_APP_REST_URL + '/api/photos/')
 			.then((res => res.json()))
 			.then((res) => {
-				if (res.photos.length != photos.length) setPhotos(shuffle(res.photos))// !! check for duplicates !! //
+				if (res.photos.length !== photos.length) setPhotos(shuffle(res.photos))// !! check for duplicates !! //
 			})
 	}, [])
 

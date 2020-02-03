@@ -21,11 +21,11 @@ const FoundMap = (props) => {
 	const [center, setCenter] = useState({ lat: 51.2432, lng: 6.7822 })
 	const [coords, setCoords] = useState({ lat: 51.2432, lng: 6.7822 })
 	const [places, setPlaces] = useState([])
-	const [images, preloadImages] = useState([])
+	const [, preloadImages] = useState([])
 	const [range, setRange] = useState(0)
 	const [zoomX, setZoomX] = useState(16)
 
-	const auth = useContext(AuthContext)
+	const { token } = useContext(AuthContext)
 
 	const mapRef = useRef(null)
 
@@ -64,7 +64,7 @@ const FoundMap = (props) => {
 			fetch(process.env.REACT_APP_REST_URL + '/api/places/')
 				.then((res => res.json()))
 				.then((res) => {
-					(res.places.length != places.length) && setPlaces(res.places)
+					(res.places.length !== places.length) && setPlaces(res.places)
 				})
 		}, 6666)
 
@@ -108,6 +108,9 @@ const FoundMap = (props) => {
 	});
 
 	const handleClick = (e) => {// !! Bubblin like damn !! //
+		//e.target.cancelBubble
+		//e.originalEvent.cancelBubble()
+		//console.log(e.originalEvent, e.target.leafletElement)
 		const pos = e.latlng
 		setCoords(pos)
 	}
@@ -115,7 +118,7 @@ const FoundMap = (props) => {
 	const deletePlace = (id) => {
 		if (!id) return false
 		fetch(process.env.REACT_APP_REST_URL + '/api/places/' + id, {
-			headers: { 'Authorization': 'Bearer ' + auth.token },
+			headers: { 'Authorization': 'Bearer ' + token },
 			method: 'delete',
 		})
 			.then(res => {
@@ -132,7 +135,7 @@ const FoundMap = (props) => {
 	}
 
 	const loadPlaces = () => {
-		if (!places || places.length < 1) return ''
+		if (!places || places.length < 1) return null
 		return places.map(place => {
 			const pos = { lat: place.lat, lng: place.lng }
 			const ref = (place._id === index) ? indexRef : null
@@ -148,14 +151,20 @@ const FoundMap = (props) => {
 			return (
 				<div key={'circleMarker-' + place._id}>
 					{(place.range && place.range > 0) && <Circle center={[pos.lat, pos.lng]} radius={place.range} />}
-					<Marker icon={cloverIcon} position={pos} ref={ref} riseOnHover dataSaved>
+					<Marker
+						icon={cloverIcon}
+						position={pos}
+						ref={ref}
+					dataSaved>
 						<Popup minWidth="160" maxWidth="320" closeButton="false">
 							<div className="text-center m-0">
 								{img()}
-								{(place.name && place.name !== undefined) ? <h4 className="mb-0">{place.name}</h4> : ''}
-								{(place.author && place.author !== undefined) ? <p className="m-0"><small>von </small>{place.author}</p> : ''}
+								{(place.name && place.name !== undefined) ? <h4 className="mb-0">{place.name}</h4> : null}
+								{(place.author && place.author !== undefined) ? <p className="m-0"><small>von </small>{place.author}</p> : null}
 							</div>
-							{auth.token !== 'false' && <img className="trash feather" src={trashIcon} alt="delete" onMouseUp={() => deletePlace(place._id)} />}
+							{token !== 'false' && <img className="trash feather" src={trashIcon} alt="delete" onClick={(e) => {
+								deletePlace(place._id)
+							}} />}
 						</Popup>
 					</Marker>
 				</div>
@@ -184,17 +193,21 @@ const FoundMap = (props) => {
 				ref={mapRef}
 				zoom={zoomX}
 				center={center}
-				onMousedown={handleClick}
-				onBaselayerChange={e => console.log('baselayerchange', e)}
-				onLayeradd={onLayerAdd}
+				onMouseUp={handleClick}
+				//onBaselayerChange={e => console.log('baselayerchange', e)}
+				//onLayeradd={onLayerAdd}
 				onZoomEnd={ e => setZoomX(e.target._zoom) }
 			>
 				<MapBoxGLLayer
+					//onMouseDown={e => console.log('tile', e)}
 					attribution='<a href="http://openstreetmap.org" rel="nofollow">OSM</a>'
 				/>
 				{loadPlaces()}
-				{range > 0 ? <Circle center={[coords.lat, coords.lng]} radius={range} /> : ''}
-				<Marker position={coords} key="newPlace" />
+				{range > 0 ? <Circle center={[coords.lat, coords.lng]} radius={range} /> : null}
+				<Marker
+					key="newPlace"
+					position={coords}
+				/>
 				<MapBoxSearch
 					className="mapSearchBox"
 					//position="topleft"
@@ -209,7 +222,10 @@ const FoundMap = (props) => {
 					//customProvider={undefined | { search: (searchString) => { } }} // see examples to usage details until docs are ready
 				/>
 			</Map>
-			<MapInputBox />
+			<MapInputBox
+				setCenter={setCenter}
+				setCoords={setCoords}
+			/>
 		</MapContext.Provider>
 	)
 

@@ -28,4 +28,5 @@
 	bottom: 4px;
 	right: -32px;
 	cursor: pointer;
+	z-index: 996;
 }

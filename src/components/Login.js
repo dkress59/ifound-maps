@@ -8,7 +8,7 @@ const cookies = new Cookies()
 const LoginPage = (props) => {
 
 	const formRef = useRef(null)
-	const auth = useContext(AuthContext)
+	const { setToken } = useContext(AuthContext)
 	const [alertMsg, setAlertMsg] = useState({
 		alert: 0,
 		message: ''
@@ -58,11 +58,11 @@ const LoginPage = (props) => {
 						alert: 0,
 						message: 'Erfolgreich eingeloggt!'
 					})
-					auth.set(response.token)
-					cookies.set('token', response.token, {
+					setToken(response.token)
+					if (formRef.current.rememberMe.checked) cookies.set('token', response.token, {
 						//httpOnly: true,
 						//domain: '.herokuapp.com',
-						maxAge: 60*60
+						maxAge: process.env.REACT_APP_AUTH_TIME
 					})
 					formRef.current.email.value = ''
 					formRef.current.password.value = ''
@@ -112,8 +112,8 @@ const LoginPage = (props) => {
 					<input type="password" name="password" id="inputPassword" className="form-control mb-3" placeholder="Passwort" required />
 					<div className="checkbox mb-3">
 						<label>
-							<input type="checkbox" value="remember-me" /> Remember me
-								</label>
+							<input type="checkbox" name="rememberMe" value="true" defaultChecked/> Eingeloggt bleiben
+						</label>
 					</div>
 					<button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 					<p className="mt-4 text-muted">© 2020</p>
