@@ -12,6 +12,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import AuthContext from './context/AuthContext'
 import './assets/custom-bootstrap.css'
 import GalleryView from './components/Gallery'
+import Imprint from './components/Imprint'
 
 import Cookies from 'universal-cookie'
 const cookies = new Cookies()
@@ -41,6 +42,9 @@ const Router = (props) => {
 					<Route path='/places'>
 						<App><Map /></App>
 					</Route> */}
+					<Route path='/imprint'>
+						<App><Imprint /></App>
+					</Route>
 					<Route path='/'>
 						<App><Map /></App>
 					</Route>

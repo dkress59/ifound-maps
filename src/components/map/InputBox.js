@@ -169,7 +169,7 @@ const InputBox = (props) => {
 				setIsSending(0)
 				formRef.current.reset()
 				setRange(0)
-				if (res.newPlace.gps && res.newPlace.gps.GPSLatitude.length) setPickGPS({ ...calcGPS(res.newPlace.gps), placeID: res.newPlace._id })
+				if (res.newPlace.gps && res.newPlace.gps.GPSLatitude) setPickGPS({ ...calcGPS(res.newPlace.gps), placeID: res.newPlace._id })
 			})
 			.catch(err => {
 				console.error(err)

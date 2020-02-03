@@ -47,7 +47,6 @@ const GalleryView = (props) => {
 			)
 		})
 	}
-	console.log('gal', props)
 
 	const shuffle = (a) => {
 		var j, x, i;

@@ -24,7 +24,7 @@ const DataLayer = (props) => {
 			//return {[plc._id]: img}
 			return img
 		})
-		console.log('keys', preloaded)
+		//console.log('keys', preloaded)
 		//console.log(preloaded['5e3844d9336b5079d4ff27e2'])
 		setPhotos(preloaded)
 	}, [places])
