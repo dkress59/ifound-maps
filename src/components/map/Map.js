@@ -66,7 +66,7 @@ const FoundMap = (props) => {
 				.then((res) => {
 					(res.places.length !== places.length) && setPlaces(res.places)
 				})
-		}, 6666)
+		}, 26666)
 
 		return () => {
 			clearInterval(window.placeInterval)

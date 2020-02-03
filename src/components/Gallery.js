@@ -14,7 +14,7 @@ const GalleryView = (props) => {
 			.then((res) => {
 				if (res.photos.length !== photos.length) setPhotos(shuffle(res.photos))// !! check for duplicates !! //
 			})
-	}, 6666)
+	}, 26666)
 
 	useEffect(() => {
 		fetch(process.env.REACT_APP_REST_URL + '/api/photos/')

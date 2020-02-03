@@ -20,7 +20,7 @@ const Router = (props) => {
 	const [auth, setAuth] = useState('false')
 
 	useEffect(() => {
-		if (cookies.get('token')) setAuth(cookies.get('token'))
+		if (auth === 'false' && cookies.get('token')) setAuth(cookies.get('token'))
 	}, [])
 	return (
 		<BrowserRouter>
