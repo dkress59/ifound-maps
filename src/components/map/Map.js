@@ -15,6 +15,7 @@ import { isMobile } from 'react-device-detect'
 import PhotoContext from '../../context/PhotoContext'
 
 import qs from 'query-string'
+import Image from 'react-image-webp'
 
 
 const FoundMap = (props) => {
@@ -152,10 +153,11 @@ const FoundMap = (props) => {
 			const ref = (place._id === index) ? indexRef : null
 			const img = () => {
 				if (place.photos.length > 0) {
-					return <img
-						alt="document"
+					return <Image
+						alt={`Hier hat ${place.author} ein vier-blättriges Kleeblat gefunden!`}
 						className="thumbnail"
-						src={new Image().src = 'https://ifoundone.projecd.org/view/' + place.photos[0]}
+						src={'https://ifoundone.projecd.org/view/' + place.photos[0] + '?thumb=true'}
+						webp={'https://ifoundone.projecd.org/view/' + place.photos[0] + '.webp?thumb=true'}
 					/>
 				}
 			}

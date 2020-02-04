@@ -2,6 +2,7 @@ import './Gallery.css'
 import React, { useState, useEffect } from 'react'
 //import NavLink from 'react-router'
 import { Link } from 'react-router-dom'
+import Image from 'react-image-webp'
 
 const GalleryView = (props) => {
 
@@ -37,7 +38,8 @@ const GalleryView = (props) => {
 			return (
 				<figure key={"photo-" + photo._id}>
 					<Link to={"/?place=" + photo.place}>
-						<img src={photo.url} alt="This is a descriptive subtitle." className="photo" />
+						{/* <img src={photo.url} alt="This is a descriptive subtitle." className="photo" /> */}
+						<Image src={photo.url} webp={photo.url+'.webp'} alt="This is a descriptive subtitle." className="photo" />
 						<figcaption>
 							<h3 className="display-4">Title</h3>
 							<p className="h2">This is a descriptive subtitle.</p>
