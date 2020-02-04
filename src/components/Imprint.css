@@ -1,0 +1,28 @@
+.mobile #legal #disclaimer h1.display-1 {
+	font-size: 4rem;
+}
+section#legal > article > h1:first-child {
+	text-align: center;
+	cursor: pointer;
+}
+
+section#legal > article > h1 ~ * {
+	max-height: 24em;
+	max-height: 50vh;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	transition: all .6s ease;
+}
+section#legal > article#disclaimer > h1 ~ * {
+	overflow-y: auto;
+}
+section#legal > article.collapsed > h1 ~ * {
+	max-height: 0;
+	padding: 0;
+	margin: 0;
+}
+
+article#imprint,
+article#privacyPolicy {
+	background-color: rgba(0,0,0, .12);
+}
