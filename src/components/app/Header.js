@@ -6,7 +6,12 @@ const Header = (props) => {
 		<header className="mt-2 mt-3 mb-2 navbar-expand-md">
 			<nav className="navbar navbar-expand-lg navbar-dark bg-primaryy bg-secondary">
 				<a className="navbar-brand" href="/">
-					<h1 className="h3"><img src="Logo192.png" alt="iFound.one Logo" style={{ height: '3em', width: 'auto', margin: '-.45em' }} />iFound.one!</h1>
+					<h1 className="h3"><img src="Logo192.png" alt="iFound.one Logo" style={{
+						height: '2em',
+						width: 'auto',
+						margin: '-.55em -.55em -.55em auto'
+						
+					}} />iFound.one!</h1>
 				</a>
 				<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 					<span className="navbar-toggler-icon"></span>
