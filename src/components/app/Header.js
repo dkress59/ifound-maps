@@ -9,7 +9,7 @@ const Header = (props) => {
 					<h1 className="h3"><img src="Logo192.png" alt="iFound.one Logo" style={{
 						height: '2em',
 						width: 'auto',
-						margin: '-.55em -.55em -.55em auto'
+						margin: '-.55em -.55em -.55em -.35em'
 						
 					}} />iFound.one!</h1>
 				</a>
