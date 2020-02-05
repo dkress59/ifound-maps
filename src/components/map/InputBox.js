@@ -250,7 +250,7 @@ const InputBox = (props) => {
 			id="mapInputBox"
 			className={className()}
 		>
-			<div className="card-header text-right bg-primary text-white">
+			<div className="card-header text-right bg-primaryy bg-secondary text-white">
 				<button
 					onMouseDown={() => { collapse(!isCollapsed) }}
 					className="btn btn-sm btn-outline-light text-white text-hover-primary"
