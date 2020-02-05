@@ -186,6 +186,10 @@ const ImprintHTML = (props) => {
 
 			</article>
 
+			<article id="credits" className="mt-5 mb-3 col-lg-8 offset-lg-2 text-center">
+				Clover (marker) icon made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik" rel="noopener noreferrer">Freepik</a> from <a href="https://www.flaticon.com/free-icon/clover_1530866" title="Flaticon" rel="noopener noreferrer">www.flaticon.com</a>
+			</article>
+
 		</section>
 	)
 }
