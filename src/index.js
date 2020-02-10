@@ -1,5 +1,10 @@
 //import 'core-js/es/map'//polyfills
 //import 'core-js/es/set'//polyfills
+//import 'react-app-polyfill/ie9'
+//import 'react-app-polyfill/stable'
+import 'es5-shim'
+import 'es6-shim'
+import 'es7-shim'
 import './index.css'
 import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
@@ -17,7 +22,7 @@ import Imprint from './components/Imprint'
 import Cookies from 'universal-cookie'
 const cookies = new Cookies()
 
-const Router = (props) => {
+const Router = () => {
 	const [auth, setAuth] = useState('false')
 
 	useEffect(() => {

@@ -222,7 +222,7 @@ const InputBox = (props) => {
 			})
 		})
 			.then(res => {
-				console.log('PATCH', [ ...places, res.updatedPlace ])
+				console.log('PATCH', [...places, res.updatedPlace])
 				//setPlaces([ ...places, res.updatedPlace ])
 			})
 			.catch(err => console.error(err))
@@ -266,6 +266,27 @@ const InputBox = (props) => {
 					<input name="lat" type="hidden" value={coords.lat} />
 					<input name="lng" type="hidden" value={coords.lng} />
 
+					<div className="input-group mb-2">
+						<div className="input-group-prepend" onClick={() => {getGeo(); isMobile && collapse(1)}}>
+							<span className="btn btn-primary input-group-text" id="nameInputPrepend">
+								<NameIcon />
+							</span>
+						</div>
+						<input
+							required
+							type="text"
+							//placeholder="Fundstelle"
+							className={"form-control"}
+							disabled={isSending || pickGPS.lat}
+							aria-label="Dein Fundort"
+							placeholder="Fundort"
+							aria-describedby="nameInputPrepend"
+							title="place"
+							name="name"
+							id="name"
+						/>
+					</div>
+
 					<div className="input-group mb-3">
 						<div className="input-group-prepend">
 							<span className="input-group-text" id="authorInputPrepend">
@@ -287,28 +308,8 @@ const InputBox = (props) => {
 						/>
 					</div>
 
-					<div className="input-group mb-2">
-						<div className="input-group-prepend" onClick={getGeo}>
-							<span className="input-group-text" id="nameInputPrepend">
-								<NameIcon />
-							</span>
-						</div>
-						<input
-							required
-							type="text"
-							//placeholder="Fundstelle"
-							className={"form-control"}
-							disabled={isSending || pickGPS.lat}
-							aria-label="Dein Fundort"
-							placeholder="Fundort"
-							aria-describedby="nameInputPrepend"
-							title="place"
-							name="name"
-							id="name"
-						/>
-					</div>
 					<label htmlFor="formControlRange" className="text-center w-100 subtitle">
-						Umkreis{range > 0 ? ': '+range+'m' : null}
+						Umkreis{range > 0 ? ': ' + range + 'm' : null}
 					</label>
 					<input
 						type="range"
@@ -316,7 +317,7 @@ const InputBox = (props) => {
 						disabled={isSending || pickGPS.lat}
 						id="formControlRange"
 						initial="20"
-						onChange={e => {setRange(e.target.value)}}
+						onChange={e => { setRange(e.target.value) }}
 					/>
 
 					{isMobile && !pickGPS.lat && <label htmlFor="cameraData" style={{ width: 'calc(50% - .125em)' }} className="mr-1">
@@ -359,8 +360,8 @@ const InputBox = (props) => {
 							GPS-Quelle
 						</label>
 						<div id="GPSgroup" className="btn-group w-100 mt-1 mb-2" role="group" aria-label="Pick the GPS source">
-							<button type="button" className="btn btn-sm btn-primary" onClick={ e => { setPickGPS({}) } }><NameIcon className="mb-1" /> Position</button>
-							<button type="button" className="btn btn-sm btn-secondary" onClick={ e => { photoGPS(pickGPS) } }><CameraIcon className="mb-1 mr-1" />Foto&shy;daten</button>
+							<button type="button" className="btn btn-sm btn-primary" onClick={e => { setPickGPS({}) }}><NameIcon className="mb-1" /> Position</button>
+							<button type="button" className="btn btn-sm btn-secondary" onClick={e => { photoGPS(pickGPS) }}><CameraIcon className="mb-1 mr-1" />Foto&shy;daten</button>
 						</div>
 					</>) : null}
 
