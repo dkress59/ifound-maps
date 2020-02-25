@@ -18,6 +18,7 @@
     "react-app-polyfill": "^1.0.6",
     "react-device-detect": "^1.11.14",
     "react-dom": "^16.12.0",
+    "react-hammerjs": "^1.0.1",
     "react-image-webp": "^0.7.0",
     "react-leaflet": "^2.6.1",
     "react-leaflet-search": "^1.0.3",

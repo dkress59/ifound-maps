@@ -12,6 +12,7 @@ import MapInputBox from './InputBox'
 import MapContext from '../../context/MapContext'
 import { isMobile } from 'react-device-detect'
 //import fetch from 'cross-fetch'
+// eslint-disable-next-line
 import PhotoContext from '../../context/PhotoContext'
 
 import qs from 'query-string'
@@ -26,8 +27,8 @@ const FoundMap = (props) => {
 	//const [preloaded, preloadImages] = useState([])
 	const [range, setRange] = useState(0) */
 	const [zoomX, setZoomX] = useState(16)
-	const { photos, setPhotos } = useContext(PhotoContext)
-	const { coords, setCoords, center, setCenter, places, setPlaces, range, setRange } = useContext(MapContext)
+	//const { photos, setPhotos } = useContext(PhotoContext)
+	const { coords, setCoords, center, setCenter, places, setPlaces, range, /* setRange */ } = useContext(MapContext)
 
 	const { token } = useContext(AuthContext)
 
@@ -183,6 +184,7 @@ const FoundMap = (props) => {
 		})
 	}
 
+	// eslint-disable-next-line
 	const onLayerAdd = ({ layer }) => {// !! should only exec if [places] changes !!
 		const mCoords = layer._latlng
 		if (!layer.options.dataSaved) setCoords(mCoords) &&

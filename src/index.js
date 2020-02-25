@@ -27,7 +27,7 @@ const Router = () => {
 
 	useEffect(() => {
 		if (auth === 'false' && cookies.get('token')) setAuth(cookies.get('token'))
-	}, [])
+	}, [auth])
 	return (
 		<BrowserRouter>
 			<AuthContext.Provider value={{

@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import React, { useState, useEffect, useContext, useReducer } from 'react'
 import PhotoContext from '../../context/PhotoContext'
 import MapContext from '../../context/MapContext'
@@ -12,7 +13,9 @@ const DataLayer = (props) => {
 
 	//const { places, setPlaces } = useContext(MapContext)
 
+	// eslint-disable-next-line
 	const updatePlaces = () => { }
+	// eslint-disable-next-line
 	const updatePhotos = () => { }
 
 	useEffect(() => {
