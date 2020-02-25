@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef, useContext } from 'react'
 import { Map, Marker, Popup, Circle } from 'react-leaflet'
 import './Map.css'
 import L from 'leaflet'
+import qs from 'query-string'
+import Image from 'react-image-webp'
+
 import trashIcon from '../../assets/trash-2.svg'
 import AuthContext from '../../context/AuthContext'
 
@@ -9,26 +12,18 @@ import MapBoxGLLayer from './GLLayerBox'
 import MapBoxSearch from 'react-leaflet-search'
 
 import MapInputBox from './InputBox'
-import MapContext from '../../context/MapContext'
 import { isMobile } from 'react-device-detect'
-//import fetch from 'cross-fetch'
-// eslint-disable-next-line
-import PhotoContext from '../../context/PhotoContext'
 
-import qs from 'query-string'
-import Image from 'react-image-webp'
+import MapContext from '../../context/MapContext'
+import PlaceContext from '../../context/PlaceContext'
+
 
 
 const FoundMap = (props) => {
 
-	/* const [center, setCenter] = useState({ lat: 51.2432, lng: 6.7822 })
-	const [coords, setCoords] = useState({ lat: 51.2432, lng: 6.7822 })
-	const [places, setPlaces] = useState([])
-	//const [preloaded, preloadImages] = useState([])
-	const [range, setRange] = useState(0) */
 	const [zoomX, setZoomX] = useState(16)
-	//const { photos, setPhotos } = useContext(PhotoContext)
-	const { coords, setCoords, center, setCenter, places, setPlaces, range, /* setRange */ } = useContext(MapContext)
+	const { places, setPlaces, photos } = useContext(PlaceContext)
+	const { coords, setCoords, center, setCenter, range } = useContext(MapContext)
 
 	const { token } = useContext(AuthContext)
 
@@ -54,59 +49,15 @@ const FoundMap = (props) => {
 				})
 			})
 		}
-		fetch(process.env.REACT_APP_REST_URL + '/api/places/')
-			.then((res => res.json()))
-			.then((res) => {
-				setPlaces(res.places)
-			})
-
-	}, [])
+	}, [])// eslint-disable-line
 
 	useEffect(() => {
-
-		window.placeInterval = setInterval(() => {
-			console.log('Reloading places...')
-			fetch(process.env.REACT_APP_REST_URL + '/api/places/')
-				.then((res => res.json()))
-				.then((res) => {
-					(res.places && res.places.length !== places.length) && setPlaces(res.places)
-				})
-		}, 26666)
-
-		return () => {
-			clearInterval(window.placeInterval)
-		}
-
-	})
-
-	useEffect(() => {
-		//let photos = {}
-		/* let photos = []
-		if (places) places.map(place => {
-			const img = new Image()
-			img.key = place._id
-			img.alt = 'Photo document'
-			img.className = 'thumbnail'
-			img.src = 'https://ifoundone.projecd.org/view/' + place.photos[0]
-			//photos = {...photos, [place._id]: img.src}//works, but unallowed
-			photos.push(img)
-			console.log('img',img)
-			return null
-		}) */
-		/* const photos = places.map(plc => {
-			const img = new Image()
-			img.alt = 'Photo document'
-			img.className = 'thumbnail'
-			img.src = 'https://ifoundone.projecd.org/view/' + plc.photos[0]
-			return img
-		})
-		preloadImages(photos) */
 		if (indexRef.current) indexRef.current.leafletElement.fire('click')// !! ?? !! //
 	}, [places])
 
 	useEffect(() => {// !! this picks up external marker addings (doesnt it?) !! // onlayeradd?
 		if (!isMobile) setCenter(coords)
-	}, [coords])
+	}, [coords])// eslint-disable-line
 
 
 
@@ -121,9 +72,6 @@ const FoundMap = (props) => {
 	});
 
 	const handleClick = (e) => {// !! Bubblin like damn !! //
-		//e.target.cancelBubble
-		//e.originalEvent.cancelBubble()
-		//console.log(e.originalEvent, e.target.leafletElement)
 		const pos = e.latlng
 		setCoords(pos)
 	}
@@ -152,16 +100,12 @@ const FoundMap = (props) => {
 		return places.map(place => {
 			const pos = { lat: place.lat, lng: place.lng }
 			const ref = (place._id === index) ? indexRef : null
-			const img = () => {
-				if (place.photos.length > 0) {
-					return <Image
-						alt={`Hier hat ${place.author} ein vier-blättriges Kleeblat gefunden!`}
-						className="thumbnail"
-						src={'https://ifoundone.projecd.org/view/' + place.photos[0] + '?thumb=true'}
-						webp={'https://ifoundone.projecd.org/view/' + place.photos[0] + '.webp?thumb=true'}
-					/>
+			const imgObj = photos.filter(photo => { return photo._id === place._id })
+			const img = (imgObj.length > 0)
+				? () => {
+					return <Image src={imgObj[0].img.src+'?thumb=true'} webp={imgObj[0].img.src+'.webp?thumb=true'} className="thumbnail" />
 				}
-			}
+				: () => {}
 			return (
 				<div key={'circleMarker-' + place._id}>
 					{(place.range && place.range > 0) && <Circle center={[pos.lat, pos.lng]} radius={place.range} />}
@@ -184,13 +128,6 @@ const FoundMap = (props) => {
 		})
 	}
 
-	// eslint-disable-next-line
-	const onLayerAdd = ({ layer }) => {// !! should only exec if [places] changes !!
-		const mCoords = layer._latlng
-		if (!layer.options.dataSaved) setCoords(mCoords) &&
-			console.log('onLayerAdd', layer)
-	}
-
 
 	return (
 		<>
@@ -200,8 +137,6 @@ const FoundMap = (props) => {
 				zoom={zoomX}
 				center={center}
 				onClick={handleClick}
-				//onBaselayerChange={e => console.log('baselayerchange', e)}
-				//onLayeradd={onLayerAdd}
 				onZoomEnd={e => setZoomX(e.target._zoom)}
 			>
 				<MapBoxGLLayer

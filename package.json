@@ -13,6 +13,7 @@
     "leaflet": "^1.6.0",
     "mapbox-gl": "^1.7.0",
     "mapbox-gl-leaflet": "0.0.11",
+    "node-sass": "^4.13.1",
     "query-string": "^6.10.1",
     "react": "^16.12.0",
     "react-app-polyfill": "^1.0.6",
