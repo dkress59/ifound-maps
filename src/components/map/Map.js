@@ -21,19 +21,27 @@ import PlaceContext from '../../context/PlaceContext'
 
 const FoundMap = (props) => {
 
+	const { token } = useContext(AuthContext)
 	const [zoomX, setZoomX] = useState(16)
 	const { places, setPlaces, photos } = useContext(PlaceContext)
 	const { coords, setCoords, center, setCenter, range } = useContext(MapContext)
 
-	const { token } = useContext(AuthContext)
-
 	const mapRef = useRef(null)
-
 	const indexRef = useRef(null)
 
 	const index = (qs.parse(window.location.search).place)
 		? qs.parse(window.location.search).place : (props.index)
 			? props.index : 0
+
+	const cloverIcon = L.icon({
+		iconUrl: './clover-2.svg',
+		iconSize: [64, 64],
+		iconAnchor: [10, 64],
+		popupAnchor: [-3, -76],
+		shadowUrl: './clover-shadow.svg',
+		shadowSize: [64, 56],
+		shadowAnchor: [10, 56]
+	});
 
 
 	useEffect(() => {
@@ -49,7 +57,7 @@ const FoundMap = (props) => {
 				})
 			})
 		}
-	}, [])// eslint-disable-line
+	}, [])//eslint-disable-line
 
 	useEffect(() => {
 		if (indexRef.current) indexRef.current.leafletElement.fire('click')// !! ?? !! //
@@ -57,19 +65,9 @@ const FoundMap = (props) => {
 
 	useEffect(() => {// !! this picks up external marker addings (doesnt it?) !! // onlayeradd?
 		if (!isMobile) setCenter(coords)
-	}, [coords])// eslint-disable-line
+	}, [coords])//eslint-disable-line
 
 
-
-	const cloverIcon = L.icon({
-		iconUrl: './clover-2.svg',
-		iconSize: [64, 64],
-		iconAnchor: [10, 64],
-		popupAnchor: [-3, -76],
-		shadowUrl: './clover-shadow.svg',
-		shadowSize: [64, 56],
-		shadowAnchor: [10, 56]
-	});
 
 	const handleClick = (e) => {// !! Bubblin like damn !! //
 		const pos = e.latlng
@@ -95,17 +93,17 @@ const FoundMap = (props) => {
 			})
 	}
 
-	const loadPlaces = () => {
-		if (!places || places.length < 1) return null
+	const Places = () => {
+		if (!places || places.length < 1) return <></>
 		return places.map(place => {
 			const pos = { lat: place.lat, lng: place.lng }
 			const ref = (place._id === index) ? indexRef : null
 			const imgObj = photos.filter(photo => { return photo._id === place._id })
 			const img = (imgObj.length > 0)
 				? () => {
-					return <Image src={imgObj[0].img.src+'?thumb=true'} webp={imgObj[0].img.src+'.webp?thumb=true'} className="thumbnail" />
+					return <Image src={imgObj[0].img.src + '?thumb=true'} webp={imgObj[0].img.src + '.webp?thumb=true'} className="thumbnail" />
 				}
-				: () => {}
+				: () => { }
 			return (
 				<div key={'circleMarker-' + place._id}>
 					{(place.range && place.range > 0) && <Circle center={[pos.lat, pos.lng]} radius={place.range} />}
@@ -143,7 +141,7 @@ const FoundMap = (props) => {
 					//onMouseDown={e => console.log('tile', e)}
 					attribution='<a href="http://openstreetmap.org" rel="nofollow">OSM</a>'
 				/>
-				{loadPlaces()}
+				<Places />
 				{range > 0 ? <Circle center={[coords.lat, coords.lng]} radius={range} /> : null}
 				<Marker
 					key="newPlace"
