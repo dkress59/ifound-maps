@@ -161,10 +161,7 @@ const FoundMap = (props) => {
 				//customProvider={undefined | { search: (searchString) => { } }} // see examples to usage details until docs are ready
 				/>
 			</Map>
-			<MapInputBox
-				setCenter={setCenter}
-				setCoords={setCoords}
-			/>
+			<MapInputBox />
 		</>
 	)
 

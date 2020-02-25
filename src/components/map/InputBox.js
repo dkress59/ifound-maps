@@ -1,6 +1,7 @@
 import './InputBox.css'
 import React, { useState, useRef, useContext, useEffect } from 'react'
 import MapContext from '../../context/MapContext'
+import PlaceContext from '../../context/PlaceContext'
 import ReactDOM from 'react-dom'
 import { isMobile } from 'react-device-detect'
 import './InputRange.css'
@@ -10,18 +11,16 @@ import { UserIcon, NameIcon, MinimiseIcon, AddIcon, CameraIcon, FileIcon } from 
 
 
 const InputBox = (props) => {
-	//const [coords, setCoords] = useState({ lat: 51.2432, lng: 6.7822 })
 	const fileRef = useRef(null)
 	const cameraRef = useRef(null)
-	const { coords, places, setPlaces, range, setRange } = useContext(MapContext)
-	const [isSending, setIsSending] = useState(0)
 	const formRef = useRef(null)
+	const { places, setPlaces } = useContext(PlaceContext)
+	const { setCenter, coords, setCoords, range, setRange } = useContext(MapContext)
+	const [isSending, setIsSending] = useState(0)
 	const [pickGPS, setPickGPS] = useState({})
-	const { setCenter, setCoords } = props
 
-	// !! maybe move this to jquery later !!
-	const [boxSize, setBoxSize] = useState({ w: 0, h: 0 })
 	const bodyRef = useRef(null)
+	const [boxSize, setBoxSize] = useState({ w: 0, h: 0 })
 	const [isCollapsed, collapse] = useState(props.collapsed || false)
 
 
@@ -37,6 +36,7 @@ const InputBox = (props) => {
 		formBody.append('photoData', fileRef.current.files[0])
 		formBody.append('photoData', cameraRef.current.files[0])
 		setIsSending(1)
+
 		fetch(process.env.REACT_APP_REST_URL + '/api/places', {
 			method: 'post',
 			body: formBody
@@ -107,6 +107,11 @@ const InputBox = (props) => {
 			.catch(err => console.error(err))
 	}
 
+	const setSize = () => {
+		if (!isCollapsed && boxSize.h && boxSize.w)
+			return { width: boxSize.w + 'px', height: boxSize.h + 'px' }
+	}
+
 
 	useEffect(() => {
 		const w = ReactDOM.findDOMNode(bodyRef.current).clientWidth
@@ -117,11 +122,6 @@ const InputBox = (props) => {
 	useEffect(() => {
 		if (isMobile) collapse(true)
 	}, [])
-
-	const setSize = () => {
-		if (!isCollapsed && boxSize.h && boxSize.w)
-			return { width: boxSize.w + 'px', height: boxSize.h + 'px' }
-	}
 
 
 	return (

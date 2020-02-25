@@ -35,7 +35,7 @@ const DataLayer = (props) => {
 			.then((res => res.json()))
 			.then((res) => {
 				const sorted = res.places.sort((a, b) => {
-					if (a._id > b._id) return -1
+					if (a.created < b.created) return -1
 					else return 1
 				})
 				setPlaces(sorted)
@@ -77,23 +77,23 @@ const DataLayer = (props) => {
 	}, [places])
 
 	return (
-		<MapContext.Provider value={{
-			coords: coords,
-			setCoords: setCoords,
-			center: center,
-			setCenter: setCenter,
-			range: range,
-			setRange: setRange
+		<PlaceContext.Provider value={{
+			places: places,
+			setPlaces: setPlaces,
+			photos: photos,
+			setPhotos: setPhotos
 		}}>
-			<PlaceContext.Provider value={{
-				places: places,
-				setPlaces: setPlaces,
-				photos: photos,
-				setPhotos: setPhotos
+			<MapContext.Provider value={{
+				coords: coords,
+				setCoords: setCoords,
+				center: center,
+				setCenter: setCenter,
+				range: range,
+				setRange: setRange
 			}}>
 				{props.children}
-			</PlaceContext.Provider>
-		</MapContext.Provider>
+			</MapContext.Provider>
+		</PlaceContext.Provider>
 	)
 
 }
