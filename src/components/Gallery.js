@@ -29,10 +29,10 @@ const GalleryView = (props) => {
 			return (
 				<figure key={"photo-" + photo._id}>
 					<Image src={photo.img.src} webp={photo.img.src + '.webp'} alt="This is a descriptive subtitle." className="photo" />
-					<figcaption>
+					{/* <figcaption>
 						<h3 className="display-4">Title</h3>
 						<p className="h2">This is a descriptive subtitle.</p>
-					</figcaption>
+					</figcaption> */}
 				</figure>
 			)
 		})

@@ -60,6 +60,7 @@
 	&.level-0 {// 6
 		figure {
 			flex-basis: 13%;
+			max-height: calc(16.666vw - .5vw);
 			flex-basis: calc(16.666% - .25vw);
 		}
 	}
@@ -67,12 +68,14 @@
 	&.level--2 {// 12
 		figure {
 			flex-basis: 7%;
+			max-height: calc(8.333vw - .5vw);
 			flex-basis: calc(8.333% - .25vw);
 		}
 	}
 	&.level--1 {// 8
 		figure {
 			flex-basis: 10%;
+			max-height: calc(12.5vw - .5vw);
 			flex-basis: calc(12.5% - .25vw);
 		}
 	}
@@ -80,24 +83,28 @@
 	&.level-1 {// 4
 		figure {
 			flex-basis: 21%;
+			max-height: calc(25vw - .5vw);
 			flex-basis: calc(25% - .25vw);
 		}
 	}
 	&.level-2 {// 3
 		figure {
 			flex-basis: 26%;
+			max-height: calc(33vw - .5vw);
 			flex-basis: calc(33% - .25vw);
 		}
 	}
 	&.level-3 {// 2
 		figure {
 			flex-basis: 34%;
+			max-height: calc(50vw - .5vw);
 			flex-basis: calc(50% - .25vw);
 		}
 	}
 	&.level-4 {// 1
 		figure {
 			flex-basis: 51%;
+			max-height: calc(100vw - .5vw);
 			flex-basis: calc(100% - .25vw);
 		}
 	}
