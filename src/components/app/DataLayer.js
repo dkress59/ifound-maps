@@ -12,11 +12,11 @@ const DataLayer = (props) => {
 
 	const updatePlaces = (res) => {
 		places.sort((a, b) => {
-			if (a._id > b._id) return -1
+			if (a.created > b.created) return -1
 			else return 1
 		})
 		res.sort((a, b) => {
-			if (a._id > b._id) return -1
+			if (a.created > b.created) return -1
 			else return 1
 		})
 
@@ -66,7 +66,11 @@ const DataLayer = (props) => {
 			img.alt = 'Photo document'
 			img.className = 'full'
 			img.src = 'https://ifoundone.projecd.org/view/' + plc.photos[0]
-			if (plc.photos.length > 0) return { _id: plc._id, img: img }
+			if (plc.photos.length > 0) return {
+				_id: plc._id,
+				img: img,
+				created: plc.created
+			}
 			else return {}
 		})
 		if (preloaded.length) setPhotos(preloaded)
