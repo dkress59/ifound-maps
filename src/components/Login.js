@@ -19,7 +19,7 @@ const LoginPage = (props) => {
 	const alert = () => {
 		const colour = (!alertMsg.alert)
 			? 'alert-success'
-			: 'alert-warning'
+			: 'alert-danger'
 		if (!alertMsg.message || alertMsg.message === '')
 			return ''
 		else

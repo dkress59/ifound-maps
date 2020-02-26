@@ -10,7 +10,7 @@ const Header = (props) => {
 						height: '2em',
 						width: 'auto',
 						margin: '-.55em -.55em -.55em -.35em'
-						
+
 					}} />iFound.one!</h1>
 				</a>
 				<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,7 +18,11 @@ const Header = (props) => {
 				</button>
 				<ul className="navbar-nav mr-auto w-100 justify-content-end collapse navbar-collapse" id="navbarSupportedContent">
 					<li className="nav-item">
-						<NavLink exact to="/" className="nav-link" activeClassName="active">Karte</NavLink>
+						<NavLink to="/places" isActive={(match, location) => {
+							//if (!match) return false
+							if (location.pathname === '/' || location.pathname.substr(0, 7) === '/places') return true
+							else return false
+						}} className="nav-link" activeClassName="active">Karte</NavLink>
 					</li>
 					<li className="nav-item">
 						<NavLink exact to="/gallery" className="nav-link" activeClassName="active">Galerie</NavLink>

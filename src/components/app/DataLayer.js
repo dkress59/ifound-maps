@@ -8,6 +8,7 @@ const DataLayer = (props) => {
 	const [center, setCenter] = useState({ lat: 51.2432, lng: 6.7822 })
 	const [places, setPlaces] = useState([])
 	const [range, setRange] = useState(0)
+	const [current, setCurrent] = useState('')
 
 
 	const updatePlaces = (res) => {
@@ -31,6 +32,7 @@ const DataLayer = (props) => {
 
 
 	useEffect(() => {
+		if (localStorage.getItem('places')) setPlaces( JSON.parse(localStorage.getItem('places')) )
 		fetch(process.env.REACT_APP_REST_URL + '/api/places/')
 			.then((res => res.json()))
 			.then((res) => {
@@ -38,7 +40,8 @@ const DataLayer = (props) => {
 					if (a.created < b.created) return -1
 					else return 1
 				})
-				setPlaces(sorted)
+				updatePlaces(sorted)
+				localStorage.setItem('places', JSON.stringify(sorted))
 			})
 
 	}, [])
@@ -61,6 +64,7 @@ const DataLayer = (props) => {
 	})
 
 	useEffect(() => {
+		if (localStorage.getItem('photos')) setPhotos( JSON.parse(localStorage.getItem('photos')) )
 		const preloaded = places.map(plc => {
 			const img = new Image()
 			img.alt = 'Photo document'
@@ -74,6 +78,7 @@ const DataLayer = (props) => {
 			else return {}
 		})
 		if (preloaded.length) setPhotos(preloaded)
+		if (preloaded.length) localStorage.setItem('photos', JSON.stringify(preloaded))
 	}, [places])
 
 	return (
@@ -81,7 +86,9 @@ const DataLayer = (props) => {
 			places: places,
 			setPlaces: setPlaces,
 			photos: photos,
-			setPhotos: setPhotos
+			setPhotos: setPhotos,
+			current: current,
+			setCurrent: setCurrent
 		}}>
 			<MapContext.Provider value={{
 				coords: coords,

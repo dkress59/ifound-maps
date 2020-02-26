@@ -146,7 +146,7 @@ const InputBox = (props) => {
 					<input name="lng" type="hidden" value={coords.lng} />
 
 					<div className="input-group mb-2">
-						<div className="input-group-prepend" onClick={() => {getGeo(); isMobile && collapse(1)}}>
+						<div className="input-group-prepend" onClick={() => { getGeo(); isMobile && collapse(1) }}>
 							<span className="btn btn-primary input-group-text" id="nameInputPrepend">
 								<NameIcon />
 							</span>
@@ -199,9 +199,15 @@ const InputBox = (props) => {
 						onChange={e => { setRange(e.target.value) }}
 					/>
 
-					{isMobile && !pickGPS.lat && <label htmlFor="cameraData" style={{ width: 'calc(50% - .125em)' }} className="mr-1">
-						<span className={"btn btn-primary mt-2 pb-2 mb-1 w-100" + ((isSending || pickGPS.lat) ? ' disabled' : '')}><CameraIcon /></span>
-					</label>}
+					{(() => {
+						if (isMobile && !pickGPS.lat) return (
+							<label htmlFor="cameraData" style={{ width: 'calc(50% - .125em)' }} className="mr-1">
+								<span className={"btn btn-primary mt-2 pb-2 mb-1 w-100" + ((isSending || pickGPS.lat) ? ' disabled' : '')}>
+									<CameraIcon />
+								</span>
+							</label>
+						)
+					})()}
 					<input
 						type="file"
 						accept="image/*"
@@ -213,16 +219,20 @@ const InputBox = (props) => {
 						ref={cameraRef}
 						style={{ display: 'none' }}
 					/>
-					{isMobile && !pickGPS.lat && (
-						<label htmlFor="photoData" style={{ width: 'calc(50% - .125em)' }}>
-							<span className={"btn btn-primary mt-2 mb-1 w-100" + ((isSending || pickGPS.lat) ? ' disabled' : '')}><FileIcon /></span>
-						</label>
-					)}
-					{!isMobile && !pickGPS.lat && (
-						<label htmlFor="photoData" className="">
-							<span className={"btn btn-primary mt-2 mb-1 mr-2" + ((isSending || pickGPS.lat) ? ' disabled' : '')}><FileIcon /></span> Foto auswählen
-						</label>
-					)}
+					{(() => {
+						if (isMobile && !pickGPS.lat) return (
+							<label htmlFor="photoData" style={{ width: 'calc(50% - .125em)' }}>
+								<span className={"btn btn-primary mt-2 mb-1 w-100" + ((isSending || pickGPS.lat) ? ' disabled' : '')}><FileIcon /></span>
+							</label>
+						)
+					})()}
+					{(() => {
+						if (!isMobile && !pickGPS.lat) return (
+							<label htmlFor="photoData" className="">
+								<span className={"btn btn-primary mt-2 mb-1 mr-2" + ((isSending || pickGPS.lat) ? ' disabled' : '')}><FileIcon /></span> Foto auswählen
+							</label>
+						)
+					})()}
 					<input
 						type="file"
 						accept="image/*"
@@ -234,15 +244,17 @@ const InputBox = (props) => {
 						style={{ display: 'none' }}
 					/>
 
-					{pickGPS.lat ? (<>
-						<label htmlFor="GPSgroup" className="text-center w-100 subtitle">
-							GPS-Quelle
-						</label>
-						<div id="GPSgroup" className="btn-group w-100 mt-1 mb-2" role="group" aria-label="Pick the GPS source">
-							<button type="button" className="btn btn-sm btn-primary" onClick={e => { setPickGPS({}) }}><NameIcon className="mb-1" /> Position</button>
-							<button type="button" className="btn btn-sm btn-secondary" onClick={e => { photoGPS(pickGPS) }}><CameraIcon className="mb-1 mr-1" />Foto&shy;daten</button>
-						</div>
-					</>) : null}
+					{(() => {
+						if (pickGPS.lat) return (<>
+							<label htmlFor="GPSgroup" className="text-center w-100 subtitle">
+								GPS-Quelle
+							</label>
+							<div id="GPSgroup" className="btn-group w-100 mt-1 mb-2" role="group" aria-label="Pick the GPS source">
+								<button type="button" className="btn btn-sm btn-primary" onClick={e => { setPickGPS({}) }}><NameIcon className="mb-1" /> Position</button>
+								<button type="button" className="btn btn-sm btn-secondary" onClick={e => { photoGPS(pickGPS) }}><CameraIcon className="mb-1 mr-1" />Foto&shy;daten</button>
+							</div>
+						</>)
+					})()}
 
 					<button type="submit" className={"btn btn-dark btn-sm mt-2 w-100" + ((isSending || pickGPS.lat) ? ' disabled' : '')}>{isSending ? <span className="spinner-border spinner-border-sm text-white mr-2" role="status" aria-hidden="true" /> : null}Senden{isSending ? '…' : null}</button>
 				</form>

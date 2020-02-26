@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef, useContext } from 'react'
 import { Map, Marker, Popup, Circle } from 'react-leaflet'
 import './Map.css'
 import L from 'leaflet'
-import qs from 'query-string'
 import Image from 'react-image-webp'
 
+import { CloverIcon } from '../../assets/Icons'
 import trashIcon from '../../assets/trash-2.svg'
 import AuthContext from '../../context/AuthContext'
 
@@ -18,27 +18,27 @@ import MapContext from '../../context/MapContext'
 import PlaceContext from '../../context/PlaceContext'
 
 
-
 const FoundMap = (props) => {
 
 	const { token } = useContext(AuthContext)
 	const [zoomX, setZoomX] = useState(16)
-	const { places, setPlaces, photos } = useContext(PlaceContext)
+	const { places, setPlaces, photos, current, setCurrent } = useContext(PlaceContext)
 	const { coords, setCoords, center, setCenter, range } = useContext(MapContext)
 
 	const mapRef = useRef(null)
 	const indexRef = useRef(null)
+	const tempRef = useRef(null)
 
-	const index = (qs.parse(window.location.search).place)
-		? qs.parse(window.location.search).place : (props.index)
-			? props.index : 0
+	const index = (Object.keys(props.match.params).length > 0)
+		? props.match.params.placeID : (props.location && props.location.state && props.location.state.place)
+			? props.location.state.place : 0
 
 	const cloverIcon = L.icon({
-		iconUrl: './clover-2.svg',
+		iconUrl: process.env.REACT_APP_URL + '/ifound-clover.svg',
 		iconSize: [64, 64],
 		iconAnchor: [10, 64],
 		popupAnchor: [-3, -76],
-		shadowUrl: './clover-shadow.svg',
+		shadowUrl: process.env.REACT_APP_URL + '/clover-shadow.svg',
 		shadowSize: [64, 56],
 		shadowAnchor: [10, 56]
 	});
@@ -57,11 +57,17 @@ const FoundMap = (props) => {
 				})
 			})
 		}
+		if (index && index !== current) setCurrent(index)
 	}, [])//eslint-disable-line
 
 	useEffect(() => {
-		if (indexRef.current) indexRef.current.leafletElement.fire('click')// !! ?? !! //
-	}, [places])
+		if (indexRef.current) (() => {
+			console.log('openPopup')
+			setTimeout(() => {
+				indexRef.current.leafletElement.openPopup()
+			}, 666)
+		})()
+	}, [current])
 
 	useEffect(() => {// !! this picks up external marker addings (doesnt it?) !! // onlayeradd?
 		if (!isMobile) setCenter(coords)
@@ -97,7 +103,7 @@ const FoundMap = (props) => {
 		if (!places || places.length < 1) return <></>
 		return places.map(place => {
 			const pos = { lat: place.lat, lng: place.lng }
-			const ref = (place._id === index) ? indexRef : null
+			const ref = (place._id === index) ? indexRef : tempRef
 			const imgObj = photos.filter(photo => { return photo._id === place._id })
 			const img = (imgObj.length > 0)
 				? () => {
@@ -106,19 +112,24 @@ const FoundMap = (props) => {
 				: () => { }
 			return (
 				<div key={'circleMarker-' + place._id}>
-					{(place.range && place.range > 0) && <Circle center={[pos.lat, pos.lng]} radius={place.range} />}
+					{(() => { if (place.range && place.range > 0) return <Circle center={[pos.lat, pos.lng]} radius={place.range} /> })()}
 					<Marker
 						icon={cloverIcon}
 						position={pos}
 						ref={ref}
+						/*onClick={e => {
+							setCurrent(place._id)
+							console.log('click')
+							//ref.current.leafletElement._popup.openPopup()
+						}}*/
 						dataSaved>
 						<Popup minWidth="160" maxWidth="320" closeButton="false">
-							<div className="text-center m-0">
+							<div className="text-center m-0" data-id={place._id}>
 								{img()}
-								{(place.name && place.name !== undefined) ? <h4 className="mb-0">{place.name}</h4> : null}
-								{(place.author && place.author !== undefined) ? <p className="m-0"><small>von </small>{place.author}</p> : null}
+								{(() => { if (place.name && place.name !== undefined) return <h4 className="mb-0">{place.name}</h4> })()}
+								{(() => { if (place.author && place.author !== undefined) return <p className="m-0"><small>von </small>{place.author}</p> })()}
 							</div>
-							{token !== 'false' && <img className="trash feather" src={trashIcon} alt="delete" onClick={(e) => deletePlace(place._id)} />}
+							{(() => { if (token !== 'false') return <img className="trash feather" src={trashIcon} alt="delete" onClick={(e) => deletePlace(place._id)} /> })()}
 						</Popup>
 					</Marker>
 				</div>
@@ -142,7 +153,7 @@ const FoundMap = (props) => {
 					attribution='<a href="http://openstreetmap.org" rel="nofollow">OSM</a>'
 				/>
 				<Places />
-				{range > 0 ? <Circle center={[coords.lat, coords.lng]} radius={range} /> : null}
+				{(() => { if (range > 0) return <Circle center={[coords.lat, coords.lng]} radius={range} /> })()}
 				<Marker
 					key="newPlace"
 					position={coords}
