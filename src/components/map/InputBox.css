@@ -25,13 +25,6 @@
 	transition: transform .6s ease, width .4s ease, height .4s ease, padding .4s ease, margin .4s ease;
 }
 
-.btn.text-hover-white:hover {
-	color: white !important;
-}
-.btn.text-hover-primary:hover {
-	color: var(--primary) !important;
-}
-
 .card-body {
 	width: 16rem;
 	max-width: 100%;

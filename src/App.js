@@ -32,7 +32,7 @@ const App = (props) => {
 			<BrowserRouter>
 				<DataLayer>
 					<Header />
-					<main className={"mb-333 mb-0" + (isMobile ? ' mobile' : '')}>
+					<main className={"mb-0" + (isMobile ? ' mobile' : '')}>
 
 						<Switch>
 							<Route exact path='/login' component={Login} />

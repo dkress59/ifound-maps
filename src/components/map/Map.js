@@ -33,15 +33,23 @@ const FoundMap = (props) => {
 		? props.match.params.placeID : (props.location && props.location.state && props.location.state.place)
 			? props.location.state.place : 0
 
+	const coordIcon = L.icon({
+		iconSize: [25, 41],
+		iconAnchor: [12.5, 41],
+		iconUrl: process.env.REACT_APP_URL + '/marker-icon.png',
+		shadowUrl: process.env.REACT_APP_URL + '/marker-shadow.png',
+		iconRetinaUrl: process.env.REACT_APP_URL + '/marker-icon-2x.png',
+	})	
+
 	const cloverIcon = L.icon({
-		iconUrl: process.env.REACT_APP_URL + '/ifound-clover.svg',
 		iconSize: [64, 64],
 		iconAnchor: [10, 64],
+		iconUrl: process.env.REACT_APP_URL + '/ifound-clover.svg',
 		popupAnchor: [-3, -76],
-		shadowUrl: process.env.REACT_APP_URL + '/clover-shadow.svg',
 		shadowSize: [64, 56],
-		shadowAnchor: [10, 56]
-	});
+		shadowAnchor: [10, 56],
+		shadowUrl: process.env.REACT_APP_URL + '/ifound-clover-shadow.svg',
+	})
 
 
 	useEffect(() => {
@@ -157,6 +165,7 @@ const FoundMap = (props) => {
 				<Marker
 					key="newPlace"
 					position={coords}
+					icon={coordIcon}
 				/>
 				<MapBoxSearch
 					className="mapSearchBox"

@@ -132,14 +132,14 @@ const InputBox = (props) => {
 			<div className="card-header text-right bg-primaryy bg-secondary text-white">
 				<button
 					onMouseDown={() => { collapse(!isCollapsed) }}
-					className="btn btn-sm btn-outline-light text-white text-hover-primary"
+					className="btn btn-sm btn-outline-light"
 				>
 					{!isCollapsed && <MinimiseIcon />}
 					{isCollapsed && <AddIcon />}
 				</button>
 			</div>
 
-			<div ref={bodyRef} className="card-body" style={setSize()}>
+			<div ref={bodyRef} className="card-body text-dark" style={setSize()}>
 				<form ref={formRef} onSubmit={handleSubmit} className="form-group">
 
 					<input name="lat" type="hidden" value={coords.lat} />

@@ -18,3 +18,37 @@ body {
 #root {
 	min-height: 100vh;
 }
+
+@media (prefers-color-scheme: light), (prefers-color-scheme: no-preference) {
+	.text-flip {
+		color: var(--secondary)
+	}
+	.text-flip {
+		color: var(--secondary)
+	}
+	html > head + body {
+		color: var(--gray-dark);
+		background-color: var(--light)
+	}
+	header > nav {
+		background-color: var(--secondary);
+	}
+}
+@media (prefers-color-scheme: dark) {
+	.text-flip {
+		color: rgba(255,255,255,.33)
+	}
+	.text-flip-more {
+		color: var(--light)
+	}
+	html > head + body {
+		color: var(--light);
+		background-color: var(--dark);
+	}
+	header > nav {
+		background-color: var(--dark);
+	}
+	header .logo-1 {
+		fill: var(--dark);
+	}
+}

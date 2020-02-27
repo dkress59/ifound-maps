@@ -16,7 +16,7 @@ const LoginPage = (props) => {
 	let removeTimer
 	const [gotoMap, setGotoMap] = useState(<React.Fragment />)
 
-	const alert = () => {
+	const Alert = (props) => {
 		const colour = (!alertMsg.alert)
 			? 'alert-success'
 			: 'alert-danger'
@@ -24,7 +24,7 @@ const LoginPage = (props) => {
 			return ''
 		else
 			return (
-				<div className={"alert " + colour + " alert-dismissible animated fadeIn fast"} role="alert">
+				<div className={"alert " + colour + " alert-dismissible animated fadeIn fast " + props.className} role="alert">
 					{alertMsg.message}
 					<button type="button" className="close" data-dismiss="alert" aria-label="Close" onMouseUp={(e) => { clearTimeout(removeTimer) }}>
 						<span aria-hidden="true">&times;</span>
@@ -102,10 +102,10 @@ const LoginPage = (props) => {
 
 	return (
 		<>
-			<div className="col-md-4 offset-md-4 mt-4 b-4">
-				{alert()}
-				<form ref={formRef} key="login-form" className="form-signin" onSubmit={handleSubmit}>
-					<h1 className="h3 mb-3 font-weight-normal">Hi, Pete!</h1>
+			<div className="col-md-4 offset-md-4 mt-4 mb-4 w-100 h-100">
+				<Alert className="mb-1" />
+				<form ref={formRef} key="login-form" className="form-signin pt-4" onSubmit={handleSubmit}>
+					<h1 className="h3 mt-5 mb-3 font-weight-normal">Hi, Pete!</h1>
 					<label htmlFor="inputEmail" className="sr-only">E-Mail</label>
 					<input type="email" name="email" id="inputEmail" className="form-control mb-3" placeholder="E-Mail" required autoFocus />
 					<label htmlFor="inputPassword" className="sr-only">Passwort</label>
@@ -116,7 +116,7 @@ const LoginPage = (props) => {
 						</label>
 					</div>
 					<button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-					<p className="mt-4 text-muted">© 2020</p>
+					<p className="mt-4 text-flip">© 2020</p>
 				</form>
 			</div>
 			{gotoMap}

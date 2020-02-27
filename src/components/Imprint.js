@@ -16,7 +16,7 @@ const ImprintHTML = (props) => {
 
 			<article
 				id="disclaimer"
-				className="text-center mt-5 pb-2 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3 text-secondary">
+				className="text-center mt-5 pb-2 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3 text-flip-more">
 				<h1 className="display-1">Wir speichern gar nichts.</h1>
 				<h2 className="h5">iFound.one gibt sich größte Mühe, keine Nutzerdaten aufzuzeichnen. Außer dem angegeben Namen und Ihren Angaben zum Fundort werden keine Daten übermittelt. Fotos werden beim Abspeichern auf unseren Servern von allen Metainformationen bereinigt und mit einer Creative Commons Lizenz versehen. Weitere Informationen dazu finden Sie <a href="http://creativecommons.org/licenses/by-nc/4.0/" rel="noopener noreferrer">hier</a>.</h2>
 			</article>
