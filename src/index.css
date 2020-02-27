@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
 	margin: 0;
 	padding: 0;
 	width: 100%;
@@ -21,14 +22,14 @@ body {
 
 @media (prefers-color-scheme: light), (prefers-color-scheme: no-preference) {
 	.text-flip {
-		color: var(--secondary)
+		color: var(--secondary);
 	}
 	.text-flip-more {
-		color: var(--secondary)
+		color: var(--secondary);
 	}
 	html > head + body {
 		color: var(--gray-dark);
-		background-color: var(--light)
+		background-color: var(--light);
 	}
 	header > nav {
 		background-color: var(--secondary);
@@ -36,10 +37,10 @@ body {
 }
 @media (prefers-color-scheme: dark) {
 	.text-flip {
-		color: rgba(255,255,255,.33)
+		color: rgba(255, 255, 255, 0.33);
 	}
 	.text-flip-more {
-		color: var(--light)
+		color: var(--light);
 	}
 	html > head + body {
 		color: var(--light);

@@ -150,8 +150,10 @@ const InputBox = (props) => {
 
 					<div className="input-group mb-2">
 						<Tooltip
-							position="top"
-							distance={4}
+							disabled={isMobile}
+							position="top-end"
+							distance={8}
+							//theme="transparent"
 							html={(
 								<div>
 									Your current location
@@ -243,7 +245,10 @@ const InputBox = (props) => {
 					{(() => {
 						if (!isMobile && !pickGPS.lat) return (
 							<label htmlFor="photoData" className="">
-								<span className={"btn btn-primary mt-2 mb-1 mr-2" + ((isSending || pickGPS.lat) ? ' disabled' : '')}><FileIcon /></span> Foto auswählen
+								<span className={"btn btn-primary mt-0 mb-1 mr-2" + ((isSending || pickGPS.lat) ? ' disabled' : '')}>
+									<FileIcon className="mb-1" />
+								</span>
+								<span className="mt-2 ml-2">Foto auswählen</span>
 							</label>
 						)
 					})()}
