@@ -23,7 +23,7 @@ body {
 	.text-flip {
 		color: var(--secondary)
 	}
-	.text-flip {
+	.text-flip-more {
 		color: var(--secondary)
 	}
 	html > head + body {
