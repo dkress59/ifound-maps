@@ -6,6 +6,9 @@ import ReactDOM from 'react-dom'
 import { isMobile } from 'react-device-detect'
 import './InputRange.css'
 //import fetch from 'cross-fetch'
+import 'react-tippy/dist/tippy.css'
+import { Tooltip } from 'react-tippy'
+
 
 import { UserIcon, NameIcon, MinimiseIcon, AddIcon, CameraIcon, FileIcon } from '../../assets/Icons'
 
@@ -146,11 +149,22 @@ const InputBox = (props) => {
 					<input name="lng" type="hidden" value={coords.lng} />
 
 					<div className="input-group mb-2">
-						<div className="input-group-prepend" onClick={() => { getGeo(); isMobile && collapse(1) }}>
-							<span className="btn btn-primary input-group-text" id="nameInputPrepend">
-								<NameIcon />
-							</span>
-						</div>
+						<Tooltip
+							position="top"
+							distance={4}
+							html={(
+								<div>
+									Your current location
+								</div>
+							)}
+							arrow
+						>
+							<div className="input-group-prepend h-100" onClick={() => { getGeo(); isMobile && collapse(1) }}>
+								<span className="btn btn-primary input-group-text" id="nameInputPrepend">
+									<NameIcon />
+								</span>
+							</div>
+						</Tooltip>
 						<input
 							required
 							type="text"
