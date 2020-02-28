@@ -1,11 +1,13 @@
 import './Gallery.scss'
-import React, { useState, useContext, useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'//eslint-disable-line
+import React, { useState, useContext, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import Image from 'react-image-webp'
 import { isMobile } from 'react-device-detect'
 
 import PlaceContext from '../context/PlaceContext'
 import MapContext from '../context/MapContext'
+
+import { ImageIcon, GridIcon } from '../assets/Icons'
 
 const shuffle = (a) => {//eslint-disable-line
 	var j, x, i;
@@ -43,23 +45,26 @@ const GalleryView = (props) => {
 	const [pinchCenter, setPinchCenter] = useState({ x: 'center', y: 'center' });//eslint-disable-line
 	const [pinchLevel, setPinchLevel] = useState((isMobile) ? 1 : -1)
 	const [distInput, setDistInput] = useState(0)
-	const [filtered, setFiltered] = useState([])
+	const [filteredPhotos, setFilteredPhotos] = useState([])
 	const { coords } = useContext(MapContext)
 	const [searchInput, setSearchInput] = useState('')
-	const pickSet = (filtered.length) ? filtered : photos
+	const pickSet = (filteredPhotos.length) ? filteredPhotos : photos
 
 	const searchPlaces = (input) => {
 		setSearchInput(input)
-		if (!input.length) return
-		const pick = (filtered.length)
-			? filtered
-			: places
-		const results = pick.filter((plc) => {
+		if (!input.length) return setFilteredPhotos([])
+		const results = places.filter((plc) => {
 			if (plc.name.toUpperCase().indexOf(input.toUpperCase()) > -1 || plc.author.toUpperCase().indexOf(input.toUpperCase()) > -1) return true
 			else return false
 		})
-		console.log(results, filtered)
-		if (results.length) setFiltered(results)
+		if (!results.length) return null
+		const filterSet = results.map((plc) => {
+			return photos.filter((pht) => {
+				return plc._id == pht._id
+			})[0]
+		})
+		console.log(results, filteredPhotos)
+		setFilteredPhotos(filterSet)
 	}
 
 	useEffect(() => {
@@ -69,61 +74,97 @@ const GalleryView = (props) => {
 			if (dist <= distInput) return true
 			else return false
 		})
-		if (filterSet.length !== filtered.length) setFiltered(filterSet)
+		if (filterSet.length !== filteredPhotos.length) setFilteredPhotos(filterSet)
 	}, [distInput])
 
 	if (!photos.length) return (<div className="loadingScreen">Loading...</div>)
 
 	return (
-		<div className={"gallery level-" + pinchLevel} style={{ transform: `scale(${pinchScale})`, transformOrigin: `${pinchCenter.x}px ${pinchCenter.y}px` }}>
-			<section
-				className="d-flex align-items-center justify-content-end w-100"
-				style={{
-					zIndex: 9999,
-					transform: 'translateZ(0)',
-					perspective: 1000
-				}}
-			>
-				{/* <input
-					type="text"
-					value={searchInput}
-					onChange={e => { searchPlaces(e.target.value) }}
-				/> */}
-				<input
-					key="distance-input"
-					type="range"
-					style={{ width: '96px' }}
-					className={"form-control-range mb-2 mt-2"}
-					id="formControlDistance"
-					value={distInput}
-					step="10"
-					onInput={e => { setDistInput(parseInt(e.target.value)) }}
-				/>
-				<label htmlFor="formControlDistance">
-					{(() => { if (distInput != 0) return distInput * 40 + 'm Umkreis' })()}
-				</label>
-			</section>
-			{/*shuffle(*/pickSet.map(photo => {
-				const place = places.filter((p) => {
-					return p._id === photo._id
-				})[0]
+		<>
+			<div className={"gallery level-" + pinchLevel} style={{ transform: `scale(${pinchScale})`, transformOrigin: `${pinchCenter.x}px ${pinchCenter.y}px` }}>
+				{/*shuffle(*/pickSet.map(photo => {
+					const place = places.filter((p) => {
+						return p._id === photo._id
+					})[0]
+					console.log(place, photo)
 
-				return (
-					<figure key={"photo-" + photo._id}>
-						<Link to={{
-							pathname: '/places/' + photo._id,
-							state: { place: photo._id }
-						}}>
-							<Image src={photo.img.src} webp={photo.img.src + '.webp'} alt="This is a descriptive subtitle." className="photo" />
-						</Link>
-						<figcaption>
-							<h3 className="mt-1 mb-0">{place.name}</h3>
-							<p className="mt-0 mb-1">by {place.author}</p>
-						</figcaption>
-					</figure>
-				)
-			})/*)*/}
-		</div>
+					return (
+						<figure key={"photo-" + photo._id}>
+							<Link to={{
+								pathname: '/places/' + photo._id,
+								state: { place: photo._id }
+							}}>
+								<Image src={photo.img.src} webp={photo.img.src + '.webp'} alt="This is a descriptive subtitle." className="photo" />
+							</Link>
+							<figcaption>
+								<h3 className="mt-1 mb-0">{place.name}</h3>
+								<p className="mt-0 mb-1">by {place.author}</p>
+							</figcaption>
+						</figure>
+					)
+				})/*)*/}
+			</div>
+			<section className="card shadow" style={{ position: 'fixed', bottom: '1rem', right: '1rem' }}>
+				<div className="card-header bg-secondary text-white text-right">Suchfilter</div>
+				<div className="card-body text-dark">
+					<div className="d-flex flex-row flex-wrap mb-4">
+						<input
+							type="text"
+							//className="w-100"
+							style={{ width: '6rem', flex: 1 }}
+							value={searchInput}
+							placeholder=" Suchen…"
+							aria-label="search by name or author"
+							onChange={e => { searchPlaces(e.target.value) }}
+						/>
+						<div className="btn-group ml-3" role="group" aria-label="grid columns / image size">
+							<button
+								type="button"
+								className="btn btn-primary"
+								aria-label="less columns / larger images"
+								onClick={() => { if (pinchLevel < 4) setPinchLevel(pinchLevel + 1) }}
+							>
+								<ImageIcon />
+							</button>
+							<button
+								type="button"
+								className="btn btn-primary"
+								aria-label="more columns / smaller images"
+								onClick={() => { if (pinchLevel > -1) setPinchLevel(pinchLevel - 1) }}
+							>
+								<GridIcon />
+							</button>
+						</div>
+					</div>
+					<input
+						key="distance-input"
+						type="range"
+						style={{ width: '100%', minWidth: '96px' }}
+						className={"form-control-range mt-4"}
+						id="formControlDistance"
+						value={distInput}
+						step="10"
+						onChange={e => { setDistInput(parseInt(e.target.value)) }}
+						onInput={e => { setDistInput(parseInt(e.target.value)) }}
+						aria-label="filter results based on the distance to your current position"
+					/>
+					<label
+						htmlFor="formControlDistance"
+						className="text-center mt-2"
+						style={{
+							width: '100%',
+							display: 'block'
+						}}
+						aria-label="distance to your position"
+					>
+						{(() => {
+							if (distInput != 0) return 'Bis zu ' + distInput * 40 / 1000 + 'km entfernt'
+							//else return ' '
+						})()}
+					</label>
+				</div>
+			</section>
+		</>
 	)
 }
 

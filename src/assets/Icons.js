@@ -136,7 +136,7 @@ export const UserIcon = props => {
 		</svg>
 	)
 }
-export const NameIcon = (props) => {
+export const NameIcon = props => {
 	const addClass = props.className && ' ' + props.className
 	return (
 		<svg
@@ -157,7 +157,7 @@ export const NameIcon = (props) => {
 		</svg>
 	)
 }
-export const MinimiseIcon = (props) => {
+export const MinimiseIcon = props => {
 	const addClass = props.className && ' ' + props.className
 	return (
 		<svg
@@ -177,7 +177,7 @@ export const MinimiseIcon = (props) => {
 		</svg>
 	)
 }
-export const AddIcon = (props) => {
+export const AddIcon = props => {
 	const addClass = props.className && ' ' + props.className
 	return (
 		<svg
@@ -197,7 +197,7 @@ export const AddIcon = (props) => {
 		</svg>
 	)
 }
-export const CameraIcon = (props) => {
+export const CameraIcon = props => {
 	const addClass = props.className && ' ' + props.className
 	return (
 		<svg
@@ -217,7 +217,7 @@ export const CameraIcon = (props) => {
 		</svg>
 	)
 }
-export const FileIcon = (props) => {
+export const FileIcon = props => {
 	const addClass = props.className && ' ' + props.className
 	return (
 		<svg
@@ -234,6 +234,58 @@ export const FileIcon = (props) => {
 		>
 			<path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" />
 			<polyline points="13 2 13 9 20 9" />
+		</svg>
+	)
+}
+export const ImageIcon = props => {
+	const addClass = props.className && ' ' + props.className
+	return (
+		<svg xmlns="http://www.w3.org/2000/svg"
+			width="24"
+			height="24"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			strokeWidth="2"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			className={"feather feather-image" + addClass}
+		>
+			<rect
+				x="3"
+				y="3"
+				width="18"
+				height="18"
+				rx="2"
+				ry="2"
+			/>
+			<circle cx="8.5"
+				cy="8.5"
+				r="1.5"
+			/>
+			<polyline points="21 15 16 10 5 21" />
+		</svg>
+	)
+}
+export const GridIcon = props => {
+	const addClass = props.className && ' ' + props.className
+	return (
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			width="24"
+			height="24"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			strokeWidth="2"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			className={"feather feather-grid" + addClass}
+		>
+			<rect x="3" y="3" width="7" height="7" />
+			<rect x="14" y="3" width="7" height="7" />
+			<rect x="14" y="14" width="7" height="7" />
+			<rect x="3" y="14" width="7" height="7" />
 		</svg>
 	)
 }
