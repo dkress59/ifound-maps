@@ -73,7 +73,8 @@ const DataLayer = (props) => {
 			if (plc.photos.length > 0) return {
 				_id: plc._id,
 				img: img,
-				created: plc.created
+				created: plc.created,
+				place: { lat: plc.lat, lng: plc.lng }
 			}
 			else return {}
 		})

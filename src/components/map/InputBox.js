@@ -132,7 +132,7 @@ const InputBox = (props) => {
 			id="mapInputBox"
 			className={className()}
 		>
-			<div className="card-header text-right bg-primaryy bg-secondary text-white">
+			<div className="card-header text-right bg-secondary text-white">
 				<button
 					onMouseDown={() => { collapse(!isCollapsed) }}
 					className="btn btn-sm btn-outline-light"
@@ -156,7 +156,7 @@ const InputBox = (props) => {
 							//theme="transparent"
 							html={(
 								<div>
-									Your current location
+									Deine aktuelle Position
 								</div>
 							)}
 							arrow

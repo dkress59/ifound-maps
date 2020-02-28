@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
 
-//import MetaTags from 'react-meta-tags'
+import MetaTags from 'react-meta-tags'
 
 import './App.css'
 import Header from './components/app/Header'
@@ -21,35 +21,31 @@ const cookies = new Cookies()
 
 const App = (props) => {
 	const [auth, setAuth] = useState('false')
-	/* const theme = (window
-    .getComputedStyle(document.documentElement)
-    .getPropertyValue('content')
-	.replace(/"/g, '') === 'dark') 
+	const startTheme = (window.matchMedia("(prefers-color-scheme: dark)").matches)
 		? 'black-translucent'
 		: 'default'
-	console.log(window
-		.getComputedStyle(document.documentElement)
-		.getPropertyValue('content')
-		.replace(/"/g, ''))
-	const statusBar = () => {
-		window.matchMedia("(prefers-color-scheme: dark)").addListener(e => {
-			if (e.matches) return 'black-translucent'
-			else return 'default'
-		})
-	} */
+	const [theme, setTheme] = useState(startTheme)
+
 
 	useEffect(() => {
 		if (auth === 'false' && cookies.get('token')) setAuth(cookies.get('token'))
 	}, [auth])
 
+	useEffect(() => {
+		const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
+		if (isDarkMode && theme === 'default') setTheme('black-translucent')
+		if (!isDarkMode && theme !== 'default') setTheme('default')
+	}, [])
+
+	
 	return (
 		<AuthContext.Provider value={{
 			token: auth,
 			setToken: setAuth
 		}}>
-			{/* <MetaTags>
-				<meta name="apple-mobile-web-app-status-bar-style" content={'black-translucent'} />
-			</MetaTags> */}
+			<MetaTags>
+				<meta name="apple-mobile-web-app-status-bar-style" content={theme} />
+			</MetaTags>
 			<BrowserRouter>
 				<DataLayer>
 					<Header />
