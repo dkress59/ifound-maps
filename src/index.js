@@ -8,7 +8,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import * as serviceWorker from './serviceWorker'
 
-import App from './App'
+import App from './components/app/App'
 //import 'core-js/es/map'//polyfills
 //import 'core-js/es/set'//polyfills
 //import 'react-app-polyfill/ie9'

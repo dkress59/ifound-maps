@@ -7,7 +7,8 @@ import { isMobile } from 'react-device-detect'
 import PlaceContext from '../context/PlaceContext'
 import MapContext from '../context/MapContext'
 
-import { ImageIcon, GridIcon, FilterIcon } from '../assets/Icons'
+import { ImageIcon, GridIcon, FilterIcon, DeleteIcon } from './app/Icons'
+
 
 const shuffle = (a) => {//eslint-disable-line
 	var j, x, i;
@@ -38,73 +39,104 @@ const deg2rad = (deg) => {
 	return deg * (Math.PI / 180)
 }
 
+
+export const Gallery = (props) => {
+	const { selectedSet, places } = props
+	return (
+		selectedSet.map(photo => {
+			const place = places.filter((p) => {
+				return p._id === photo._id
+			})[0]
+
+			return (
+				<figure key={"photo-" + photo._id}>
+					<Link to={{
+						pathname: '/places/' + photo._id,
+						state: { place: photo._id }
+					}}>
+						<Image src={photo.img.src} webp={photo.img.src + '.webp'} alt="This is a descriptive subtitle." className="photo" />
+					</Link>
+					<figcaption>
+						<h3 className="mt-1 mb-0">{place.name}</h3>
+						<p className="mt-0 mb-1">by {place.author}</p>
+					</figcaption>
+				</figure>
+			)
+		})
+	)
+}
+
+
 const GalleryView = (props) => {
 
 	const { photos, places } = useContext(PlaceContext)
-	const [pinchScale, setPinchScale] = useState(1);//eslint-disable-line
-	const [pinchCenter, setPinchCenter] = useState({ x: 'center', y: 'center' });//eslint-disable-line
-	const [pinchLevel, setPinchLevel] = useState((isMobile) ? 1 : -1)
+	//const [pinchScale, setPinchScale] = useState(1);//eslint-disable-line
+	//const [pinchCenter, setPinchCenter] = useState({ x: 'center', y: 'center' });//eslint-disable-line
+	const [pinchLevel, setPinchLevel] = useState((isMobile) ? 2 : 0)
 	const [distInput, setDistInput] = useState(0)
-	const [filteredPhotos, setFilteredPhotos] = useState([])
+	const [filtered, setFiltered] = useState([])
 	const { coords } = useContext(MapContext)
 	const [searchInput, setSearchInput] = useState('')
-	const pickSet = (filteredPhotos.length) ? filteredPhotos : photos
+	const selectedSet = (filtered.length) ? filtered : photos
+
+	const index = (Object.keys(props.match.params).length > 0)
+		? props.match.params.photoID
+		: (props.location && props.location.state && props.location.state.photo)
+			? props.location.state.photo
+			: 0
+
 
 	const searchPlaces = (input) => {
 		setSearchInput(input)
-		if (!input.length) return setFilteredPhotos([])
+		if (pinchLevel === 4) setPinchLevel(3 - !isMobile)
+		if (!input.length) return setFiltered([])
 		const results = places.filter((plc) => {
-			if (plc.name.toUpperCase().indexOf(input.toUpperCase()) > -1 || plc.author.toUpperCase().indexOf(input.toUpperCase()) > -1) return true
-			else return false
+			if (
+				plc.name.toUpperCase().indexOf(input.toUpperCase()) > -1
+				|| plc.author.toUpperCase().indexOf(input.toUpperCase()) > -1
+				|| plc._id.toUpperCase().indexOf(input.toUpperCase()) > -1
+			)
+				return true
+			else
+				return false
 		})
 		if (!results.length) return null
 		const filterSet = results.map((plc) => {
 			return photos.filter((pht) => {
-				return plc._id == pht._id
+				return plc._id === pht._id
 			})[0]
 		})
-		console.log(results, filteredPhotos)
-		setFilteredPhotos(filterSet)
+		console.log(results, filtered)
+		setFiltered(filterSet)
 	}
 
 	useEffect(() => {
 		const filterSet = photos.filter((photo) => {
-			//if (!distInput) return true
+			if (!distInput) return false
 			const dist = getDistanceFromLatLonInKm(coords.lat, coords.lng, photo.place.lat, photo.place.lng) * 25
 			if (dist <= distInput) return true
 			else return false
 		})
-		if (filterSet.length !== filteredPhotos.length) setFilteredPhotos(filterSet)
+		if (filterSet.length !== filtered.length) setFiltered(filterSet)
 	}, [distInput])
+
+	useEffect(() => {
+		if (index) {
+			searchPlaces(index)
+			if (places.filter((p) => p._id === index).length) setPinchLevel(4)
+			console.log(places)
+		}
+	}, [photos])
+
 
 	if (!photos.length) return (<div className="loadingScreen">Loading...</div>)
 
 	return (
 		<>
-			<div className={"gallery level-" + pinchLevel} style={{ transform: `scale(${pinchScale})`, transformOrigin: `${pinchCenter.x}px ${pinchCenter.y}px` }}>
-				{/*shuffle(*/pickSet.map(photo => {
-					const place = places.filter((p) => {
-						return p._id === photo._id
-					})[0]
-					console.log(place, photo)
-
-					return (
-						<figure key={"photo-" + photo._id}>
-							<Link to={{
-								pathname: '/places/' + photo._id,
-								state: { place: photo._id }
-							}}>
-								<Image src={photo.img.src} webp={photo.img.src + '.webp'} alt="This is a descriptive subtitle." className="photo" />
-							</Link>
-							<figcaption>
-								<h3 className="mt-1 mb-0">{place.name}</h3>
-								<p className="mt-0 mb-1">by {place.author}</p>
-							</figcaption>
-						</figure>
-					)
-				})/*)*/}
+			<div className={"gallery level-" + pinchLevel} style={{ /*transform: `scale(${pinchScale})`, transformOrigin: `${pinchCenter.x}px ${pinchCenter.y}px`*/ }}>
+				<Gallery selectedSet={selectedSet} places={places} />
 			</div>
-			<section id="filterBox" className="card shadow" style={{ position: 'fixed', bottom: '1rem', right: '1rem' }}>
+			<section id="filterBox" className="card shadow" style={{ position: 'fixed', bottom: '1rem', right: '1rem', zIndex: 1 }}>
 				<div className="card-header bg-secondary text-white text-right">
 					<button className="btn btn-sm btn-outline-light" aria-label="search parameters" disabled>
 						<FilterIcon />
@@ -112,15 +144,17 @@ const GalleryView = (props) => {
 				</div>
 				<div className="card-body text-dark">
 					<div className="d-flex flex-row flex-wrap mb-4">
-						<input
-							type="text"
-							//className="w-100"
-							style={{ width: '6rem', flex: 1 }}
-							value={searchInput}
-							placeholder=" Suchen…"
-							aria-label="search by name or author"
-							onChange={e => { searchPlaces(e.target.value) }}
-						/>
+						<div style={{ flex: 1, flexBasis: '96px', position: 'relative' }}>
+							<input
+								type="text"
+								className="w-100 h-100"
+								value={searchInput}
+								placeholder=" Suchen…"
+								aria-label="search by name or author"
+								onChange={e => { searchPlaces(e.target.value) }}
+							/>
+							<DeleteIcon onClick={() => searchPlaces('')} />
+						</div>
 						<div className="btn-group ml-3" role="group" aria-label="grid columns / image size">
 							<button
 								type="button"
@@ -134,7 +168,7 @@ const GalleryView = (props) => {
 								type="button"
 								className="btn btn-primary"
 								aria-label="more columns / smaller images"
-								onClick={() => { if (pinchLevel > -1) setPinchLevel(pinchLevel - 1) }}
+								onClick={() => { if (pinchLevel > -1 && selectedSet.length > 1) setPinchLevel(pinchLevel - 1) }}
 							>
 								<GridIcon />
 							</button>

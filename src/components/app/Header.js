@@ -39,7 +39,11 @@ const Header = (props) => {
 						}} className="nav-link" activeClassName="active">Karte</NavLink>
 					</li>
 					<li className="nav-item">
-						<NavLink exact to="/gallery" className="nav-link" activeClassName="active">Galerie</NavLink>
+						<NavLink to="/gallery" isActive={(match, location) => {
+							//if (!match) return false
+							if (location.pathname.substr(0, 8) === '/gallery') return true
+							else return false
+						}} className="nav-link" activeClassName="active">Galerie</NavLink>
 					</li>
 					<li className="nav-item">
 						<NavLink exact to="/login" className="nav-link" activeClassName="active">Login</NavLink>

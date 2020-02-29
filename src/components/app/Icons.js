@@ -5,10 +5,12 @@ export const CloverIcon = props => {
 	const addClass = props.className && ' ' + props.className
 	return (
 		<svg className={addClass}
-			xmlns="http://www.w3.org/2000/svg" viewBox="0 0 381.4 512"
+			xmlns="http://www.w3.org/2000/svg"
+			viewBox="0 0 381.4 512"
 		>
 			<title>ifound-clover</title>
-			<g id="Ebene_2" dataName="Ebene 2">
+			<g id="Ebene_2"
+				dataName="Ebene 2">
 				<g id="Ebene_3_Kopie" dataName="Ebene 3 Kopie">
 					<path className="clv-1" d="M93.49,271h0q-3.52,4.48-6.93,9Q84,283.52,81.45,287a426,426,0,0,0-39.79,67.43A385.19,385.19,0,0,0,6,488a22.24,22.24,0,0,0,6.11,17.2,22.28,22.28,0,0,0,14.31-19A340.61,340.61,0,0,1,57.72,368.66c8.72-18.63,39.82-67,67.72-107.73A141.3,141.3,0,0,1,93.49,271Z" />
 					<path className="clv-1" d="M16.64,508.86a22.2,22.2,0,0,1-4.5-3.62A22.2,22.2,0,0,0,16.64,508.86Z" />
@@ -305,6 +307,85 @@ export const FilterIcon = props => {
 			className={"feather feather-filter" + addClass}
 		>
 			<polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+		</svg>
+	)
+}
+export const CancelIcon = props => {
+	const addClass = props.className && props.className + ' '
+	const addProps = { ...props, className: addClass }
+	return (
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			width="24"
+			height="24"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			strokeWidth="2"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			{...addProps}>
+			<circle cx="12"
+				cy="12"
+				r="10" />
+			<line x1="15"
+				y1="9"
+				x2="9"
+				y2="15" />
+			<line x1="9"
+				y1="9"
+				x2="15"
+				y2="15" />
+		</svg>
+	)
+}
+export const DeleteIcon = props => {
+	const addClass = props.className && props.className + ' '
+	const addProps = { ...props, className: addClass }
+	return (
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			width="24"
+			height="24"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			strokeWidth="2"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			{...addProps}>
+			<path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z" />
+			<line x1="18"
+				y1="9"
+				x2="12"
+				y2="15" />
+			<line x1="12"
+				y1="9"
+				x2="18"
+				y2="15" />
+		</svg>
+	)
+}
+export const TrashIcon = props => {
+	const addClass = props.className && props.className + ' '
+	const addProps = { ...props, className: addClass }
+	return (
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			width="24"
+			height="24"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="#c00"
+			strokeWidth="2"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			{...addProps}>
+		>
+			<polyline points="3 6 5 6 21 6" />
+			<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+			<line x1="10" y1="11" x2="10" y2="17" />
+			<line x1="14" y1="11" x2="14" y2="17" />
 		</svg>
 	)
 }

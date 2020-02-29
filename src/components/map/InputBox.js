@@ -10,7 +10,7 @@ import 'react-tippy/dist/tippy.css'
 import { Tooltip } from 'react-tippy'
 
 
-import { UserIcon, NameIcon, MinimiseIcon, AddIcon, CameraIcon, FileIcon } from '../../assets/Icons'
+import { UserIcon, NameIcon, MinimiseIcon, AddIcon, CameraIcon, FileIcon } from '../app/Icons'
 
 
 const InputBox = (props) => {

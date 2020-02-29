@@ -6,16 +6,16 @@ import { isMobile } from 'react-device-detect'
 import MetaTags from 'react-meta-tags'
 
 import './App.css'
-import Header from './components/app/Header'
-import Footer from './components/app/Footer'
-import DataLayer from './components/app/DataLayer'
+import Header from './Header'
+import Footer from './Footer'
+import DataLayer from './DataLayer'
 
-import FoundMap from './components/map/Map'
-import Login from './components/Login'
-import GalleryView from './components/Gallery'
-import Imprint from './components/Imprint'
+import FoundMap from '../Map'
+import Login from '../Login'
+import GalleryView from '../Gallery'
+import Imprint from '../Imprint'
 
-import AuthContext from './context/AuthContext'
+import AuthContext from '../../context/AuthContext'
 import Cookies from 'universal-cookie'
 const cookies = new Cookies()
 
@@ -53,7 +53,8 @@ const App = (props) => {
 
 						<Switch>
 							<Route exact path='/login' component={Login} />
-							<Route exact path='/gallery' component={GalleryView} />
+							<Route path='/gallery/:photoID' component={GalleryView} />
+							<Route path='/gallery' component={GalleryView} />
 							<Route path='/places/:placeID' component={FoundMap} />
 							<Route path='/imprint' component={Imprint} />
 							<Route path='/' component={FoundMap} />
