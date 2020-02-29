@@ -13,12 +13,12 @@ const LoginPage = (props) => {
 		alert: 0,
 		message: ''
 	})
-	let removeTimer
 	const [gotoMap, setGotoMap] = useState(<React.Fragment />)
 
 	const Alert = (props) => {
 		const colour = (!alertMsg.alert)
-			? 'alert-success'
+			//? 'alert-success'
+			? 'alert-info'
 			: 'alert-danger'
 		if (!alertMsg.message || alertMsg.message === '')
 			return ''
@@ -26,7 +26,12 @@ const LoginPage = (props) => {
 			return (
 				<div className={"alert " + colour + " alert-dismissible animated fadeIn fast " + props.className} role="alert">
 					{alertMsg.message}
-					<button type="button" className="close" data-dismiss="alert" aria-label="Close" onMouseUp={(e) => { clearTimeout(removeTimer) }}>
+					<button type="button" className="close" data-dismiss="alert" aria-label="Close" onMouseUp={(e) => {
+						setAlertMsg({
+							alert: 0,
+							message: ''
+						})
+					}}>
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
@@ -39,10 +44,8 @@ const LoginPage = (props) => {
 		const password = e.target.password.value
 		fetch(process.env.REACT_APP_REST_URL + '/api/users/login', {
 			method: 'post',
-			//credentials: 'include',
 			headers: {
 				'Content-Type': 'application/json',
-				//'xhrFields': { withCredentials: true }
 			},
 			body: JSON.stringify({
 				"email": email,
@@ -66,8 +69,6 @@ const LoginPage = (props) => {
 					})
 					formRef.current.email.value = ''
 					formRef.current.password.value = ''
-					removeTimer = setTimeout(() => { setAlertMsg({ alert: 0, message: '' }) }, 6000)
-					//window.location='/'
 					setTimeout(() => { setGotoMap(<Redirect to="/" />) }, 1800)
 				} else {
 					console.log('Login failed', response.message)
@@ -77,27 +78,23 @@ const LoginPage = (props) => {
 					})
 					formRef.current.email.value = ''
 					formRef.current.password.value = ''
-					removeTimer = setTimeout(() => { setAlertMsg({ alert: 0, message: '' }) }, 6000)
 				}
 				return response
 			})
 			.catch(err => {
 				setAlertMsg({
 					alert: 1,
-					//message: 'Login fehlgeschlagen'
 					message: err.message
 				})
 				formRef.current.email.value = ''
 				formRef.current.password.value = ''
-				removeTimer = setTimeout(() => { setAlertMsg({ alert: 0, message: '' }) }, 6000)
 			})
 	}
 
 	useEffect(() => {
-		setTimeout(() => {
-			clearTimeout(removeTimer)
-		}, 100)
-	})
+		const clearTimer = setTimeout(() => { setAlertMsg({ alert: 0, message: '' }) }, 6000)
+		return () => clearTimeout(clearTimer)
+	}, [alertMsg])
 
 
 	return (
@@ -112,7 +109,7 @@ const LoginPage = (props) => {
 					<input type="password" name="password" id="inputPassword" className="form-control mb-3" placeholder="Passwort" required />
 					<div className="checkbox mb-3">
 						<label>
-							<input type="checkbox" name="rememberMe" value="true" defaultChecked/> Eingeloggt bleiben
+							<input type="checkbox" name="rememberMe" value="true" defaultChecked /> Eingeloggt bleiben
 						</label>
 					</div>
 					<button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>

@@ -7,7 +7,7 @@ import { isMobile } from 'react-device-detect'
 import PlaceContext from '../context/PlaceContext'
 import MapContext from '../context/MapContext'
 
-import { ImageIcon, GridIcon } from '../assets/Icons'
+import { ImageIcon, GridIcon, FilterIcon } from '../assets/Icons'
 
 const shuffle = (a) => {//eslint-disable-line
 	var j, x, i;
@@ -104,8 +104,12 @@ const GalleryView = (props) => {
 					)
 				})/*)*/}
 			</div>
-			<section className="card shadow" style={{ position: 'fixed', bottom: '1rem', right: '1rem' }}>
-				<div className="card-header bg-secondary text-white text-right">Suchfilter</div>
+			<section id="filterBox" className="card shadow" style={{ position: 'fixed', bottom: '1rem', right: '1rem' }}>
+				<div className="card-header bg-secondary text-white text-right">
+					<button className="btn btn-sm btn-outline-light" aria-label="search parameters" disabled>
+						<FilterIcon />
+					</button>
+				</div>
 				<div className="card-body text-dark">
 					<div className="d-flex flex-row flex-wrap mb-4">
 						<input

@@ -18,7 +18,7 @@ const ImprintHTML = (props) => {
 				id="disclaimer"
 				className="text-center mt-5 pb-2 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3 text-flip-more">
 				<h1 className="display-1">Wir speichern gar nichts.</h1>
-				<h2 className="h5">iFound.one gibt sich größte Mühe, keine Nutzerdaten aufzuzeichnen. Außer dem angegeben Namen und Ihren Angaben zum Fundort werden keine Daten übermittelt. Fotos werden beim Abspeichern auf unseren Servern von allen Metainformationen bereinigt und mit einer Creative Commons Lizenz versehen. Weitere Informationen dazu finden Sie <a href="http://creativecommons.org/licenses/by-nc/4.0/" rel="noopener noreferrer">hier</a>.</h2>
+				<h2 className="h5">iFound.one gibt sich größte Mühe, keine Nutzerdaten aufzuzeichnen. Außer deinem angegeben Namen und deinen Angaben zum Fundort werden keine Daten übermittelt. Fotos werden beim Abspeichern auf unseren Servern von allen Metainformationen bereinigt und mit einer Creative Commons Lizenz versehen. Weitere Informationen dazu findest du <a href="http://creativecommons.org/licenses/by-nc/4.0/" rel="noopener noreferrer">hier</a>.</h2>
 			</article>
 
 			<article
@@ -186,8 +186,10 @@ const ImprintHTML = (props) => {
 
 			</article>
 
-			<article id="credits" className="mt-5 mb-3 col-lg-8 offset-lg-2 text-center">
-				Clover (marker) icon made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik" rel="noopener noreferrer">Freepik</a> from <a href="https://www.flaticon.com/free-icon/clover_1530866" title="Flaticon" rel="noopener noreferrer">www.flaticon.com</a>
+			<article id="credits" className="mt-4 mb-3 col-lg-8 offset-lg-2 text-center">
+				Clover (marker) icon made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik" rel="noopener noreferrer">Freepik</a> from <a href="https://www.flaticon.com/free-icon/clover_1530866" title="Flaticon" rel="noopener noreferrer">www.flaticon.com</a><br />
+				<br />
+				non-profit driven & open-source powered
 			</article>
 
 		</section>

@@ -131,11 +131,20 @@
 	}
 
 }
-
 .mobile .gallery {
 	--gridspace: 2px;
 }
-@media screen and (orientation: landscape) {
-	.mobile .gallery {
+
+#filterBox {
+	opacity: .25;
+	transition: opacity .4s ease-out;
+
+	.card-header { cursor: pointer }
+
+	&:hover, &:focus {
+		opacity: 1;
 	}
+}
+.mobile #filterBox {
+//	opacity: 1;
 }
