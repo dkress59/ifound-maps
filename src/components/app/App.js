@@ -3,8 +3,6 @@ import React, { useState, useEffect } from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
 
-import MetaTags from 'react-meta-tags'
-
 import './App.css'
 import Header from './Header'
 import Footer from './Footer'
@@ -17,7 +15,12 @@ import Imprint from '../Imprint'
 
 import AuthContext from '../../context/AuthContext'
 import Cookies from 'universal-cookie'
-const cookies = new Cookies()
+
+import { Helmet } from 'react-helmet'
+import PWAMeta from './PWAMeta'
+
+import HttpsRedirect from 'react-https-redirect'
+
 
 const App = (props) => {
 	const [auth, setAuth] = useState('false')
@@ -25,6 +28,8 @@ const App = (props) => {
 		? 'black-translucent'
 		: 'default'
 	const [theme, setTheme] = useState(startTheme)
+
+	const cookies = new Cookies()
 
 
 	useEffect(() => {
@@ -35,36 +40,43 @@ const App = (props) => {
 		const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
 		if (isDarkMode && theme === 'default') setTheme('black-translucent')
 		if (!isDarkMode && theme !== 'default') setTheme('default')
-	}, [])
+	}, [theme])
 
-	
-	return (
-		<AuthContext.Provider value={{
-			token: auth,
-			setToken: setAuth
-		}}>
-			<MetaTags>
-				<meta name="apple-mobile-web-app-status-bar-style" content={theme} />
-			</MetaTags>
-			<BrowserRouter>
-				<DataLayer>
-					<Header />
-					<main className={"mb-0" + (isMobile ? ' mobile' : '')}>
 
-						<Switch>
-							<Route exact path='/login' component={Login} />
-							<Route path='/gallery/:photoID' component={GalleryView} />
-							<Route path='/gallery' component={GalleryView} />
-							<Route path='/places/:placeID' component={FoundMap} />
-							<Route path='/imprint' component={Imprint} />
-							<Route path='/' component={FoundMap} />
-						</Switch>
+	return (<>
+		<Helmet>
+			<title>iFound.one – Share your lucky clover with us!</title>
+			<meta name="apple-mobile-web-app-status-bar-style" content={theme} />
+			<meta name="description" content="A full geographical map of four-leaf clover, found all across the world." />
+			<link rel="canonical" href="https://www.ifound.one/" />
+		</Helmet>
+		<HttpsRedirect>
+			<AuthContext.Provider value={{
+				token: auth,
+				setToken: setAuth
+			}}>
+				<BrowserRouter>
+					<DataLayer>
+						<Header />
+						<main className={"mb-0" + (isMobile ? ' mobile' : '')}>
 
-					</main>
-					<Footer />
-				</DataLayer>
-			</BrowserRouter>
-		</AuthContext.Provider>
+							<Switch>
+								<Route exact path='/login' component={Login} />
+								<Route path='/gallery/:photoID' component={GalleryView} />
+								<Route path='/gallery' component={GalleryView} />
+								<Route path='/places/:placeID' component={FoundMap} />
+								<Route path='/imprint' component={Imprint} />
+								<Route path='/' component={FoundMap} />
+							</Switch>
+
+						</main>
+						<Footer />
+					</DataLayer>
+				</BrowserRouter>
+			</AuthContext.Provider>
+		</HttpsRedirect>
+		<PWAMeta />
+	</>
 	)
 
 }

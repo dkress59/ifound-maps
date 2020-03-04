@@ -17,6 +17,8 @@ import { isMobile } from 'react-device-detect'
 import MapContext from '../context/MapContext'
 import PlaceContext from '../context/PlaceContext'
 
+import { Helmet } from 'react-helmet'
+
 
 const coordIcon = L.icon({
 	iconSize: [25, 41],
@@ -46,7 +48,15 @@ const cloverIcon = L.icon({
 		const imgObj = photos.filter(photo => { return photo._id === place._id })
 		const img = (imgObj.length > 0)
 			? () => {
-				return <Image src={imgObj[0].img.src + '?thumb=true'} webp={imgObj[0].img.src + '.webp?thumb=true'} className="thumbnail" />
+				return <>
+					<Image src={imgObj[0].img.src + '?thumb=true'} webp={imgObj[0].img.src + '.webp?thumb=true'} className="thumbnail" />
+					<meta itemProp="url" content={`${process.env.REACT_APP_URL}/photos/${place._id}`} />
+					<meta itemProp="embedUrl" content={imgObj[0].img.src} />
+					<meta itemProp="author" content={place.author} />
+					<span itemProp="thumbnail">
+						<meta itemProp="embedUrl" content={imgObj[0].img.src + '?thumb=true'} />
+					</span>
+				</>
 			}
 			: () => { }
 		return (
@@ -63,14 +73,17 @@ const cloverIcon = L.icon({
 					}}*/
 					dataSaved>
 					<Popup minWidth="160" maxWidth="320" closeButton="false">
-						<div className="text-center m-0" data-id={place._id}>
-							<Link to={{
+						<div className="text-center m-0" data-id={place._id} itemScope itemType="https://schema.org/Place">
+							<meta itemProp="url" content={`${process.env.REACT_APP_URL}/places/${place._id}`} />
+							<meta itemProp="latitude" content={`${pos.lat}`} />
+							<meta itemProp="longitude" content={`${pos.lng}`} />
+							<Link itemProp="photo" to={{
 								pathname: '/gallery/' + place._id,
 								state: { photo: place._id }
 							}}>
 								{img()}
 							</Link>
-							{(() => { if (place.name && place.name !== undefined) return <h4 className="mb-0">{place.name}</h4> })()}
+							{(() => { if (place.name && place.name !== undefined) return <h4 className="mb-0" itemProp="name">{place.name}</h4> })()}
 							{(() => { if (place.author && place.author !== undefined) return <p className="m-0"><small>von </small>{place.author}</p> })()}
 						</div>
 						{(() => { if (token !== 'false') return <img className="trash feather" src={trashIcon} alt="delete" onClick={(e) => deletePlace(place._id)} /> })()}
@@ -92,7 +105,7 @@ const FoundMap = (props) => {
 	const indexRef = useRef(null)
 	const tempRef = useRef(null)
 
-	const index = (Object.keys(props.match.params).length > 0)
+	const index = (Object.keys(props.match.params).length)
 		? props.match.params.placeID : (props.location && props.location.state && props.location.state.place)
 			? props.location.state.place : 0
 
@@ -153,6 +166,11 @@ const FoundMap = (props) => {
 
 	return (
 		<>
+			<Helmet>
+				{/*<title>iFound.one – Map</title>*/}
+				<meta name="description" content="A full geographical map of four-leaf clover, found all across the world. Let the world know, where to get lucky and send us a photo of one of your findings!" />
+				<link rel="canonical" href={"https://www.ifound.one/" + (Object.keys(props.match.params).length ? 'places/' + props.match.params.placeID : '')} />
+			</Helmet>
 			<Map
 				id="map"
 				ref={mapRef}

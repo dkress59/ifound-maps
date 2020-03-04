@@ -21,16 +21,14 @@ const Header = (props) => {
 					<h1 className="h3">
 						<Logo src={require('../../assets/logo.svg')} alt="iFound.one Logo" style={{
 							height: '2em',
-							width: 'auto',
-							margin: '-.55em -.55em -.55em -.35em'
+							width: 'auto', margin: '-.55em -.55em -.55em -.35em'
 						}} />
 						iFound.one!
-					</h1>
+	</h1>
 				</a>
 				<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 					<span className="navbar-toggler-icon"></span>
-				</button>
-				<ul className="navbar-nav mr-auto w-100 justify-content-end collapse navbar-collapse" id="navbarSupportedContent">
+				</button><ul className="navbar-nav mr-auto w-100 justify-content-end collapse navbar-collapse" id="navbarSupportedContent">
 					<li className="nav-item">
 						<NavLink to="/places" isActive={(match, location) => {
 							//if (!match) return false

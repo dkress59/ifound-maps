@@ -9,6 +9,8 @@ import MapContext from '../context/MapContext'
 
 import { ImageIcon, GridIcon, FilterIcon, DeleteIcon } from './app/Icons'
 
+import { Helmet } from 'react-helmet'
+
 
 const shuffle = (a) => {//eslint-disable-line
 	var j, x, i;
@@ -133,6 +135,11 @@ const GalleryView = (props) => {
 
 	return (
 		<>
+			<Helmet>
+				<title>iFound.one – Find four-leaf clover all across the world!</title>
+				<meta name="description" content="Scroll through our gallery and see all of the beautiful photos, shared by users all scross the world! Find four-leaf clover near you or any in any area you pinpointed on our map!" />
+				<link rel="canonical" href={"https://www.ifound.one/photos/" + ( Object.keys(props.match.params).length ? props.match.params.placeID : '' )} />
+			</Helmet>
 			<div className={"gallery level-" + pinchLevel} style={{ /*transform: `scale(${pinchScale})`, transformOrigin: `${pinchCenter.x}px ${pinchCenter.y}px`*/ }}>
 				<Gallery selectedSet={selectedSet} places={places} />
 			</div>
