@@ -21,6 +21,7 @@ const ImprintHTML = (props) => {
 				<meta property="og:site_name" content="iFound.one" />
 				<meta property="og:url" content="http://www.ifound.one/gallery/" />
 				<meta property="og:image" content="http://www.ifound.one/logo.svg" />
+				<meta property="og:description" content="iFound.one tries hard not to record any user data. Except for your name and your location information, no data will be transmitted. Photos are cleaned from all meta information when saved on our servers and are provided with a Creative Commons license." />
 			</Helmet>
 			<section id="legal" className="container-fluid row pb-3">
 
