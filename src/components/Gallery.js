@@ -204,7 +204,6 @@ const GalleryView = (props) => {
 					>
 						{(() => {
 							if (distInput != 0) return 'Bis zu ' + distInput * 40 / 1000 + 'km entfernt'
-							//else return ' '
 						})()}
 					</label>
 				</div>

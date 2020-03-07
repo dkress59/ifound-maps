@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react'
-//import { findDOMNode } from 'react-dom'
 import { Helmet } from 'react-helmet'
 import './Imprint.css'
 
@@ -10,7 +9,6 @@ const ImprintHTML = (props) => {
 
 	const [impIsOpen, openImp] = useState(0)
 	const [priIsOpen, openPri] = useState(0)
-	//console.log(impRef.current)
 
 	return (
 		<>
