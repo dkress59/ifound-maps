@@ -43,9 +43,9 @@ const Header = (props) => {
 							else return false
 						}} className="nav-link" activeClassName="active">Galerie</NavLink>
 					</li>
-					<li className="nav-item">
+					{/*<li className="nav-item">
 						<NavLink exact to="/login" className="nav-link" activeClassName="active">Login</NavLink>
-					</li>
+					</li>*/}
 				</ul>
 			</nav>
 		</header>

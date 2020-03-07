@@ -33,7 +33,7 @@ const DataLayer = (props) => {
 
 	useEffect(() => {
 		if (localStorage.getItem('places')) setPlaces( JSON.parse(localStorage.getItem('places')) )
-		fetch(process.env.REACT_APP_REST_URL + '/api/places/')
+		fetch(process.env.REACT_APP_REST_URL + '/places/')
 			.then((res => res.json()))
 			.then((res) => {
 				const sorted = res.places.sort((a, b) => {
@@ -50,7 +50,7 @@ const DataLayer = (props) => {
 
 		window.placeInterval = setInterval(() => {
 			console.log('Reloading places...')
-			fetch(process.env.REACT_APP_REST_URL + '/api/places/')
+			fetch(process.env.REACT_APP_REST_URL + '/places/')
 				.then((res => res.json()))
 				.then((res) => {
 					updatePlaces(res.places)
@@ -69,7 +69,7 @@ const DataLayer = (props) => {
 			const img = new Image()
 			img.alt = 'Photo document'
 			img.className = 'full'
-			img.src = 'https://ifoundone.projecd.org/view/' + plc.photos[0]
+			img.src = process.env.REACT_APP_MEDIA_URL + '/view/' + plc.photos[0]
 			if (plc.photos.length > 0) return {
 				_id: plc._id,
 				img: img,

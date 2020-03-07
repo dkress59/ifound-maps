@@ -56,11 +56,11 @@ export const Gallery = (props) => {
 						pathname: '/places/' + photo._id,
 						state: { place: photo._id }
 					}}>
-						<Image src={photo.img.src} webp={photo.img.src + '.webp'} alt="This is a descriptive subtitle." className="photo" />
+						<Image src={photo.img.src} webp={photo.img.src + '.webp'} alt="Four-leaf clover photo" className="photo" />
 					</Link>
 					<figcaption>
 						<h3 className="mt-1 mb-0">{place.name}</h3>
-						<p className="mt-0 mb-1">by {place.author}</p>
+						<p className="mt-0 mb-1"><small>von</small> {place.author}</p>
 					</figcaption>
 				</figure>
 			)
@@ -138,7 +138,7 @@ const GalleryView = (props) => {
 			<Helmet>
 				<title>iFound.one – Find four-leaf clover all across the world!</title>
 				<meta name="description" content="Scroll through our gallery and see all of the beautiful photos, shared by users all scross the world! Find four-leaf clover near you or any in any area you pinpointed on our map!" />
-				<link rel="canonical" href={"https://www.ifound.one/photos/" + ( Object.keys(props.match.params).length ? props.match.params.placeID : '' )} />
+				<link rel="canonical" href={"http://www.ifound.one/photos/" + ( Object.keys(props.match.params).length ? props.match.params.placeID : '' )} />
 			</Helmet>
 			<div className={"gallery level-" + pinchLevel} style={{ /*transform: `scale(${pinchScale})`, transformOrigin: `${pinchCenter.x}px ${pinchCenter.y}px`*/ }}>
 				<Gallery selectedSet={selectedSet} places={places} />

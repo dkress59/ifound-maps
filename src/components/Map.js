@@ -50,7 +50,7 @@ const cloverIcon = L.icon({
 			? () => {
 				return <>
 					<Image src={imgObj[0].img.src + '?thumb=true'} webp={imgObj[0].img.src + '.webp?thumb=true'} className="thumbnail" />
-					<meta itemProp="url" content={`${process.env.REACT_APP_URL}/photos/${place._id}`} />
+					<meta itemProp="url" content={`${process.env.REACT_APP_URL}/gallery/${place._id}`} />
 					<meta itemProp="embedUrl" content={imgObj[0].img.src} />
 					<meta itemProp="author" content={place.author} />
 					<span itemProp="thumbnail">
@@ -147,13 +147,13 @@ const FoundMap = (props) => {
 
 	const deletePlace = (id) => {
 		if (!id) return false
-		fetch(process.env.REACT_APP_REST_URL + '/api/places/' + id, {
+		fetch(process.env.REACT_APP_REST_URL + '/places/' + id, {
 			headers: { 'Authorization': 'Bearer ' + token },
 			method: 'DELETE',
 		})
 			.then(res => {
 				console.log(res)
-				fetch(process.env.REACT_APP_REST_URL + '/api/places/')
+				fetch(process.env.REACT_APP_REST_URL + '/places/')
 					.then(nu => nu.json())
 					.then(nu => {
 						setPlaces(nu.places)
@@ -169,7 +169,7 @@ const FoundMap = (props) => {
 			<Helmet>
 				{/*<title>iFound.one – Map</title>*/}
 				<meta name="description" content="A full geographical map of four-leaf clover, found all across the world. Let the world know, where to get lucky and send us a photo of one of your findings!" />
-				<link rel="canonical" href={"https://www.ifound.one/" + (Object.keys(props.match.params).length ? 'places/' + props.match.params.placeID : '')} />
+				<link rel="canonical" href={"http://www.ifound.one/" + (Object.keys(props.match.params).length ? 'places/' + props.match.params.placeID : '')} />
 			</Helmet>
 			<Map
 				id="map"
