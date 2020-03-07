@@ -30,14 +30,14 @@ const Header = (props) => {
 					<span className="navbar-toggler-icon"></span>
 				</button><ul className="navbar-nav mr-auto w-100 justify-content-end collapse navbar-collapse" id="navbarSupportedContent">
 					<li className="nav-item">
-						<NavLink to="/places" isActive={(match, location) => {
+						<NavLink to="/" isActive={(match, location) => {
 							//if (!match) return false
 							if (location.pathname === '/' || location.pathname.substr(0, 7) === '/places') return true
 							else return false
 						}} className="nav-link" activeClassName="active">Karte</NavLink>
 					</li>
 					<li className="nav-item">
-						<NavLink to="/gallery" isActive={(match, location) => {
+						<NavLink to="/gallery/" isActive={(match, location) => {
 							//if (!match) return false
 							if (location.pathname.substr(0, 8) === '/gallery') return true
 							else return false

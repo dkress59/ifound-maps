@@ -67,9 +67,13 @@ const DataLayer = (props) => {
 		if (localStorage.getItem('photos')) setPhotos( JSON.parse(localStorage.getItem('photos')) )
 		const preloaded = places.map(plc => {
 			const img = new Image()
+			const thumb = new Image()
 			img.alt = 'Photo document'
+			thumb.alt = 'Photo thumbnail'
 			img.className = 'full'
+			thumb.className = 'thumbnail'
 			img.src = process.env.REACT_APP_MEDIA_URL + '/view/' + plc.photos[0]
+			thumb.src = process.env.REACT_APP_MEDIA_URL + '/view/' + plc.photos[0] + '?thumb=true'
 			if (plc.photos.length > 0) return {
 				_id: plc._id,
 				img: img,

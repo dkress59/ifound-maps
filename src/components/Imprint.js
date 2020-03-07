@@ -16,6 +16,11 @@ const ImprintHTML = (props) => {
 				<title>iFound.one – Site Notice & Privacy Protection</title>
 				<meta name="description" content="iFound.one tries hard not to record any user data. Except for your name and your location information, no data will be transmitted. Photos are cleaned from all meta information when saved on our servers and are provided with a Creative Commons license." />
 				<link rel="canonical" href="http://www.ifound.one/imprint/" />
+				<meta property="og:type" content="website" />
+				<meta property="og:title" content="iFound.one" />
+				<meta property="og:site_name" content="iFound.one" />
+				<meta property="og:url" content="http://www.ifound.one/gallery/" />
+				<meta property="og:image" content="http://www.ifound.one/logo.svg" />
 			</Helmet>
 			<section id="legal" className="container-fluid row pb-3">
 
