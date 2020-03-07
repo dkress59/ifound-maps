@@ -34,7 +34,7 @@ const App = (props) => {
 
 	useEffect(() => {
 		if (auth === 'false' && cookies.get('token')) setAuth(cookies.get('token'))
-	}, [auth])
+	}, [auth])//eslint-disable-line
 
 	useEffect(() => {
 		const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches

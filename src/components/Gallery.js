@@ -120,7 +120,7 @@ const GalleryView = (props) => {
 			else return false
 		})
 		if (filterSet.length !== filtered.length) setFiltered(filterSet)
-	}, [distInput])
+	}, [distInput])//eslint-disable-line
 
 	useEffect(() => {
 		if (index) {
@@ -128,7 +128,7 @@ const GalleryView = (props) => {
 			if (places.filter((p) => p._id === index).length) setPinchLevel(4)
 			console.log(places)
 		}
-	}, [photos])
+	}, [photos])//eslint-disable-line
 
 
 	if (!photos.length) return (<div className="loadingScreen">Loading...</div>)
@@ -209,7 +209,7 @@ const GalleryView = (props) => {
 						aria-label="distance to your position"
 					>
 						{(() => {
-							if (distInput != 0) return 'Bis zu ' + distInput * 40 / 1000 + 'km entfernt'
+							if (distInput !== 0) return 'Bis zu ' + distInput * 40 / 1000 + 'km entfernt'
 						})()}
 					</label>
 				</div>

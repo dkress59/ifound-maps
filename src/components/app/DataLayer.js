@@ -32,19 +32,43 @@ const DataLayer = (props) => {
 
 
 	useEffect(() => {
+
 		if (localStorage.getItem('places')) setPlaces( JSON.parse(localStorage.getItem('places')) )
+		if (localStorage.getItem('photos')) setPhotos( JSON.parse(localStorage.getItem('photos')) )
 		fetch(process.env.REACT_APP_REST_URL + '/places/')
 			.then((res => res.json()))
 			.then((res) => {
+
 				const sorted = res.places.sort((a, b) => {
 					if (a.created < b.created) return -1
 					else return 1
 				})
 				updatePlaces(sorted)
 				localStorage.setItem('places', JSON.stringify(sorted))
+
+				const preloaded = sorted.map(plc => {
+					const img = new Image()
+					const thumb = new Image()
+					img.alt = 'Photo document'
+					thumb.alt = 'Photo thumbnail'
+					img.className = 'full'
+					thumb.className = 'thumbnail'
+					img.src = process.env.REACT_APP_MEDIA_URL + '/view/' + plc.photos[0]
+					thumb.src = process.env.REACT_APP_MEDIA_URL + '/view/' + plc.photos[0] + '?thumb=true'
+					if (plc.photos.length > 0) return {
+						_id: plc._id,
+						img: img,
+						created: plc.created,
+						place: { lat: plc.lat, lng: plc.lng }
+					}
+					else return {}
+				})
+				if (preloaded.length) setPhotos(preloaded)
+				if (preloaded.length) localStorage.setItem('photos', JSON.stringify(preloaded))
+
 			})
 
-	}, [])
+	}, [])//eslint-disable-line
 
 	useEffect(() => {
 
