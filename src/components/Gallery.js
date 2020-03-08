@@ -139,12 +139,12 @@ const GalleryView = (props) => {
 			<Helmet>
 				<title>iFound.one – Find four-leaf clover all across the world!</title>
 				<meta name="description" content="Scroll through our gallery and see all of the beautiful photos, shared by users all scross the world! Find four-leaf clover near you or any in any area you pinpointed on our map!" />
-				<link rel="canonical" href={"http://www.ifound.one/gallery/" + ( Object.keys(props.match.params).length ? props.match.params.placeID : '' )} />
+				<link rel="canonical" href={"https://www.ifound.one/gallery/" + ( Object.keys(props.match.params).length ? props.match.params.placeID : '' )} />
 				<meta property="og:type" content="website" />
 				<meta property="og:title" content="iFound.one" />
 				<meta property="og:site_name" content="iFound.one" />
-				<meta property="og:url" content="http://www.ifound.one/gallery/" />
-				<meta property="og:image" content="http://www.ifound.one/logo.svg" />
+				<meta property="og:url" content="https://www.ifound.one/gallery/" />
+				<meta property="og:image" content="https://www.ifound.one/logo.svg" />
 				<meta property="og:description" content="Scroll through our gallery and see all of the beautiful photos, shared by users all scross the world! Find four-leaf clover near you or any in any area you pinpointed on our map!" />
 			</Helmet>
 			<div className={"gallery level-" + pinchLevel} style={{ /*transform: `scale(${pinchScale})`, transformOrigin: `${pinchCenter.x}px ${pinchCenter.y}px`*/ }}>
