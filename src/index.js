@@ -1,6 +1,7 @@
 import './index.css'
 import './assets/bootstrap.sass'
 import 'jquery'
+import $ from 'jquery'
 import 'bootstrap/dist/js/bootstrap.min.js'
 import 'leaflet/dist/leaflet.css'
 import 'animate.css'
@@ -16,6 +17,8 @@ import App from './components/app/App'
 import 'es5-shim'
 import 'es6-shim'
 import 'es7-shim'
+
+window.$ = $
 
 
 ReactDOM.render((<App />), document.getElementById('root'))

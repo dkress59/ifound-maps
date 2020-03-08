@@ -7,7 +7,9 @@ import { isMobile } from 'react-device-detect'
 import './InputRange.css'
 //import fetch from 'cross-fetch'
 import 'react-tippy/dist/tippy.css'
-import { Tooltip } from 'react-tippy'
+//import { Tooltip } from 'react-tippy'
+
+//import $ from 'jquery'
 
 
 import { UserIcon, NameIcon, MinimiseIcon, AddIcon, CameraIcon, FileIcon } from '../app/Icons'
@@ -25,6 +27,8 @@ const InputBox = (props) => {
 	const bodyRef = useRef(null)
 	const [boxSize, setBoxSize] = useState({ w: 0, h: 0 })
 	const [isCollapsed, collapse] = useState(props.collapsed || false)
+
+	const tooltipRef = useRef(null)
 
 
 	const handleSubmit = (e) => {
@@ -124,6 +128,7 @@ const InputBox = (props) => {
 
 	useEffect(() => {
 		if (isMobile) collapse(true)
+		window.$('#nameInputPrepend').tooltip()
 	}, [])
 
 
@@ -149,24 +154,17 @@ const InputBox = (props) => {
 					<input name="lng" type="hidden" value={coords.lng} />
 
 					<div className="input-group mb-2">
-						<Tooltip
-							disabled={isMobile}
-							position="top-end"
-							distance={8}
-							//theme="transparent"
-							html={(
-								<div>
-									Deine aktuelle Position
-								</div>
-							)}
-							arrow
-						>
-							<div className="input-group-prepend h-100" onClick={() => { getGeo(); isMobile && collapse(1) }}>
-								<span className="btn btn-primary input-group-text" id="nameInputPrepend">
-									<NameIcon />
-								</span>
-							</div>
-						</Tooltip>
+						<div className="input-group-prepend" onClick={() => { getGeo(); isMobile && collapse(1) }}>
+							<span
+								className="btn btn-primary input-group-text"
+								data-toggle={!isMobile ? 'tooltip' : ''}
+								data-placement={!isMobile ? 'top' : ''}
+								title="Deine aktuelle Position"
+								id="nameInputPrepend"
+							>
+								<NameIcon />
+							</span>
+						</div>
 						<input
 							required
 							type="text"
