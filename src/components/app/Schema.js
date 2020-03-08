@@ -14,13 +14,11 @@ const Schema = (props) => {
 						<meta itemProp="url" content={`${process.env.REACT_APP_URL}/places/${place._id}`} />
 						<meta itemProp="latitude" content={`${pos.lat}`} />
 						<meta itemProp="longitude" content={`${pos.lng}`} />
-						<span itemProp="photo">
+						<span itemProp="photo" itemScope itemType="https://schema.org/Photograph">
+							<meta itemProp="author" content={place.author} />
 							<meta itemProp="url" content={`${process.env.REACT_APP_URL}/gallery/${place._id}`} />
 							<meta itemProp="embedUrl" content={imgObj.length && imgObj[0].img.src} />
-							<meta itemProp="author" content={place.author} />
-							<span itemProp="thumbnail">
-								<meta itemProp="embedUrl" content={imgObj.length && imgObj[0].img.src + '?thumb=true'} />
-							</span>
+							<meta itemProp="thumbnailUrl" content={imgObj.length && imgObj[0].img.src + '?thumb=true'} />
 						</span>
 					</div>
 				)
