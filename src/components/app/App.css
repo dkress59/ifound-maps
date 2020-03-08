@@ -33,6 +33,14 @@ div.loadingScreen {
 	align-items: center;
 	justify-content: center;
 }
+#splash-screen {
+	padding: 40vh 40vw;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 999;
+	pointer-events: none;
+}
 
 .logo-1 {
 	fill: #68768a;

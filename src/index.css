@@ -19,8 +19,18 @@ body {
 #root {
 	min-height: 100vh;
 }
+.bg-theme {
+	background-color: var(--bgcolor);
+}
+.text-theme {
+	color: var(--txtcolor);
+}
 
 @media (prefers-color-scheme: light), (prefers-color-scheme: no-preference) {
+	:root {
+		--bgcolor: var(--light);
+		--txtcolor: var(--gray-dark);
+	}
 	.text-flip {
 		color: var(--secondary);
 	}
@@ -36,6 +46,10 @@ body {
 	}
 }
 @media (prefers-color-scheme: dark) {
+	:root {
+		--bgcolor: var(--dark);
+		--txtcolor: var(--light)
+	}
 	.text-flip {
 		color: rgba(255, 255, 255, 0.33);
 	}

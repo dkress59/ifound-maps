@@ -22,7 +22,7 @@ import PWAMeta from './PWAMeta'
 //import HttpsRedirect from 'react-https-redirect'
 
 
-const App = (props) => {
+const App = () => {
 	const [auth, setAuth] = useState('false')
 	const startTheme = (window.matchMedia("(prefers-color-scheme: dark)").matches)
 		? 'black-translucent'
@@ -30,6 +30,21 @@ const App = (props) => {
 	const [theme, setTheme] = useState(startTheme)
 
 	const cookies = new Cookies()
+	const [isLoading, setIsLoading] = useState(1)
+
+	const SplashScreen = () => {
+		const fade = isLoading
+			? ''
+			: 'fadeOut animated fast '
+		const zoom = isLoading
+			? {}
+			: {className: 'zoomOut animated fast'}
+		return (
+			<div id="splash-screen" className={fade + "w-100 h-100 d-flex align-items-center justify-content-center bg-theme"}>
+				<img src={process.env.REACT_APP_URL + "/logo.svg"} alt="loading…" {...zoom} style={{ width: '100%', height: 'auto', maxWidth: '512px' }} />
+			</div>
+		)
+	}
 
 
 	useEffect(() => {
@@ -43,6 +58,19 @@ const App = (props) => {
 	}, [theme])
 
 
+	if (isLoading) return (
+		<>
+			<DataLayer isLoading={isLoading} setIsLoading={setIsLoading} />
+			<Helmet>
+				<title>iFound.one – Share your lucky clover with us!</title>
+				<meta name="apple-mobile-web-app-status-bar-style" content={theme} />
+				<meta name="description" content="A full geographical map of four-leaf clover, found all across the world." />
+				<link rel="canonical" href="http://www.ifound.one/" />
+			</Helmet>
+			<SplashScreen />
+		</>
+	)
+
 	return (<>
 		<Helmet>
 			<title>iFound.one – Share your lucky clover with us!</title>
@@ -51,29 +79,30 @@ const App = (props) => {
 			<link rel="canonical" href="http://www.ifound.one/" />
 		</Helmet>
 		{/*<HttpsRedirect>*/}
-			<AuthContext.Provider value={{
-				token: auth,
-				setToken: setAuth
-			}}>
-				<BrowserRouter>
-					<DataLayer>
-						<Header />
-						<main className={"mb-0" + (isMobile ? ' mobile' : '')}>
+		<AuthContext.Provider value={{
+			token: auth,
+			setToken: setAuth
+		}}>
+			<BrowserRouter>
+				<DataLayer isLoading={0} setIsLoading={()=>{}}>
+					<Header />
+					<main className={"mb-0" + (isMobile ? ' mobile' : '')}>
 
-							<Switch>
-								<Route exact path='/login' component={Login} />
-								<Route path='/gallery/:photoID' component={GalleryView} />
-								<Route path='/gallery' component={GalleryView} />
-								<Route path='/places/:placeID' component={FoundMap} />
-								<Route path='/imprint' component={Imprint} />
-								<Route path='/' component={FoundMap} />
-							</Switch>
+						<Switch>
+							<Route exact path='/login' component={Login} />
+							<Route path='/gallery/:photoID' component={GalleryView} />
+							<Route path='/gallery' component={GalleryView} />
+							<Route path='/places/:placeID' component={FoundMap} />
+							<Route path='/imprint' component={Imprint} />
+							<Route path='/' component={FoundMap} />
+						</Switch>
 
-						</main>
-						<Footer />
-					</DataLayer>
-				</BrowserRouter>
-			</AuthContext.Provider>
+					</main>
+					<Footer />
+				</DataLayer>
+			</BrowserRouter>
+			<SplashScreen />
+		</AuthContext.Provider>
 		{/*</HttpsRedirect>*/}
 		<PWAMeta />
 	</>

@@ -9,6 +9,7 @@ const DataLayer = (props) => {
 	const [places, setPlaces] = useState([])
 	const [range, setRange] = useState(0)
 	const [current, setCurrent] = useState('')
+	const { isLoading, setIsLoading } = props
 
 
 	const updatePlaces = (res) => {
@@ -35,18 +36,14 @@ const DataLayer = (props) => {
 
 		if (localStorage.getItem('places')) setPlaces( JSON.parse(localStorage.getItem('places')) )
 		if (localStorage.getItem('photos')) setPhotos( JSON.parse(localStorage.getItem('photos')) )
+
 		fetch(process.env.REACT_APP_REST_URL + '/places/')
 			.then((res => res.json()))
 			.then((res) => {
+				localStorage.setItem('places', JSON.stringify(res.places))
+				updatePlaces(res.places)
 
-				const sorted = res.places.sort((a, b) => {
-					if (a.created < b.created) return -1
-					else return 1
-				})
-				updatePlaces(sorted)
-				localStorage.setItem('places', JSON.stringify(sorted))
-
-				const preloaded = sorted.map(plc => {
+				const preloaded = res.places.map(plc => {
 					const img = new Image()
 					const thumb = new Image()
 					img.alt = 'Photo document'
@@ -61,11 +58,15 @@ const DataLayer = (props) => {
 						created: plc.created,
 						place: { lat: plc.lat, lng: plc.lng }
 					}
-					else return {}
+					else return false
 				})
-				if (preloaded.length) setPhotos(preloaded)
-				if (preloaded.length) localStorage.setItem('photos', JSON.stringify(preloaded))
 
+				if (preloaded.length) {
+					setPhotos(preloaded)
+					localStorage.setItem('photos', JSON.stringify(preloaded))
+				}
+
+				if (res.places.length && isLoading) setIsLoading(0)
 			})
 
 	}, [])//eslint-disable-line
@@ -104,13 +105,15 @@ const DataLayer = (props) => {
 				created: plc.created,
 				place: { lat: plc.lat, lng: plc.lng }
 			}
-			else return {}
+			else return false
 		})
-		if (preloaded.length) setPhotos(preloaded)
-		if (preloaded.length) localStorage.setItem('photos', JSON.stringify(preloaded))
+		if (preloaded.length) {
+			setPhotos(preloaded)
+			localStorage.setItem('photos', JSON.stringify(preloaded))
+		}
 	}, [places])
 
-	return (
+	if (!isLoading) return (
 		<PlaceContext.Provider value={{
 			places: places,
 			setPlaces: setPlaces,
@@ -131,6 +134,7 @@ const DataLayer = (props) => {
 			</MapContext.Provider>
 		</PlaceContext.Provider>
 	)
+	else return <></>
 
 }
 

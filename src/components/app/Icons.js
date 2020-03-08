@@ -2,7 +2,7 @@ import React from 'react'
 import './Icons.css'
 
 export const CloverIcon = props => {
-	const addClass = props.className && ' ' + props.className
+	const addClass = props.className ? ' ' + props.className : ''
 	return (
 		<svg className={addClass}
 			xmlns="http://www.w3.org/2000/svg"
@@ -118,7 +118,7 @@ export const CloverIcon = props => {
 }
 
 export const UserIcon = props => {
-	const addClass = props.className && ' ' + props.className
+	const addClass = props.className ? ' ' + props.className : ''
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -139,7 +139,7 @@ export const UserIcon = props => {
 	)
 }
 export const NameIcon = props => {
-	const addClass = props.className && ' ' + props.className
+	const addClass = props.className ? ' ' + props.className : ''
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -160,7 +160,7 @@ export const NameIcon = props => {
 	)
 }
 export const MinimiseIcon = props => {
-	const addClass = props.className && ' ' + props.className
+	const addClass = props.className ? ' ' + props.className : ''
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -180,7 +180,7 @@ export const MinimiseIcon = props => {
 	)
 }
 export const AddIcon = props => {
-	const addClass = props.className && ' ' + props.className
+	const addClass = props.className ? ' ' + props.className : ''
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -200,7 +200,7 @@ export const AddIcon = props => {
 	)
 }
 export const CameraIcon = props => {
-	const addClass = props.className && ' ' + props.className
+	const addClass = props.className ? ' ' + props.className : ''
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -220,7 +220,7 @@ export const CameraIcon = props => {
 	)
 }
 export const FileIcon = props => {
-	const addClass = props.className && ' ' + props.className
+	const addClass = props.className ? ' ' + props.className : ''
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -240,7 +240,7 @@ export const FileIcon = props => {
 	)
 }
 export const ImageIcon = props => {
-	const addClass = props.className && ' ' + props.className
+	const addClass = props.className ? ' ' + props.className : ''
 	return (
 		<svg xmlns="http://www.w3.org/2000/svg"
 			width="24"
@@ -270,7 +270,7 @@ export const ImageIcon = props => {
 	)
 }
 export const GridIcon = props => {
-	const addClass = props.className && ' ' + props.className
+	const addClass = props.className ? ' ' + props.className : ''
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -292,7 +292,7 @@ export const GridIcon = props => {
 	)
 }
 export const FilterIcon = props => {
-	const addClass = props.className && props.classname + ' '
+	const addClass = props.className ? ' ' + props.classname : ''
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -311,7 +311,7 @@ export const FilterIcon = props => {
 	)
 }
 export const CancelIcon = props => {
-	const addClass = props.className && props.className + ' '
+	const addClass = props.className ? ' ' + props.className : ''
 	const addProps = { ...props, className: addClass }
 	return (
 		<svg
@@ -340,7 +340,7 @@ export const CancelIcon = props => {
 	)
 }
 export const DeleteIcon = props => {
-	const addClass = props.className && props.className + ' '
+	const addClass = props.className ? ' ' + props.className : ''
 	const addProps = { ...props, className: addClass }
 	return (
 		<svg
@@ -353,7 +353,8 @@ export const DeleteIcon = props => {
 			strokeWidth="2"
 			strokeLinecap="round"
 			strokeLinejoin="round"
-			{...addProps}>
+			{...addProps}
+		>
 			<path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z" />
 			<line x1="18"
 				y1="9"
@@ -367,7 +368,7 @@ export const DeleteIcon = props => {
 	)
 }
 export const TrashIcon = props => {
-	const addClass = props.className && props.className + ' '
+	const addClass = props.className ? ' ' + props.className : ''
 	const addProps = { ...props, className: addClass }
 	return (
 		<svg
@@ -380,12 +381,81 @@ export const TrashIcon = props => {
 			strokeWidth="2"
 			strokeLinecap="round"
 			strokeLinejoin="round"
-			{...addProps}>
+			{...addProps}
 		>
 			<polyline points="3 6 5 6 21 6" />
 			<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
 			<line x1="10" y1="11" x2="10" y2="17" />
 			<line x1="14" y1="11" x2="14" y2="17" />
+		</svg>
+	)
+}
+
+export const LoadingCircle = props => {
+	const addClass = props.className ? ' ' + props.className : ''
+	const addProps = { ...props, className: "loading-circle" + addClass }
+	return (
+		<svg
+			xmlns="http://www.w3.org/2000/svg" 
+			xmlnsXlink="http://www.w3.org/1999/xlink"
+			style={{
+				margin: 'auto',
+				//backgroundColor: '#fff',
+				display: 'block',
+				shapeRendering: 'auto',
+				animationPlayState: 'running',
+				animationDelay: 0,
+				backgroundPosition: 'initial initial',
+				backgroundRepeat: 'initial initial'
+			}}
+			width="128px"
+			height="128px"
+			viewBox="0 0 100 100"
+			preserveAspectRatio="xMidYMid"
+			{...addProps}
+		>
+			<circle
+				cx="50"
+				cy="50"
+				r="24"
+				strokeWidth="4"
+				stroke="#355355"
+				strokeDasharray="37.69911184307752 37.69911184307752"
+				fill="none"
+				strokeLinecap="round"
+				style={{ animationPlayState: 'running', animationDelay: 0 }}
+			>
+				<animateTransform attributeName="transform"
+					type="rotate"
+					dur="1.4925373134328357s"
+					repeatCount="indefinite"
+					keyTimes="0;1"
+					values="0 50 50;360 50 50"
+					style={{ animationPlayState: 'running', animationDelay: 0 }}
+				/>
+			</circle>
+			<circle
+				cx="50"
+				cy="50"
+				r="19"
+				strokeWidth="4"
+				stroke="#45bf7f"
+				strokeDasharray="29.845130209103033 29.845130209103033"
+				strokeDashoffset="29.845130209103033"
+				fill="none"
+				strokeLinecap="round"
+				style={{ animationPlayState: 'running', animationDelay: 0 }}
+			>
+				<animateTransform
+					attributeName="transform"
+					type="rotate"
+					dur="1.4925373134328357s"
+					repeatCount="indefinite"
+					keyTimes="0;1"
+					values="0 50 50;-360 50 50"
+					style={{ animationPlayState: 'running', animationDelay: 0 }}
+				/>
+			</circle>
 		</svg>
 	)
 }

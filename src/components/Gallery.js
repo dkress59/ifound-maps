@@ -7,7 +7,7 @@ import { isMobile } from 'react-device-detect'
 import PlaceContext from '../context/PlaceContext'
 import MapContext from '../context/MapContext'
 
-import { ImageIcon, GridIcon, FilterIcon, DeleteIcon } from './app/Icons'
+import { ImageIcon, GridIcon, FilterIcon, DeleteIcon, LoadingCircle } from './app/Icons'
 
 import { Helmet } from 'react-helmet'
 
@@ -52,6 +52,7 @@ export const Gallery = (props) => {
 
 			return (
 				<figure key={"photo-" + photo._id}>
+					<LoadingCircle />
 					<Link to={{
 						pathname: '/places/' + photo._id,
 						state: { place: photo._id }
