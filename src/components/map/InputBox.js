@@ -6,10 +6,6 @@ import ReactDOM from 'react-dom'
 import { isMobile } from 'react-device-detect'
 import './InputRange.css'
 //import fetch from 'cross-fetch'
-import 'react-tippy/dist/tippy.css'
-//import { Tooltip } from 'react-tippy'
-
-//import $ from 'jquery'
 
 
 import { UserIcon, NameIcon, MinimiseIcon, AddIcon, CameraIcon, FileIcon } from '../app/Icons'
@@ -27,8 +23,6 @@ const InputBox = (props) => {
 	const bodyRef = useRef(null)
 	const [boxSize, setBoxSize] = useState({ w: 0, h: 0 })
 	const [isCollapsed, collapse] = useState(props.collapsed || false)
-
-	const tooltipRef = useRef(null)
 
 
 	const handleSubmit = (e) => {
