@@ -1,5 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import { isMobile } from 'react-device-detect'
 
 const Logo = (props) => (
 	<svg className={props.className} style={props.style} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
@@ -14,6 +15,7 @@ const Logo = (props) => (
 )
 
 const Header = (props) => {
+	const align = isMobile ? 'text-right' : 'justify-content-end'
 	return (
 		<header className="my-2 navbar-expand-md">
 			<nav className="navbar navbar-expand-lg navbar-dark">
@@ -24,28 +26,29 @@ const Header = (props) => {
 							width: 'auto', margin: '-.55em -.55em -.55em -.35em'
 						}} />
 						iFound.one!
-	</h1>
+					</h1>
 				</a>
-				<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-					<span className="navbar-toggler-icon"></span>
-				</button><ul className="navbar-nav mr-auto w-100 justify-content-end collapse navbar-collapse" id="navbarSupportedContent">
-					<li className="nav-item">
-						<NavLink to="/" isActive={(match, location) => {
-							//if (!match) return false
-							if (location.pathname === '/' || location.pathname.substr(0, 7) === '/places') return true
-							else return false
-						}} className="nav-link" activeClassName="active">Karte</NavLink>
-					</li>
-					<li className="nav-item">
-						<NavLink to="/gallery/" isActive={(match, location) => {
-							//if (!match) return false
-							if (location.pathname.substr(0, 8) === '/gallery') return true
-							else return false
-						}} className="nav-link" activeClassName="active">Galerie</NavLink>
-					</li>
-					{/*<li className="nav-item">
+				<ul className={"navbar-nav mr-auto " + align + " flex-grow-1"} id="navbarSupportedContent">
+					{!isMobile 
+						? <><li className="nav-item">
+								<NavLink to="/" isActive={(match, location) => {
+									//if (!match) return false
+									if (location.pathname === '/' || location.pathname.substr(0, 7) === '/places') return true
+									else return false
+								}} className="nav-link" activeClassName="active">Karte</NavLink>
+							</li>
+							<li className="nav-item">
+								<NavLink to="/gallery/" isActive={(match, location) => {
+									//if (!match) return false
+									if (location.pathname.substr(0, 8) === '/gallery') return true
+									else return false
+								}} className="nav-link" activeClassName="active">Galerie</NavLink>
+							</li></>
+						 : ''
+					}
+					{window.matchMedia('(display-mode: standalone)').matches && <li className="nav-item">
 						<NavLink exact to="/login" className="nav-link" activeClassName="active">Login</NavLink>
-					</li>*/}
+					</li>}
 				</ul>
 			</nav>
 		</header>

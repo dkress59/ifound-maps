@@ -1,7 +1,7 @@
 import Alert from 'bootstrap/js/src/alert'
 import Button from 'bootstrap/js/src/button'
 //import Carousel from 'bootstrap/js/src/carousel'
-import Collapse from 'bootstrap/js/src/collapse'
+//import Collapse from 'bootstrap/js/src/collapse'
 //import Dropdown from 'bootstrap/js/src/dropdown'
 //import Modal from 'bootstrap/js/src/modal'
 import Popover from 'bootstrap/js/src/popover'
@@ -23,7 +23,7 @@ export {
   Alert,
   Button,
   //Carousel,
-  Collapse,
+  //Collapse,
   //Dropdown,
   //Modal,
   Popover,

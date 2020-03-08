@@ -78,7 +78,7 @@ const App = () => {
 			<meta name="description" content="A full geographical map of four-leaf clover, found all across the world." />
 			<link rel="canonical" href="http://www.ifound.one/" />
 		</Helmet>
-		<HttpsRedirect>
+		{/* <HttpsRedirect> */}
 			<AuthContext.Provider value={{
 				token: auth,
 				setToken: setAuth
@@ -103,7 +103,7 @@ const App = () => {
 				</BrowserRouter>
 				<SplashScreen />
 			</AuthContext.Provider>
-		</HttpsRedirect>
+		{/* </HttpsRedirect> */}
 		<PWAMeta />
 	</>
 	)
