@@ -29,7 +29,7 @@ const Header = (props) => {
 					</h1>
 				</a>
 				<ul className={"navbar-nav mr-auto " + align + " flex-grow-1"} id="navbarSupportedContent">
-					{!isMobile 
+					{!isMobile || isMobile
 						? <><li className="nav-item">
 								<NavLink to="/" isActive={(match, location) => {
 									//if (!match) return false

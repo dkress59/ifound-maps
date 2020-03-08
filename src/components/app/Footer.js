@@ -49,7 +49,7 @@ const Footer = (props) => {
 
 	return (
 		<footer {...inherit}>
-			{isMobile && <TabBar id="tab-menu" />}
+			{/* isMobile && <TabBar id="tab-menu" /> */}
 			{policy}
 		</footer>
 	)
