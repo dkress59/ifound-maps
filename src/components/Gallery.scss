@@ -166,11 +166,20 @@
 }
 
 #filterBox {
+	position: fixed;
+	bottom: 6rem;
+	right: 50%;
+	transform: translateX(50%);
+	z-index: 1;
 	opacity: 0.25;
-	transition: opacity 0.4s ease-out;
+	transition: all 0.4s ease-out;
 
 	.card-header {
 		cursor: pointer;
+		transition: all 0.4s ease-out;
+	}
+	.card-body {
+		transition: all 0.4s ease-out;
 	}
 
 	&:hover,
@@ -190,6 +199,31 @@
 		&:hover {
 			opacity: 1;
 			background-color: var(--light);
+		}
+	}
+
+	&.collapsed {
+		opacity: 1;
+		bottom: 2.25rem;
+		margin-right: -5rem;
+		border-color: transparent !important;
+		background-color: transparent;
+		> div.card-header {
+			background-color: transparent !important;
+			border-color: transparent;
+			.btn {
+				border-color: transparent;
+				background-color: var(--secondary);
+			}
+		}
+		> div.card-body {
+			height: 0;
+			width: 0;
+			padding: 0;
+			transform: scaleY(0);
+			transform-origin: top center;
+			background-color: transparent !important;
+			opacity: 0;
 		}
 	}
 }

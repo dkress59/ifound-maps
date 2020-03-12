@@ -1,7 +1,8 @@
-import L from "leaflet"
-import { } from "mapbox-gl-leaflet"
-import PropTypes from "prop-types"
-import { GridLayer, withLeaflet } from "react-leaflet"
+import L from 'leaflet'
+import { } from 'mapbox-gl-leaflet'
+import 'mapbox-gl/dist/mapbox-gl.css'
+import PropTypes from 'prop-types'
+import { GridLayer, withLeaflet } from 'react-leaflet'
 
 class GLLayerBox extends GridLayer {
 	createLeafletElement(props) {

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from 'react'
 import { Map, Marker, Popup, Circle } from 'react-leaflet'
 import './Map.css'
 import L from 'leaflet'
+import 'leaflet/dist/leaflet.css'
 import Image from 'react-image-webp'
 import { Link } from 'react-router-dom'
 

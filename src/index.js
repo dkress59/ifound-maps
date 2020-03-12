@@ -1,10 +1,10 @@
-import './index.css'
-import './assets/bootstrap.sass'
 import 'jquery'
 import $ from 'jquery'
 import './assets/bootstrap.js'
-import 'leaflet/dist/leaflet.css'
+import './assets/bootstrap.sass'
 import 'animate.css'
+
+import './index.css'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import * as serviceWorker from './serviceWorker'

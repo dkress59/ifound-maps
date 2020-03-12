@@ -29,20 +29,34 @@ const Header = (props) => {
 					</h1>
 				</a>
 				<ul className={"navbar-nav mr-auto " + align + " flex-grow-1"} id="navbarSupportedContent">
-					{!isMobile || isMobile
+					{!isMobile // || isMobile
 						? <><li className="nav-item">
-								<NavLink to="/" isActive={(match, location) => {
-									//if (!match) return false
-									if (location.pathname === '/' || location.pathname.substr(0, 7) === '/places') return true
-									else return false
-								}} className="nav-link" activeClassName="active">Karte</NavLink>
+								<NavLink
+									to="/"
+									isActive={(match, location) => {
+										//if (!match) return false
+										if (location.pathname === '/' || location.pathname.substr(0, 7) === '/places') return true
+										else return false
+									}}
+									className="nav-link"
+									activeClassName="active"
+								>
+									Karte
+								</NavLink>
 							</li>
 							<li className="nav-item">
-								<NavLink to="/gallery/" isActive={(match, location) => {
-									//if (!match) return false
-									if (location.pathname.substr(0, 8) === '/gallery') return true
-									else return false
-								}} className="nav-link" activeClassName="active">Galerie</NavLink>
+								<NavLink
+									to="/gallery/"
+									isActive={(match, location) => {
+										//if (!match) return false
+										if (location.pathname.substr(0, 8) === '/gallery') return true
+										else return false
+									}}
+									className="nav-link"
+									activeClassName="active"
+								>
+									Suche
+								</NavLink>
 							</li></>
 						 : ''
 					}
