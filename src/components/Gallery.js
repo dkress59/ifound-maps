@@ -81,6 +81,7 @@ const GalleryView = (props) => {
 	const { coords } = useContext(MapContext)
 	const [searchInput, setSearchInput] = useState('')
 	const selectedSet = (filtered.length) ? filtered : photos
+	const [collapsed, setCollapsed] = useState(isMobile);
 
 	const index = (Object.keys(props.match.params).length > 0)
 		? props.match.params.photoID
@@ -111,75 +112,6 @@ const GalleryView = (props) => {
 		})
 		console.log(results, filtered)
 		setFiltered(filterSet)
-	}
-
-	const FilterBox = props => {
-		const [collapsed, setCollapsed] = useState(isMobile);
-		return (<section id="filterBox" className={'card shadow' + (collapsed ? ' collapsed' : '' )}>
-			<div className="card-header bg-secondary text-white text-right">
-				<button className="btn btn-sm btn-outline-light" aria-label="search parameters" disabled={!isMobile} onClick={() => { if (isMobile) setCollapsed(!collapsed) }}>
-					<FilterIcon />
-				</button>
-			</div>
-			<div className="card-body text-dark">
-				<div className="d-flex flex-row flex-wrap mb-4">
-					<div style={{ flex: 1, flexBasis: '96px', position: 'relative' }}>
-						<input
-							type="text"
-							className="w-100 h-100"
-							value={searchInput}
-							placeholder=" Suchen…"
-							aria-label="search by name or author"
-							onChange={e => { searchPlaces(e.target.value) }}
-						/>
-						<DeleteIcon onClick={() => searchPlaces('')} />
-					</div>
-					<div className="btn-group ml-3" role="group" aria-label="grid columns / image size">
-						<button
-							type="button"
-							className="btn btn-primary"
-							aria-label="less columns / larger images"
-							onClick={() => { if (pinchLevel < 4) setPinchLevel(pinchLevel + 1) }}
-						>
-							<ImageIcon />
-						</button>
-						<button
-							type="button"
-							className="btn btn-primary"
-							aria-label="more columns / smaller images"
-							onClick={() => { if (pinchLevel > -1 && selectedSet.length > 1) setPinchLevel(pinchLevel - 1) }}
-						>
-							<GridIcon />
-						</button>
-					</div>
-				</div>
-				<input
-					key="distance-input"
-					type="range"
-					style={{ width: '100%', minWidth: '96px' }}
-					className={"form-control-range mt-4"}
-					id="formControlDistance"
-					value={distInput}
-					step="10"
-					onChange={e => { setDistInput(parseInt(e.target.value)) }}
-					onInput={e => { setDistInput(parseInt(e.target.value)) }}
-					aria-label="filter results based on the distance to your current position"
-				/>
-				<label
-					htmlFor="formControlDistance"
-					className="text-center mt-2"
-					style={{
-						width: '100%',
-						display: 'block'
-					}}
-					aria-label="distance to your position"
-				>
-					{(() => {
-						if (distInput !== 0) return 'Bis zu ' + distInput * 40 / 1000 + 'km entfernt'
-					})()}
-				</label>
-			</div>
-		</section>)
 	}
 
 
@@ -220,7 +152,71 @@ const GalleryView = (props) => {
 			<div className={"gallery level-" + pinchLevel} style={{ /*transform: `scale(${pinchScale})`, transformOrigin: `${pinchCenter.x}px ${pinchCenter.y}px`*/ }}>
 				<Gallery selectedSet={selectedSet} places={places} />
 			</div>
-			<FilterBox />
+			<section id="filterBox" className={'card shadow' + ((isMobile && collapsed) ? ' collapsed' : '')}>
+				<div className="card-header bg-secondary text-white text-right">
+					<button className="btn btn-sm btn-outline-light" aria-label="search parameters" disabled={!isMobile} onClick={() => { if (isMobile) setCollapsed(!collapsed) }}>
+						<FilterIcon />
+					</button>
+				</div>
+				<div className="card-body text-dark">
+					<div className="d-flex flex-row flex-wrap mb-4">
+						<div style={{ flex: 1, flexBasis: '96px', position: 'relative' }}>
+							<input
+								type="text"
+								className="w-100 h-100"
+								value={searchInput}
+								placeholder=" Suchen…"
+								aria-label="search by name or author"
+								onChange={e => { searchPlaces(e.target.value) }}
+							/>
+							<DeleteIcon onClick={() => searchPlaces('')} />
+						</div>
+						<div className="btn-group ml-3" role="group" aria-label="grid columns / image size">
+							<button
+								type="button"
+								className="btn btn-primary"
+								aria-label="less columns / larger images"
+								onClick={() => { if (pinchLevel < 4) setPinchLevel(pinchLevel + 1) }}
+							>
+								<ImageIcon />
+							</button>
+							<button
+								type="button"
+								className="btn btn-primary"
+								aria-label="more columns / smaller images"
+								onClick={() => { if (pinchLevel > -1 && selectedSet.length > 1) setPinchLevel(pinchLevel - 1) }}
+							>
+								<GridIcon />
+							</button>
+						</div>
+					</div>
+					<input
+						key="distance-input"
+						type="range"
+						style={{ width: '100%', minWidth: '96px' }}
+						className={"form-control-range mt-4"}
+						id="formControlDistance"
+						value={distInput}
+						step="10"
+						onChange={e => { setDistInput(parseInt(e.target.value)) }}
+						onInput={e => { setDistInput(parseInt(e.target.value)) }}
+						aria-label="filter results based on the distance to your current position"
+					/>
+					<label
+						htmlFor="formControlDistance"
+						className="text-center mt-2"
+						style={{
+							width: '100%',
+							display: 'block'
+						}}
+						aria-label="distance to your position"
+					>
+						{(() => {
+							if (distInput !== 0) return 'Bis zu ' + distInput * 40 / 1000 + 'km entfernt'
+						})()}
+					</label>
+				</div>
+			</section>
 		</>
 	)
 }
