@@ -207,7 +207,7 @@
 	bottom: 6rem;
 	right: 50%;
 	transform: translateX(50%);
-	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0);
+	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0) !important;
 
 	&.collapsed {
 		opacity: 1;
