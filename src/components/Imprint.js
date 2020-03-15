@@ -14,14 +14,16 @@ const ImprintHTML = (props) => {
 		<>
 			<Helmet>
 				<title>iFound.one – Site Notice & Privacy Protection</title>
-				<meta name="description" content="iFound.one tries hard not to record any user data. Except for your name and your location information, no data will be transmitted. Photos are cleaned from all meta information when saved on our servers and are provided with a Creative Commons license." />
+				{/* <meta name="description" content="iFound.one tries hard not to record any user data. Except for your name and your location information, no data will be transmitted. Photos are cleaned from all meta information when saved on our servers and are provided with a Creative Commons license." /> */}
+				<meta name="description" content="iFound.one gibt sich größte Mühe, keine Nutzerdaten aufzuzeichnen. Bis auf den angegeben Namen und deine Angaben zum Fundort werden keine Daten übermittelt. Fotos werden beim Abspeichern auf unseren Servern von allen Metainformationen bereinigt und mit einer Creative Commons Lizenz versehen." />
 				<link rel="canonical" href="https://www.ifound.one/imprint/" />
 				<meta property="og:type" content="website" />
 				<meta property="og:title" content="iFound.one" />
 				<meta property="og:site_name" content="iFound.one" />
 				<meta property="og:url" content="https://www.ifound.one/gallery/" />
 				<meta property="og:image" content="https://www.ifound.one/logo.svg" />
-				<meta property="og:description" content="iFound.one tries hard not to record any user data. Except for your name and your location information, no data will be transmitted. Photos are cleaned from all meta information when saved on our servers and are provided with a Creative Commons license." />
+				{/* <meta property="og:description" content="iFound.one tries hard not to record any user data. Except for your name and your location information, no data will be transmitted. Photos are cleaned from all meta information when saved on our servers and are provided with a Creative Commons license." /> */}
+				<meta property="og:description" content="iFound.one gibt sich größte Mühe, keine Nutzerdaten aufzuzeichnen. Bis auf den angegeben Namen und deine Angaben zum Fundort werden keine Daten übermittelt. Fotos werden beim Abspeichern auf unseren Servern von allen Metainformationen bereinigt und mit einer Creative Commons Lizenz versehen." />
 			</Helmet>
 			<section id="legal" className="container-fluid row pb-3 mx-auto">
 

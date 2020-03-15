@@ -134,20 +134,23 @@ const GalleryView = (props) => {
 	}, [photos])//eslint-disable-line
 
 
-	if (!photos.length) return (<div className="loadingScreen">Loading...</div>)
+	if (!photos.length) return (<div className="loadingScreen">Lädt...</div>)
 
 	return (
 		<>
 			<Helmet>
-				<title>iFound.one – Find four-leaf clover all across the world!</title>
-				<meta name="description" content="Scroll through our gallery and see all of the beautiful photos, shared by users all scross the world! Find four-leaf clover near you or any in any area you pinpointed on our map!" />
+				{/* <title>iFound.one – Find four-leaf clover all across the world!</title> */}
+				<title>iFound.one – Finde vierblättrigen Klee auf der ganzen Welt!</title>
+				{/* <meta name="description" content="Scroll through our gallery and see all of the beautiful photos, shared by users all scross the world! Find four-leaf clover near you or any in any area you pinpointed on our map!" /> */}
+				<meta name="description" content="Blätter' durch unsere Galerie und sieh all die schönen Fotos, die hier von Benutzern auf der ganzen Welt ausgetauscht werden! Finde ein vierblättriges Kleeblatt in Deiner Nähe oder in einem beliebigen Gebiet, das auf unserer Karte eingetragen wurde!" />
 				<link rel="canonical" href={"https://www.ifound.one/gallery/" + (Object.keys(props.match.params).length ? props.match.params.placeID : '')} />
 				<meta property="og:type" content="website" />
-				<meta property="og:title" content="iFound.one" />
+				<meta property="og:title" content={"iFound.one — " + (Object.keys(props.match.params).length ? props.match.params.name : '')} />
 				<meta property="og:site_name" content="iFound.one" />
 				<meta property="og:url" content="https://www.ifound.one/gallery/" />
 				<meta property="og:image" content="https://www.ifound.one/logo.svg" />
-				<meta property="og:description" content="Scroll through our gallery and see all of the beautiful photos, shared by users all scross the world! Find four-leaf clover near you or any in any area you pinpointed on our map!" />
+				{/* <meta property="og:description" content="Scroll through our gallery and see all of the beautiful photos, shared by users all scross the world! Find four-leaf clover near you or any in any area you pinpointed on our map!" /> */}
+				<meta property="og:description" content="Blätter' durch unsere Galerie und sieh all die schönen Fotos, die hier von Benutzern auf der ganzen Welt ausgetauscht werden! Finde ein vierblättriges Kleeblatt in Deiner Nähe oder in einem beliebigen Gebiet, das auf unserer Karte eingetragen wurde!" />
 			</Helmet>
 			<div className={"gallery level-" + pinchLevel} style={{ /*transform: `scale(${pinchScale})`, transformOrigin: `${pinchCenter.x}px ${pinchCenter.y}px`*/ }}>
 				<Gallery selectedSet={selectedSet} places={places} />
@@ -166,7 +169,8 @@ const GalleryView = (props) => {
 								className="w-100 h-100"
 								value={searchInput}
 								placeholder=" Suchen…"
-								aria-label="search by name or author"
+								//aria-label="search by id, name or author"
+								aria-label="Nach ID, Namen oder Autor suchen"
 								onChange={e => { searchPlaces(e.target.value) }}
 							/>
 							<DeleteIcon onClick={() => searchPlaces('')} />
@@ -175,7 +179,8 @@ const GalleryView = (props) => {
 							<button
 								type="button"
 								className="btn btn-primary"
-								aria-label="less columns / larger images"
+								//aria-label="less columns / larger images"
+								aria-label="weniger Spalten / größere Darstellung"
 								onClick={() => { if (pinchLevel < 4) setPinchLevel(pinchLevel + 1) }}
 							>
 								<ImageIcon />
@@ -183,7 +188,8 @@ const GalleryView = (props) => {
 							<button
 								type="button"
 								className="btn btn-primary"
-								aria-label="more columns / smaller images"
+								//aria-label="more columns / smaller images"
+								aria-label="mehr Spalten / kleinere Darstellung"
 								onClick={() => { if (pinchLevel > -1 && selectedSet.length > 1) setPinchLevel(pinchLevel - 1) }}
 							>
 								<GridIcon />
@@ -200,7 +206,8 @@ const GalleryView = (props) => {
 						step="10"
 						onChange={e => { setDistInput(parseInt(e.target.value)) }}
 						onInput={e => { setDistInput(parseInt(e.target.value)) }}
-						aria-label="filter results based on the distance to your current position"
+						//aria-label="filter results based on the distance to your position"
+						aria-label="Ergebnisse auf der Entfernung zur angegebenen Position basierend filtern"
 					/>
 					<label
 						htmlFor="formControlDistance"
@@ -209,7 +216,8 @@ const GalleryView = (props) => {
 							width: '100%',
 							display: 'block'
 						}}
-						aria-label="distance to your position"
+						//aria-label="distance to your position"
+						aria-label="Entfernung zur angegebenen Position"
 					>
 						{(() => {
 							if (distInput !== 0) return 'Bis zu ' + distInput * 40 / 1000 + 'km entfernt'

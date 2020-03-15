@@ -157,13 +157,15 @@ const FoundMap = (props) => {
 		<>
 			<Helmet>
 				{/*<title>iFound.one – Map</title>*/}
-				<meta name="description" content="A full geographical map of four-leaf clover, found all across the world. Let the world know, where to get lucky and send us a photo of one of your findings!" />
+				{/* <meta name="description" content="A full geographical map of four-leaf clover, found all across the world. Let the world know, where to get lucky and send us a photo of one of your findings!" /> */}
+				<meta name="description" content="Eine vollständige geografische Karte von vierblättrigem Klee, auf der ganzen Welt gefunden. Lass' die Welt wissen, wo das Glück zu finden ist und sende uns ein Foto von deinem Fundort!" />
 				<link rel="canonical" href={"https://www.ifound.one/" + (Object.keys(props.match.params).length ? 'places/' + props.match.params.placeID : '')} />
 				<meta property="og:type" content="website" />
 				<meta property="og:title" content="iFound.one" />
 				<meta property="og:site_name" content="iFound.one" />
 				<meta property="og:url" content={"https://www.ifound.one/" + (Object.keys(props.match.params).length ? 'places/' + props.match.params.placeID : '')} />
-				<meta property="og:description" content="A full geographical map of four-leaf clover, found all across the world. Let the world know, where to get lucky and send us a photo of one of your findings!" />
+				{/* <meta property="og:description" content="A full geographical map of four-leaf clover, found all across the world. Let the world know, where to get lucky and send us a photo of one of your findings!" /> */}
+				<meta property="og:description" content="Eine vollständige geografische Karte von vierblättrigem Klee, auf der ganzen Welt gefunden. Lass' die Welt wissen, wo das Glück zu finden ist und sende uns ein Foto von deinem Fundort!" />
 				<meta property="og:image" content={(Object.keys(props.match.params).length
 					? (photos.filter(p => { return p._id === props.match.params.placeID }).length)
 						? photos.filter(p => { return p._id === props.match.params.placeID })[0].img.src + '?thumb=true'
