@@ -66,7 +66,7 @@ const DataLayer = (props) => {
 					localStorage.setItem('photos', JSON.stringify(preloaded))
 				}
 
-				/* if ( (isLoading && res.places.length) || (isLoading && places.length) ) */ setIsLoading(0)
+				if (isLoading)/* if ( (isLoading && res.places.length) || (isLoading && places.length) ) */ setIsLoading(0)
 
 			})
 
