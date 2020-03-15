@@ -38,7 +38,7 @@ const InputBox = (props) => {
 		formBody.append('photoData', cameraRef.current.files[0])
 		setIsSending(1)
 
-		fetch(process.env.REACT_APP_REST_URL + '/api/places', {
+		fetch(process.env.REACT_APP_REST_URL + '/places', {
 			method: 'post',
 			body: formBody
 		})
@@ -90,7 +90,7 @@ const InputBox = (props) => {
 		setPickGPS({})
 		setCoords(nuGPS)
 		setCenter(nuGPS)
-		fetch(process.env.REACT_APP_REST_URL + '/api/places/' + nuGPS.placeID, {
+		fetch(process.env.REACT_APP_REST_URL + '/places/' + nuGPS.placeID, {
 			method: 'PATCH',
 			headers: {
 				'Content-Type': 'application/json',
