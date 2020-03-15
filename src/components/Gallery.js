@@ -142,7 +142,7 @@ const GalleryView = (props) => {
 				{/* <title>iFound.one – Find four-leaf clover all across the world!</title> */}
 				<title>iFound.one – Finde vierblättrigen Klee auf der ganzen Welt!</title>
 				{/* <meta name="description" content="Scroll through our gallery and see all of the beautiful photos, shared by users all scross the world! Find four-leaf clover near you or any in any area you pinpointed on our map!" /> */}
-				<meta name="description" content="Blätter' durch unsere Galerie und sieh all die schönen Fotos, die hier von Benutzern auf der ganzen Welt ausgetauscht werden! Finde ein vierblättriges Kleeblatt in Deiner Nähe oder in einem beliebigen Gebiet, das auf unserer Karte eingetragen wurde!" />
+				<meta name="description" content="Blätter' durch unsere Galerie und sieh all die schönen Fotos, die hier von Benutzern auf der ganzen Welt ausgetauscht werden! Finde ein vierblättriges Kleeblatt in deiner Nähe oder in einem beliebigen Gebiet, das auf unserer Karte eingetragen wurde!" />
 				<link rel="canonical" href={"https://www.ifound.one/gallery/" + (Object.keys(props.match.params).length ? props.match.params.placeID : '')} />
 				<meta property="og:type" content="website" />
 				<meta property="og:title" content={"iFound.one — " + (Object.keys(props.match.params).length ? props.match.params.name : '')} />
@@ -150,7 +150,7 @@ const GalleryView = (props) => {
 				<meta property="og:url" content="https://www.ifound.one/gallery/" />
 				<meta property="og:image" content="https://www.ifound.one/logo.svg" />
 				{/* <meta property="og:description" content="Scroll through our gallery and see all of the beautiful photos, shared by users all scross the world! Find four-leaf clover near you or any in any area you pinpointed on our map!" /> */}
-				<meta property="og:description" content="Blätter' durch unsere Galerie und sieh all die schönen Fotos, die hier von Benutzern auf der ganzen Welt ausgetauscht werden! Finde ein vierblättriges Kleeblatt in Deiner Nähe oder in einem beliebigen Gebiet, das auf unserer Karte eingetragen wurde!" />
+				<meta property="og:description" content="Blätter' durch unsere Galerie und sieh all die schönen Fotos, die hier von Benutzern auf der ganzen Welt ausgetauscht werden! Finde ein vierblättriges Kleeblatt in deiner Nähe oder in einem beliebigen Gebiet, das auf unserer Karte eingetragen wurde!" />
 			</Helmet>
 			<div className={"gallery level-" + pinchLevel} style={{ /*transform: `scale(${pinchScale})`, transformOrigin: `${pinchCenter.x}px ${pinchCenter.y}px`*/ }}>
 				<Gallery selectedSet={selectedSet} places={places} />

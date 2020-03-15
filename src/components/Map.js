@@ -157,7 +157,7 @@ const FoundMap = (props) => {
 		<>
 			<Helmet>
 				{/* <title>iFound.one – Share your lucky clover with us!</title> */}
-				<title>iFound.one – Teile Deinen Glücksklee mit uns!</title>
+				<title>iFound.one – Teile deinen Glücksklee mit uns!</title>
 				{/* <meta name="description" content="A full geographical map of four-leaf clover, found all across the world. Let the world know, where to get lucky and send us a photo of one of your findings!" /> */}
 				<meta name="description" content="Eine vollständige geografische Karte von vierblättrigem Klee, auf der ganzen Welt gefunden. Lass' die Welt wissen, wo das Glück zu finden ist und sende uns ein Foto von deinem Fundort!" />
 				<link rel="canonical" href={"https://www.ifound.one/" + (Object.keys(props.match.params).length ? 'places/' + props.match.params.placeID : '')} />
