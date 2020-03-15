@@ -110,9 +110,16 @@ const GalleryView = (props) => {
 				return plc._id === pht._id
 			})[0]
 		})
-		console.log(results, filtered)
+		//console.log(results, filtered)
 		setFiltered(filterSet)
 	}
+
+	const title = ( (Object.keys(props.match.params)).length && places.length )
+		? places.filter(p => {
+			return p._id === props.match.params.photoID
+		})[0].name
+		: null
+	console.log(props.match.params.photoID)
 
 
 	useEffect(() => {
@@ -129,7 +136,7 @@ const GalleryView = (props) => {
 		if (index) {
 			searchPlaces(index)
 			if (places.filter((p) => p._id === index).length) setPinchLevel(4)
-			console.log(places)
+			//console.log(places)
 		}
 	}, [photos])//eslint-disable-line
 
@@ -140,12 +147,12 @@ const GalleryView = (props) => {
 		<>
 			<Helmet>
 				{/* <title>iFound.one – Find four-leaf clover all across the world!</title> */}
-				<title>iFound.one – Finde vierblättrigen Klee auf der ganzen Welt!</title>
+				<title>iFound.one {title ? '– ' + title : ''} – Finde vierblättrigen Klee auf der ganzen Welt!</title>
 				{/* <meta name="description" content="Scroll through our gallery and see all of the beautiful photos, shared by users all scross the world! Find four-leaf clover near you or any in any area you pinpointed on our map!" /> */}
 				<meta name="description" content="Blätter' durch unsere Galerie und sieh all die schönen Fotos, die hier von Benutzern auf der ganzen Welt ausgetauscht werden! Finde ein vierblättriges Kleeblatt in deiner Nähe oder in einem beliebigen Gebiet, das auf unserer Karte eingetragen wurde!" />
-				<link rel="canonical" href={"https://www.ifound.one/gallery/" + (Object.keys(props.match.params).length ? props.match.params.placeID : '')} />
+				<link rel="canonical" href={"https://www.ifound.one/gallery/" + (Object.keys(props.match.params).length ? props.match.params.photoID : '')} />
 				<meta property="og:type" content="website" />
-				<meta property="og:title" content={"iFound.one — " + (Object.keys(props.match.params).length ? props.match.params.name : '')} />
+				<meta property="og:title" content={"iFound.one" + (title ? ' – ' + title : '')} />
 				<meta property="og:site_name" content="iFound.one" />
 				<meta property="og:url" content="https://www.ifound.one/gallery/" />
 				<meta property="og:image" content="https://www.ifound.one/logo.svg" />

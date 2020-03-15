@@ -41,7 +41,7 @@ const App = () => {
 			: { className: 'zoomOut animated fast' }
 		return (
 			<div id="splash-screen" className={fade + "w-100 h-100 d-flex align-items-center justify-content-center bg-theme"}>
-				<img src={process.env.REACT_APP_URL + "/logo.svg"} alt="loading…" {...zoom} style={{ width: '100%', height: 'auto', maxWidth: '512px' }} />
+				<img src={process.env.REACT_APP_URL + "/logo.svg"} alt="iFound.one lädt…" {...zoom} style={{ width: '100%', height: 'auto', maxWidth: '512px' }} />
 			</div>
 		)
 	}
