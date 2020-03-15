@@ -114,28 +114,30 @@ const DataLayer = (props) => {
 		}
 	}, [places])
 
-	if (!isLoading) return (
-		<PlaceContext.Provider value={{
-			places: places,
-			setPlaces: setPlaces,
-			photos: photos,
-			setPhotos: setPhotos,
-			current: current,
-			setCurrent: setCurrent
-		}}>
-			<MapContext.Provider value={{
-				coords: coords,
-				setCoords: setCoords,
-				center: center,
-				setCenter: setCenter,
-				range: range,
-				setRange: setRange
+	/* if (!isLoading) */
+		return (
+			<PlaceContext.Provider value={{
+				places: places,
+				setPlaces: setPlaces,
+				photos: photos,
+				setPhotos: setPhotos,
+				current: current,
+				setCurrent: setCurrent
 			}}>
-				{props.children}
-			</MapContext.Provider>
-		</PlaceContext.Provider>
-	)
-	else return null
+				<MapContext.Provider value={{
+					coords: coords,
+					setCoords: setCoords,
+					center: center,
+					setCenter: setCenter,
+					range: range,
+					setRange: setRange
+				}}>
+					{props.children}
+				</MapContext.Provider>
+			</PlaceContext.Provider>
+		)
+	/* else
+		return null */
 
 }
 
