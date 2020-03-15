@@ -73,37 +73,38 @@ const App = () => {
 		</>
 	)
 
-	return (<>
-		{ (process.env.REACT_APP_URL !== 'http://192.168.0.27:3000') ? <HttpsRedirect /> : '' }
-		<Helmet>
-			<meta name="apple-mobile-web-app-status-bar-style" content={theme} />
-		</Helmet>
-		<AuthContext.Provider value={{
-			token: auth,
-			setToken: setAuth
-		}}>
-			<BrowserRouter>
-				<DataLayer isLoading={0} setIsLoading={() => { }}>
-					<Header />
-					<main className={"mb-0" + (isMobile ? ' mobile' : '')}>
+	return (
+		<>
+			{ (process.env.REACT_APP_URL !== 'http://192.168.0.27:3000') ? <HttpsRedirect /> : null }
+			<Helmet>
+				<meta name="apple-mobile-web-app-status-bar-style" content={theme} />
+			</Helmet>
+			<AuthContext.Provider value={{
+				token: auth,
+				setToken: setAuth
+			}}>
+				<BrowserRouter>
+					<DataLayer isLoading={0} setIsLoading={() => { }}>
+						<Header />
+						<main className={"mb-0" + (isMobile ? ' mobile' : '')}>
 
-						<Switch>
-							<Route exact path='/login' component={Login} />
-							<Route path='/gallery/:photoID' component={GalleryView} />
-							<Route path='/gallery' component={GalleryView} />
-							<Route path='/places/:placeID' component={FoundMap} />
-							<Route path='/imprint' component={Imprint} />
-							<Route path='/' component={FoundMap} />
-						</Switch>
+							<Switch>
+								<Route exact path='/login' component={Login} />
+								<Route path='/gallery/:photoID' component={GalleryView} />
+								<Route path='/gallery' component={GalleryView} />
+								<Route path='/places/:placeID' component={FoundMap} />
+								<Route path='/imprint' component={Imprint} />
+								<Route path='/' component={FoundMap} />
+							</Switch>
 
-					</main>
-					<Footer />
-				</DataLayer>
-			</BrowserRouter>
+						</main>
+						<Footer />
+					</DataLayer>
+				</BrowserRouter>
+			</AuthContext.Provider>
 			<SplashScreen />
-		</AuthContext.Provider>
-		<PWAMeta />
-	</>
+			<PWAMeta />
+		</>
 	)
 
 }

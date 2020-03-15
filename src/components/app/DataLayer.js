@@ -66,7 +66,7 @@ const DataLayer = (props) => {
 					localStorage.setItem('photos', JSON.stringify(preloaded))
 				}
 
-				if (isLoading)/* if ( (isLoading && res.places.length) || (isLoading && places.length) ) */ setIsLoading(0)
+				if (isLoading)/* if ( (isLoading && res.places.length) || (isLoading && localStorage.getItem('places')) ) */ setIsLoading(0)
 
 			})
 
@@ -112,7 +112,8 @@ const DataLayer = (props) => {
 			setPhotos(preloaded)
 			localStorage.setItem('photos', JSON.stringify(preloaded))
 		}
-	}, [places])
+		if (isLoading)/* if ( (isLoading && res.places.length) || (isLoading && localStorage.getItem('places')) ) */ setIsLoading(0)
+	}, [places])//eslint-disable-line
 
 	/* if (!isLoading) */
 		return (
