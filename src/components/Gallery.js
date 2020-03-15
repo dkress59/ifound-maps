@@ -115,9 +115,9 @@ const GalleryView = (props) => {
 	}
 
 	const title = ( (Object.keys(props.match.params)).length && places.length )
-		? places.filter(p => {
-			return p._id === props.match.params.photoID
-		})[0].name
+		? (props.location.state && props.location.state.photo)
+			? places.filter(p => { return p._id === props.location.state.photo }).length && places.filter(p => { return p._id === props.location.state.photo })[0].name
+			: places.filter(p => { return p._id === props.match.params.photoID }).length && places.filter(p => { return p._id === props.match.params.photoID })[0].name
 		: null
 	console.log(props.match.params.photoID)
 

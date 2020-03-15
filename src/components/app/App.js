@@ -92,8 +92,9 @@ const App = () => {
 								<Route path='/gallery/:photoID' component={GalleryView} />
 								<Route path='/gallery' component={GalleryView} />
 								<Route path='/places/:placeID' component={FoundMap} />
-								<Route path='/imprint' component={Imprint} />
+								<Route exact path='/imprint' component={Imprint} />
 								<Route path='/' component={FoundMap} />
+								{/* <Route path='/' component={FourOhFour} /> */}
 							</Switch>
 
 						</main>
