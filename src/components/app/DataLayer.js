@@ -39,7 +39,7 @@ const DataLayer = (props) => {
 
 		fetch(process.env.REACT_APP_REST_URL + '/places/')
 			.then((res => res.json()))
-			.then((res) => {
+			.then(res => {
 				localStorage.setItem('places', JSON.stringify(res.places))
 				updatePlaces(res.places)
 
@@ -65,8 +65,9 @@ const DataLayer = (props) => {
 					setPhotos(preloaded)
 					localStorage.setItem('photos', JSON.stringify(preloaded))
 				}
-
-				if ( (isLoading && res.places.length || isLoading && places.length) ) setIsLoading(0)
+			})
+			.then(res => {
+				if ( (isLoading && res.places.length) || (isLoading && places.length) ) setIsLoading(0)
 			})
 
 	}, [])//eslint-disable-line
@@ -134,7 +135,7 @@ const DataLayer = (props) => {
 			</MapContext.Provider>
 		</PlaceContext.Provider>
 	)
-	else return <></>
+	else return null
 
 }
 
