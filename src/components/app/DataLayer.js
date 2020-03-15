@@ -66,7 +66,7 @@ const DataLayer = (props) => {
 					localStorage.setItem('photos', JSON.stringify(preloaded))
 				}
 
-				if (res.places.length && isLoading) setIsLoading(0)
+				if (isLoading && res.places.length || isLoading && places.length) setIsLoading(0)
 			})
 
 	}, [])//eslint-disable-line
