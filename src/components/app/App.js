@@ -75,7 +75,6 @@ const App = () => {
 
 	return (
 		<>
-			{ (process.env.REACT_APP_URL !== 'http://192.168.0.27:3000') ? <HttpsRedirect /> : null }
 			<Helmet>
 				<meta name="apple-mobile-web-app-status-bar-style" content={theme} />
 			</Helmet>
@@ -109,4 +108,10 @@ const App = () => {
 
 }
 
-export default App
+const RedirectedApp = () => {
+	return (process.env.REACT_APP_URL !== 'http://192.168.0.27:3000')
+	? <HttpsRedirect><App /></HttpsRedirect>
+	: <App />
+}
+
+export default RedirectedApp
