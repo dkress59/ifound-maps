@@ -62,11 +62,12 @@ const App = () => {
 		<>
 			<DataLayer isLoading={isLoading} setIsLoading={setIsLoading} />
 			<Helmet>
-				<title>iFound.one – Share your lucky clover with us!</title>
+				<link rel="canonical" href="http://www.ifound.one/" />
 				<meta name="apple-mobile-web-app-status-bar-style" content={theme} />
+				{/* <title>iFound.one – Share your lucky clover with us!</title> */}
+				<title>iFound.one – Teile Deinen Glücksklee mit uns!</title>
 				{/* <meta name="description" content="A full geographical map of four-leaf clover, found all across the world." /> */}
 				<meta name="description" content="Eine vollständige geografische Karte von vierblättrigem Klee, auf der ganzen Welt gefunden." />
-				<link rel="canonical" href="http://www.ifound.one/" />
 			</Helmet>
 			<SplashScreen />
 		</>
@@ -75,11 +76,7 @@ const App = () => {
 	return (<>
 		{ (process.env.REACT_APP_URL !== 'http://192.168.0.27:3000') ? <HttpsRedirect /> : '' }
 		<Helmet>
-			<title>iFound.one – Share your lucky clover with us!</title>
 			<meta name="apple-mobile-web-app-status-bar-style" content={theme} />
-			{/* <meta name="description" content="A full geographical map of four-leaf clover, found all across the world." /> */}
-			<meta name="description" content="Eine vollständige geografische Karte von vierblättrigem Klee, auf der ganzen Welt gefunden." />
-			<link rel="canonical" href="http://www.ifound.one/" />
 		</Helmet>
 		<AuthContext.Provider value={{
 			token: auth,
