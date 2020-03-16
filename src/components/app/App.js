@@ -62,7 +62,7 @@ const App = () => {
 		<>
 			<DataLayer isLoading={isLoading} setIsLoading={setIsLoading} />
 			<Helmet>
-				<link rel="canonical" href="http://www.ifound.one/" />
+				<link rel="canonical" href="https://www.ifound.one/" />
 				<meta name="apple-mobile-web-app-status-bar-style" content={theme} />
 				{/* <title>iFound.one – Share your lucky clover with us!</title> */}
 				<title>iFound.one – Teile deinen Glücksklee mit uns!</title>
