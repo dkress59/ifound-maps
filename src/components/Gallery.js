@@ -1,7 +1,5 @@
 import './Gallery.scss'
-import React, { useState, useContext, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import Image from 'react-image-webp'
+import React, { useState, useContext, useEffect, Suspense } from 'react'
 import { isMobile } from 'react-device-detect'
 
 import PlaceContext from '../context/PlaceContext'
@@ -10,6 +8,8 @@ import MapContext from '../context/MapContext'
 import { ImageIcon, GridIcon, FilterIcon, DeleteIcon, LoadingCircle } from './app/Icons'
 
 import { Helmet } from 'react-helmet'
+
+const GalleryItems = React.lazy(() => import('./gallery/GalleryItems'))
 
 
 const shuffle = (a) => {//eslint-disable-line
@@ -39,36 +39,6 @@ const getDistanceFromLatLonInKm = (lat1, lon1, lat2, lon2) => {
 
 const deg2rad = (deg) => {
 	return deg * (Math.PI / 180)
-}
-
-
-export const Gallery = (props) => {
-	const { selectedSet, places } = props
-	if (places.length) return (
-		selectedSet.map(photo => {
-			const place = places.filter((p) => {
-				return p._id === photo._id
-			})[0]
-
-			if (place) return (
-				<figure key={"photo-" + photo._id}>
-					<LoadingCircle />
-					<Link to={{
-						pathname: '/places/' + photo._id,
-						state: { place: photo._id }
-					}}>
-						{photo.img && <Image src={photo.img.src} webp={photo.img.src + '.webp'} alt={place.name + " – Vier-Blättriger Klee gefunden von " + place.author} className="photo" />}
-					</Link>
-					<figcaption>
-						{place.name && <h3 className="mt-1 mb-0">{place.name}</h3>}
-						{place.author && <p className="mt-0 mb-1"><small>von</small> {place.author}</p>}
-					</figcaption>
-				</figure>
-			)
-			return (<React.Fragment />)
-		})
-	)
-	else return (<React.Fragment />)
 }
 
 
@@ -161,79 +131,81 @@ const GalleryView = (props) => {
 				{/* <meta property="og:description" content="Scroll through our gallery and see all of the beautiful photos, shared by users all scross the world! Find four-leaf clover near you or any in any area you pinpointed on our map!" /> */}
 				<meta property="og:description" content="Blätter' durch unsere Galerie und sieh all die schönen Fotos, die hier von Benutzern auf der ganzen Welt ausgetauscht werden! Finde ein vierblättriges Kleeblatt in deiner Nähe oder in einem beliebigen Gebiet, das auf unserer Karte eingetragen wurde!" />
 			</Helmet>
-			<div className={"gallery level-" + pinchLevel} style={{ /*transform: `scale(${pinchScale})`, transformOrigin: `${pinchCenter.x}px ${pinchCenter.y}px`*/ }}>
-				<Gallery selectedSet={selectedSet} places={places} />
-			</div>
-			<section id="filterBox" className={'card shadow' + ((isMobile && collapsed) ? ' collapsed' : '')}>
-				<div className="card-header bg-secondary text-white text-right">
-					<button className="btn btn-sm btn-outline-light" aria-label="search parameters" disabled={!isMobile} onClick={() => { if (isMobile) setCollapsed(!collapsed) }}>
-						<FilterIcon />
-					</button>
+			<Suspense fallback={<div className="position-absolute w-100 h-100 flex-grow-1 text-center d-flex justify-content-center align-items-center"><LoadingCircle /></div>}>
+				<div className={"gallery level-" + pinchLevel} style={{ /*transform: `scale(${pinchScale})`, transformOrigin: `${pinchCenter.x}px ${pinchCenter.y}px`*/ }}>
+					<GalleryItems selectedSet={selectedSet} places={places} />
 				</div>
-				<div className="card-body text-dark">
-					<div className="d-flex flex-row flex-wrap mb-4">
-						<div style={{ flex: 1, flexBasis: '96px', position: 'relative' }}>
-							<input
-								type="text"
-								className="w-100 h-100"
-								value={searchInput}
-								placeholder=" Suchen…"
-								//aria-label="search by id, name or author"
-								aria-label="Nach ID, Namen oder Autor suchen"
-								onChange={e => { searchPlaces(e.target.value) }}
-							/>
-							<DeleteIcon onClick={() => searchPlaces('')} />
-						</div>
-						<div className="btn-group ml-3" role="group" aria-label="grid columns / image size">
-							<button
-								type="button"
-								className="btn btn-primary"
-								//aria-label="less columns / larger images"
-								aria-label="weniger Spalten / größere Darstellung"
-								onClick={() => { if (pinchLevel < 4) setPinchLevel(pinchLevel + 1) }}
-							>
-								<ImageIcon />
-							</button>
-							<button
-								type="button"
-								className="btn btn-primary"
-								//aria-label="more columns / smaller images"
-								aria-label="mehr Spalten / kleinere Darstellung"
-								onClick={() => { if (pinchLevel > -1 && selectedSet.length > 1) setPinchLevel(pinchLevel - 1) }}
-							>
-								<GridIcon />
-							</button>
-						</div>
+				<section id="filterBox" className={'card shadow' + ((isMobile && collapsed) ? ' collapsed' : '')}>
+					<div className="card-header bg-secondary text-white text-right">
+						<button className="btn btn-sm btn-outline-light" aria-label="search parameters" disabled={!isMobile} onClick={() => { if (isMobile) setCollapsed(!collapsed) }}>
+							<FilterIcon />
+						</button>
 					</div>
-					<input
-						key="distance-input"
-						type="range"
-						style={{ width: '100%', minWidth: '96px' }}
-						className={"form-control-range mt-4"}
-						id="formControlDistance"
-						value={distInput}
-						step="10"
-						onChange={e => { setDistInput(parseInt(e.target.value)) }}
-						onInput={e => { setDistInput(parseInt(e.target.value)) }}
-						//aria-label="filter results based on the distance to your position"
-						aria-label="Ergebnisse auf der Entfernung zur angegebenen Position basierend filtern"
-					/>
-					<label
-						htmlFor="formControlDistance"
-						className="text-center mt-2"
-						style={{
-							width: '100%',
-							display: 'block'
-						}}
-						//aria-label="distance to your position"
-						aria-label="Entfernung zur angegebenen Position"
-					>
-						{(() => {
-							if (distInput !== 0) return 'Bis zu ' + distInput * 40 / 1000 + 'km entfernt'
-						})()}
-					</label>
-				</div>
-			</section>
+					<div className="card-body text-dark">
+						<div className="d-flex flex-row flex-wrap mb-4">
+							<div style={{ flex: 1, flexBasis: '96px', position: 'relative' }}>
+								<input
+									type="text"
+									className="w-100 h-100"
+									value={searchInput}
+									placeholder=" Suchen…"
+									//aria-label="search by id, name or author"
+									aria-label="Nach ID, Namen oder Autor suchen"
+									onChange={e => { searchPlaces(e.target.value) }}
+								/>
+								<DeleteIcon onClick={() => searchPlaces('')} />
+							</div>
+							<div className="btn-group ml-3" role="group" aria-label="grid columns / image size">
+								<button
+									type="button"
+									className="btn btn-primary"
+									//aria-label="less columns / larger images"
+									aria-label="weniger Spalten / größere Darstellung"
+									onClick={() => { if (pinchLevel < 4) setPinchLevel(pinchLevel + 1) }}
+								>
+									<ImageIcon />
+								</button>
+								<button
+									type="button"
+									className="btn btn-primary"
+									//aria-label="more columns / smaller images"
+									aria-label="mehr Spalten / kleinere Darstellung"
+									onClick={() => { if (pinchLevel > -1 && selectedSet.length > 1) setPinchLevel(pinchLevel - 1) }}
+								>
+									<GridIcon />
+								</button>
+							</div>
+						</div>
+						<input
+							key="distance-input"
+							type="range"
+							style={{ width: '100%', minWidth: '96px' }}
+							className={"form-control-range mt-4"}
+							id="formControlDistance"
+							value={distInput}
+							step="10"
+							onChange={e => { setDistInput(parseInt(e.target.value)) }}
+							onInput={e => { setDistInput(parseInt(e.target.value)) }}
+							//aria-label="filter results based on the distance to your position"
+							aria-label="Ergebnisse auf der Entfernung zur angegebenen Position basierend filtern"
+						/>
+						<label
+							htmlFor="formControlDistance"
+							className="text-center mt-2"
+							style={{
+								width: '100%',
+								display: 'block'
+							}}
+							//aria-label="distance to your position"
+							aria-label="Entfernung zur angegebenen Position"
+						>
+							{(() => {
+								if (distInput !== 0) return 'Bis zu ' + distInput * 40 / 1000 + 'km entfernt'
+							})()}
+						</label>
+					</div>
+				</section>
+			</Suspense>
 		</>
 	)
 }
