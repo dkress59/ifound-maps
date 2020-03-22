@@ -44,29 +44,31 @@ const deg2rad = (deg) => {
 
 export const Gallery = (props) => {
 	const { selectedSet, places } = props
-	return (
+	if (places.length) return (
 		selectedSet.map(photo => {
 			const place = places.filter((p) => {
 				return p._id === photo._id
 			})[0]
 
-			return (
+			if (place) return (
 				<figure key={"photo-" + photo._id}>
 					<LoadingCircle />
 					<Link to={{
 						pathname: '/places/' + photo._id,
 						state: { place: photo._id }
 					}}>
-						<Image src={photo.img.src} webp={photo.img.src + '.webp'} alt="Four-leaf clover photo" className="photo" />
+						{photo.img && <Image src={photo.img.src} webp={photo.img.src + '.webp'} alt={place.name + " – Vier-Blättriger Klee gefunden von " + place.author} className="photo" />}
 					</Link>
 					<figcaption>
-						<h3 className="mt-1 mb-0">{place.name}</h3>
-						<p className="mt-0 mb-1"><small>von</small> {place.author}</p>
+						{place.name && <h3 className="mt-1 mb-0">{place.name}</h3>}
+						{place.author && <p className="mt-0 mb-1"><small>von</small> {place.author}</p>}
 					</figcaption>
 				</figure>
 			)
+			return (<React.Fragment />)
 		})
 	)
+	else return (<React.Fragment />)
 }
 
 
