@@ -45,7 +45,20 @@ const InputBox = (props) => {
 			.then(res => { return res.json() })
 			.then(res => {
 				console.log(res)
-				if (places) setPlaces([...places, res.newPlace])
+				// prerender the new photo
+				new Image().src = (res.php) ? res.php.url : ''
+				// add new photo to photos
+				const newPlace = (res.php)
+					? {
+						...res.newPlace,
+						photos: [
+							...res.newPlace.photos,
+							res.php.url.substr(-24, 24)
+						]
+					}
+					: res.newPlace
+				if (places) setPlaces([...places, newPlace])
+				else setPlaces([newPlace])
 				setIsSending(0)
 				formRef.current.reset()
 				setRange(0)

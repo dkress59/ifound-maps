@@ -187,7 +187,7 @@ const FoundMap = (props) => {
 					//onMouseDown={e => console.log('tile', e)}
 					attribution='<a href="http://openstreetmap.org" rel="nofollow noreferrer">OSM</a>'
 				/>
-				<Places state={{ places: places, photos: photos, index: index, indexRef: indexRef, tempRef: tempRef, cloverIcon: cloverIcon, token: token, deletePlace: deletePlace }} />
+				<Places state={{ places, photos, index, indexRef, tempRef, cloverIcon, token, deletePlace }} />
 				{(() => { if (range > 0) return <Circle center={[coords.lat, coords.lng]} radius={range} /> })()}
 				<Marker
 					key="newPlace"

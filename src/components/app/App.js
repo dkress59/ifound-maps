@@ -83,7 +83,7 @@ const App = () => {
 				setToken: setAuth
 			}}>
 				<BrowserRouter>
-					<DataLayer isLoading={0} setIsLoading={()=>{}}>
+					<DataLayer isLoading={isLoading} setIsLoading={setIsLoading}>
 						<Header />
 						<main className={"mb-0" + (isMobile ? ' mobile' : '')}>
 
