@@ -143,3 +143,7 @@ const DataLayer = (props) => {
 }
 
 export default DataLayer
+
+export const isPWA = (window.matchMedia('(display-mode: standalone)').matches)
+	? true
+	: false

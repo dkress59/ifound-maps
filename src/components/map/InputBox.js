@@ -155,7 +155,7 @@ const InputBox = (props) => {
 			</div>
 
 			<div ref={bodyRef} className="card-body text-dark" style={setSize()}>
-				<form ref={formRef} onSubmit={handleSubmit} className="form-group">
+				<form ref={formRef} onSubmit={handleSubmit} className="form-group needs-validation">
 
 					<input name="lat" type="hidden" value={coords.lat} />
 					<input name="lng" type="hidden" value={coords.lng} />
@@ -174,8 +174,9 @@ const InputBox = (props) => {
 						</div>
 						<input
 							required
+							onInput={e => { e.target.setCustomValidity('') }}
+							onInvalid={e => { e.target.setCustomValidity('Gib\' deinem Fundort einen Namen!') }}
 							type="text"
-							//placeholder="Fundstelle"
 							className={"form-control"}
 							disabled={isSending || pickGPS.lat}
 							aria-label="Dein Fundort"
@@ -195,8 +196,9 @@ const InputBox = (props) => {
 						</div>
 						<input
 							required
+							onInput={e => { e.target.setCustomValidity('') }}
+							onInvalid={e => { e.target.setCustomValidity('Wie heißt du?') }}
 							type="text"
-							//placeholder="Dein Name"
 							className={"form-control"}
 							disabled={isSending || pickGPS.lat}
 							aria-label="Dein Name"
