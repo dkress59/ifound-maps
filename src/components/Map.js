@@ -179,6 +179,7 @@ const FoundMap = (props) => {
 				id="map"
 				ref={mapRef}
 				zoom={zoomX}
+				minZoom={isMobile ? 2 : 3}
 				center={center}
 				onClick={handleClick}
 				onZoomEnd={e => setZoomX(e.target._zoom)}
