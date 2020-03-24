@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react'
 import PlaceContext from '../../context/PlaceContext'
 import MapContext from '../../context/MapContext'
 
+export const isPWA = (window.matchMedia('(display-mode: standalone)').matches)
+	? true
+	: false
+
 const DataLayer = (props) => {
 	const [photos, setPhotos] = useState([])
 	const [coords, setCoords] = useState({ lat: 51.2432, lng: 6.7822 })
@@ -33,6 +37,7 @@ const DataLayer = (props) => {
 
 
 	useEffect(() => {
+		if (isPWA) document.body.classList.add('pwa')
 
 		if (localStorage.getItem('places')) setPlaces( JSON.parse(localStorage.getItem('places')) )
 		if (localStorage.getItem('photos')) setPhotos( JSON.parse(localStorage.getItem('photos')) )
@@ -143,7 +148,3 @@ const DataLayer = (props) => {
 }
 
 export default DataLayer
-
-export const isPWA = (window.matchMedia('(display-mode: standalone)').matches)
-	? true
-	: false

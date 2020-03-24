@@ -6,7 +6,6 @@ import 'leaflet/dist/leaflet.css'
 import Image from 'react-image-webp'
 import { Link } from 'react-router-dom'
 
-import trashIcon from '../assets/trash-2.svg'
 import AuthContext from '../context/AuthContext'
 
 import MapBoxGLLayer from './map/GLLayerBox'
@@ -75,7 +74,7 @@ const cloverIcon = L.icon({
 							{(() => { if (place.name && place.name !== undefined) return <h4 className="mb-0" itemProp="name">{place.name}</h4> })()}
 							{(() => { if (place.author && place.author !== undefined) return <p className="m-0"><small>von </small>{place.author}</p> })()}
 						</div>
-						{(() => { if (token !== 'false') return <img className="trash feather" src={trashIcon} alt="delete" onClick={(e) => deletePlace(place._id)} /> })()}
+						{(() => { if (token !== 'false') return <div className="deletePlace" onClick={(e) => deletePlace(place._id)}>Löschen</div> })()}
 					</Popup>
 				</Marker>
 			</div>
