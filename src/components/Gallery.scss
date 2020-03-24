@@ -204,14 +204,14 @@
 
 }
 .mobile #filterBox {
-	bottom: 6rem;
+	bottom: 10rem;
 	right: 50%;
 	transform: translateX(50%);
 	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0) !important;
 
 	&.collapsed {
 		opacity: 1;
-		bottom: 1.67rem;
+		bottom: 5.67rem;
 		margin-right: -5rem;
 		border-color: transparent !important;
 		background-color: transparent;
@@ -234,4 +234,10 @@
 		}
 	}
 
+}
+.pwa .mobile #filterBox {
+	bottom: 7rem;
+}
+.pwa .mobile #filterBox.collapsed {
+	bottom: 2.67rem;
 }
