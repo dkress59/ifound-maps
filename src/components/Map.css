@@ -33,7 +33,7 @@
 .leaflet-popup-content h4 span {
 	display: block;
 	transform: scaleY(1);
-	transform-origin: bottom center;
+	transform-origin: top center;/* bottom center */
 	transition: transform .2s ease;
 }
 .leaflet-popup-content h4 a {
