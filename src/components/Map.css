@@ -27,6 +27,44 @@
 	margin: 0.75rem;
 }
 
+.leaflet-popup-content h4 {
+	position: relative;
+}
+.leaflet-popup-content h4 span {
+	display: block;
+	transform: scaleY(1);
+	transform-origin: bottom center;
+	transition: transform .2s ease;
+}
+.leaflet-popup-content h4 a {
+	position: absolute;
+	top: 0; right: 0;
+	bottom: 0; left: 0;
+	text-decoration: none;
+	text-transform: uppercase;
+	font-size: .75rem;
+	font-weight: 500;
+	color: var(--primary);
+	background-color: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transform: scaleY(0);
+	transform-origin: top center;
+	transition: transform .2s ease;
+}
+.leaflet-popup:focus h4 span,
+.leaflet-popup:active h4 span,
+.leaflet-popup-content h4:hover span {
+	transform: scaleY(0);
+}
+.leaflet-popup:focus h4 a,
+.leaflet-popup:active h4 a,
+.leaflet-popup-content h4:hover a {
+	transform: scaleY(1);
+}
+
+
 div.leaflet-container a.leaflet-popup-close-button {
 	padding: 1px 3px 3px 3px;
 	opacity: .3;

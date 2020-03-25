@@ -71,8 +71,15 @@ const cloverIcon = L.icon({
 							}}>
 								{img}
 							</Link>
-							{(() => { if (place.name && place.name !== undefined) return <h4 className="mb-0" itemProp="name">{place.name}</h4> })()}
-							{(() => { if (place.author && place.author !== undefined) return <p className="m-0"><small>von </small>{place.author}</p> })()}
+							{(() => { if (place.name && place.name !== undefined) return <h4 className="mb-0" itemProp="name">
+								<span>{place.name}</span>
+								<a href={"http://maps.apple.com?daddr="+place.lat+','+place.lng} rel="noopener noreferrer">
+									Route berechnen
+								</a>
+							</h4> })()}
+							{(() => { if (place.author && place.author !== undefined) return <p className="m-0">
+								<small>von </small>{place.author}
+							</p> })()}
 						</div>
 						{(() => { if (token !== 'false') return <div className="deletePlace" onClick={(e) => deletePlace(place._id)}>Löschen</div> })()}
 					</Popup>
