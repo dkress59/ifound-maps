@@ -7,8 +7,8 @@ This Web App is almost progressive, solely the no-js prerender still needs to be
 
 ### Front-End
 
-This is the repository for the app's Front-End. Please keep in mind this was a prototype development process, and it was wrapped up in just a few days.
-I had just switched to Functional Components and Hook Calls, so you won't find a very diverse programming paradigm.
+This is the repository for the app's Front-End. Heavy use of OpenStreetMap and Leaflet.js which I am a big fan of, and therefore also of MapBox. I had just switched to Functional Components and Hook Calls with React.js, so you won't find a very diverse programming paradigm.
+__Please keep in mind this was a prototype development process, and it was wrapped up in just a few days.__
 
 
 
