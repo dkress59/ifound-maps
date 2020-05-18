@@ -16,7 +16,9 @@ __Please keep in mind this was a prototype development process, and it was wrapp
 
 ### To Do
 
-* Redesign whole UI
+* Move localStorage logic to ServiceWorker
+* Add Push Notifications for PWA installs
+* Redesign whole UX
 * Add Pagination to Gallery
 * And remove all Bootstrap Dependencies
 * Add Unit Tests
