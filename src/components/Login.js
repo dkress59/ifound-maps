@@ -40,7 +40,7 @@ const LoginPage = (props) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
-		const email = e.target.email.value
+		const email = e.target.email.value.toLowerCase()
 		const password = e.target.password.value
 		fetch(process.env.REACT_APP_REST_URL + '/users/login', {
 			method: 'post',
