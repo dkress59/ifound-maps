@@ -39,10 +39,10 @@ const DataLayer = (props) => {
 	useEffect(() => {
 		if (isPWA) document.body.classList.add('pwa')
 
-		if (localStorage.getItem('places')) setPlaces( JSON.parse(localStorage.getItem('places')) )
-		if (localStorage.getItem('photos')) setPhotos( JSON.parse(localStorage.getItem('photos')) )
+		if (localStorage.getItem('places')) setPlaces(JSON.parse(localStorage.getItem('places')))
+		if (localStorage.getItem('photos')) setPhotos(JSON.parse(localStorage.getItem('photos')))
 
-		fetch(process.env.REACT_APP_REST_URL + '/places/')
+		fetch(process.env.IFO_REST_URL + '/places/')
 			.then((res => res.json()))
 			.then(res => {
 				localStorage.setItem('places', JSON.stringify(res.places))
@@ -55,8 +55,8 @@ const DataLayer = (props) => {
 					thumb.alt = 'Photo thumbnail'
 					img.className = 'full'
 					thumb.className = 'thumbnail'
-					img.src = process.env.REACT_APP_MEDIA_URL + '/view/' + plc.photos[0]
-					thumb.src = process.env.REACT_APP_MEDIA_URL + '/view/' + plc.photos[0] + '?thumb=true'
+					img.src = process.env.IFO_MEDIA_URL + '/view/' + plc.photos[0]
+					thumb.src = process.env.IFO_MEDIA_URL + '/view/' + plc.photos[0] + '?thumb=true'
 					if (plc.photos.length > 0) return {
 						_id: plc._id,
 						img: img,
@@ -71,7 +71,7 @@ const DataLayer = (props) => {
 					localStorage.setItem('photos', JSON.stringify(preloaded))
 				}
 
-				if ( (isLoading && res.places.length) || (isLoading && localStorage.getItem('places')) ) setIsLoading(0)
+				if ((isLoading && res.places.length) || (isLoading && localStorage.getItem('places'))) setIsLoading(0)
 
 			})
 
@@ -81,7 +81,7 @@ const DataLayer = (props) => {
 
 		window.placeInterval = setInterval(() => {
 			console.log('Reloading places...')
-			fetch(process.env.REACT_APP_REST_URL + '/places/')
+			fetch(process.env.IFO_REST_URL + '/places/')
 				.then((res => res.json()))
 				.then((res) => {
 					updatePlaces(res.places)
@@ -95,7 +95,7 @@ const DataLayer = (props) => {
 	})
 
 	useEffect(() => {
-		if (localStorage.getItem('photos')) setPhotos( JSON.parse(localStorage.getItem('photos')) )
+		if (localStorage.getItem('photos')) setPhotos(JSON.parse(localStorage.getItem('photos')))
 		const preloaded = places.map(plc => {
 			const img = new Image()
 			const thumb = new Image()
@@ -103,8 +103,8 @@ const DataLayer = (props) => {
 			thumb.alt = 'Photo thumbnail'
 			img.className = 'full'
 			thumb.className = 'thumbnail'
-			img.src = process.env.REACT_APP_MEDIA_URL + '/view/' + plc.photos[0]
-			thumb.src = process.env.REACT_APP_MEDIA_URL + '/view/' + plc.photos[0] + '?thumb=true'
+			img.src = process.env.IFO_MEDIA_URL + '/view/' + plc.photos[0]
+			thumb.src = process.env.IFO_MEDIA_URL + '/view/' + plc.photos[0] + '?thumb=true'
 			if (plc.photos.length > 0) return {
 				_id: plc._id,
 				img: img,
@@ -117,31 +117,31 @@ const DataLayer = (props) => {
 			setPhotos(preloaded)
 			localStorage.setItem('photos', JSON.stringify(preloaded))
 		}
-		if ( (isLoading && places.length) || (isLoading && localStorage.getItem('places')) ) setIsLoading(0)
+		if ((isLoading && places.length) || (isLoading && localStorage.getItem('places'))) setIsLoading(0)
 	}, [places])//eslint-disable-line
 
 	/* if (!isLoading) */
-		return (
-			<PlaceContext.Provider value={{
-				places: places,
-				setPlaces: setPlaces,
-				photos: photos,
-				setPhotos: setPhotos,
-				current: current,
-				setCurrent: setCurrent
+	return (
+		<PlaceContext.Provider value={{
+			places: places,
+			setPlaces: setPlaces,
+			photos: photos,
+			setPhotos: setPhotos,
+			current: current,
+			setCurrent: setCurrent
+		}}>
+			<MapContext.Provider value={{
+				coords: coords,
+				setCoords: setCoords,
+				center: center,
+				setCenter: setCenter,
+				range: range,
+				setRange: setRange
 			}}>
-				<MapContext.Provider value={{
-					coords: coords,
-					setCoords: setCoords,
-					center: center,
-					setCenter: setCenter,
-					range: range,
-					setRange: setRange
-				}}>
-					{props.children}
-				</MapContext.Provider>
-			</PlaceContext.Provider>
-		)
+				{props.children}
+			</MapContext.Provider>
+		</PlaceContext.Provider>
+	)
 	/* else
 		return null */
 
