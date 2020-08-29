@@ -42,7 +42,7 @@ const LoginPage = (props) => {
 		e.preventDefault()
 		const email = e.target.email.value.toLowerCase()
 		const password = e.target.password.value
-		fetch(process.env.IFO_REST_URL + '/users/login', {
+		fetch(process.env.REACT_APP_IFO_API + '/users/login', {
 			method: 'post',
 			headers: {
 				'Content-Type': 'application/json',
@@ -65,7 +65,7 @@ const LoginPage = (props) => {
 					if (formRef.current.rememberMe.checked) cookies.set('token', response.token, {
 						//httpOnly: true,
 						//domain: '.herokuapp.com',
-						maxAge: process.env.IFO_APP_AUTH_TIME
+						maxAge: process.env.REACT_APP_IFO_AUTH_TIME
 					})
 					formRef.current.email.value = ''
 					formRef.current.password.value = ''

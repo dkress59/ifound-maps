@@ -24,19 +24,19 @@ import Schema from './app/Schema'
 const coordIcon = L.icon({
 	iconSize: [25, 41],
 	iconAnchor: [12.5, 41],
-	iconUrl: process.env.IFO_REACT_APP_URL + '/marker-icon.png',
-	shadowUrl: process.env.IFO_REACT_APP_URL + '/marker-shadow.png',
-	iconRetinaUrl: process.env.IFO_REACT_APP_URL + '/marker-icon-2x.png',
+	iconUrl: process.env.REACT_APP_IFO_URL + '/marker-icon.png',
+	shadowUrl: process.env.REACT_APP_IFO_URL + '/marker-shadow.png',
+	iconRetinaUrl: process.env.REACT_APP_IFO_URL + '/marker-icon-2x.png',
 })
 
 const cloverIcon = L.icon({
 	iconSize: [64, 64],
 	iconAnchor: [10, 64],
-	iconUrl: process.env.IFO_REACT_APP_URL + '/ifound-clover.svg',
+	iconUrl: process.env.REACT_APP_IFO_URL + '/ifound-clover.svg',
 	popupAnchor: [-3, -76],
 	shadowSize: [64, 56],
 	shadowAnchor: [10, 56],
-	shadowUrl: process.env.IFO_REACT_APP_URL + '/ifound-clover-shadow.svg',
+	shadowUrl: process.env.REACT_APP_IFO_URL + '/ifound-clover-shadow.svg',
 })
 
 
@@ -146,13 +146,13 @@ const FoundMap = (props) => {
 
 	const deletePlace = (id) => {
 		if (!id) return false
-		fetch(process.env.IFO_REST_URL + '/places/' + id, {
+		fetch(process.env.REACT_APP_IFO_API + '/places/' + id, {
 			headers: { 'Authorization': 'Bearer ' + token },
 			method: 'DELETE',
 		})
 			.then(res => {
 				console.log(res)
-				fetch(process.env.IFO_REST_URL + '/places/')
+				fetch(process.env.REACT_APP_IFO_API + '/places/')
 					.then(nu => nu.json())
 					.then(nu => {
 						setPlaces(nu.places)

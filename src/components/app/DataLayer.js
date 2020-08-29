@@ -42,7 +42,7 @@ const DataLayer = (props) => {
 		if (localStorage.getItem('places')) setPlaces(JSON.parse(localStorage.getItem('places')))
 		if (localStorage.getItem('photos')) setPhotos(JSON.parse(localStorage.getItem('photos')))
 
-		fetch(process.env.IFO_REST_URL + '/places/')
+		fetch(process.env.REACT_APP_IFO_API + '/places/')
 			.then((res => res.json()))
 			.then(res => {
 				localStorage.setItem('places', JSON.stringify(res.places))
@@ -55,8 +55,8 @@ const DataLayer = (props) => {
 					thumb.alt = 'Photo thumbnail'
 					img.className = 'full'
 					thumb.className = 'thumbnail'
-					img.src = process.env.IFO_MEDIA_URL + '/view/' + plc.photos[0]
-					thumb.src = process.env.IFO_MEDIA_URL + '/view/' + plc.photos[0] + '?thumb=true'
+					img.src = process.env.REACT_APP_IFO_MEDIA + '/view/' + plc.photos[0]
+					thumb.src = process.env.REACT_APP_IFO_MEDIA + '/view/' + plc.photos[0] + '?thumb=true'
 					if (plc.photos.length > 0) return {
 						_id: plc._id,
 						img: img,
@@ -81,7 +81,7 @@ const DataLayer = (props) => {
 
 		window.placeInterval = setInterval(() => {
 			console.log('Reloading places...')
-			fetch(process.env.IFO_REST_URL + '/places/')
+			fetch(process.env.REACT_APP_IFO_API + '/places/')
 				.then((res => res.json()))
 				.then((res) => {
 					updatePlaces(res.places)
@@ -103,8 +103,8 @@ const DataLayer = (props) => {
 			thumb.alt = 'Photo thumbnail'
 			img.className = 'full'
 			thumb.className = 'thumbnail'
-			img.src = process.env.IFO_MEDIA_URL + '/view/' + plc.photos[0]
-			thumb.src = process.env.IFO_MEDIA_URL + '/view/' + plc.photos[0] + '?thumb=true'
+			img.src = process.env.REACT_APP_IFO_MEDIA + '/view/' + plc.photos[0]
+			thumb.src = process.env.REACT_APP_IFO_MEDIA + '/view/' + plc.photos[0] + '?thumb=true'
 			if (plc.photos.length > 0) return {
 				_id: plc._id,
 				img: img,
