@@ -1,17 +1,21 @@
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
 import React from 'react'
 import './TabBar.css'
 import { NavLink } from 'react-router-dom'
 
-const TabBar = props => {
-	const addClass = "btn-group " + (props.className ? props.className : '')
+const TabBar = (props) => {
+	const addClass = `btn-group ${props.className ? props.className : ''}`
 	const addProps = { ...props, className: addClass }
-	return <nav {...addProps} role="group" aria-label="Hauptmenü">
+	return (
+		<nav {...addProps} role="group" aria-label="Hauptmenü">
 			<NavLink
 				to="/"
 				isActive={(match, location) => {
-					//if (!match) return false
+					// if (!match) return false
 					if (location.pathname === '/' || location.pathname.substr(0, 7) === '/places') return true
-					else return false
+					return false
 				}}
 				className="btn btn-secondary"
 				activeClassName="active"
@@ -21,9 +25,9 @@ const TabBar = props => {
 			<NavLink
 				to="/gallery/"
 				isActive={(match, location) => {
-					//if (!match) return false
+					// if (!match) return false
 					if (location.pathname.substr(0, 8) === '/gallery') return true
-					else return false
+					return false
 				}}
 				className="btn btn-secondary"
 				activeClassName="active"
@@ -31,6 +35,7 @@ const TabBar = props => {
 				Suche
 			</NavLink>
 		</nav>
+	)
 }
 
 export default TabBar

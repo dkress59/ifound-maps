@@ -1,16 +1,23 @@
+/* eslint-disable max-len */
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
 import React from 'react'
 import './Icons.css'
 
-export const CloverIcon = props => {
-	const addClass = props.className ? ' ' + props.className : ''
+export const CloverIcon = (props) => {
+	const addClass = props.className ? ` ${props.className}` : ''
 	return (
-		<svg className={addClass}
+		<svg
+			className={addClass}
 			xmlns="http://www.w3.org/2000/svg"
 			viewBox="0 0 381.4 512"
 		>
 			<title>ifound-clover</title>
-			<g id="Ebene_2"
-				dataName="Ebene 2">
+			<g
+				id="Ebene_2"
+				dataName="Ebene 2"
+			>
 				<g id="Ebene_3_Kopie" dataName="Ebene 3 Kopie">
 					<path className="clv-1" d="M93.49,271h0q-3.52,4.48-6.93,9Q84,283.52,81.45,287a426,426,0,0,0-39.79,67.43A385.19,385.19,0,0,0,6,488a22.24,22.24,0,0,0,6.11,17.2,22.28,22.28,0,0,0,14.31-19A340.61,340.61,0,0,1,57.72,368.66c8.72-18.63,39.82-67,67.72-107.73A141.3,141.3,0,0,1,93.49,271Z" />
 					<path className="clv-1" d="M16.64,508.86a22.2,22.2,0,0,1-4.5-3.62A22.2,22.2,0,0,0,16.64,508.86Z" />
@@ -117,8 +124,8 @@ export const CloverIcon = props => {
 	)
 }
 
-export const UserIcon = props => {
-	const addClass = props.className ? ' ' + props.className : ''
+export const UserIcon = (props) => {
+	const addClass = props.className ? ` ${props.className}` : ''
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -131,15 +138,15 @@ export const UserIcon = props => {
 			strokeLinecap="round"
 			strokeLinejoin="round"
 			style={props.style}
-			className={"feather feather-user" + addClass}
+			className={`feather feather-user${addClass}`}
 		>
 			<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
 			<circle cx="12" cy="7" r="4" />
 		</svg>
 	)
 }
-export const NameIcon = props => {
-	const addClass = props.className ? ' ' + props.className : ''
+export const NameIcon = (props) => {
+	const addClass = props.className ? ` ${props.className}` : ''
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -152,15 +159,15 @@ export const NameIcon = props => {
 			strokeLinecap="round"
 			strokeLinejoin="round"
 			style={props.style}
-			className={"feather feather-map-pin" + addClass}
+			className={`feather feather-map-pin${addClass}`}
 		>
 			<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
 			<circle cx="12" cy="10" r="3" />
 		</svg>
 	)
 }
-export const MinimiseIcon = props => {
-	const addClass = props.className ? ' ' + props.className : ''
+export const MinimiseIcon = (props) => {
+	const addClass = props.className ? ` ${props.className}` : ''
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -173,14 +180,14 @@ export const MinimiseIcon = props => {
 			strokeLinecap="round"
 			strokeLinejoin="round"
 			style={props.style}
-			className={"feather feather-minimize" + addClass}
+			className={`feather feather-minimize${addClass}`}
 		>
 			<path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
 		</svg>
 	)
 }
-export const AddIcon = props => {
-	const addClass = props.className ? ' ' + props.className : ''
+export const AddIcon = (props) => {
+	const addClass = props.className ? ` ${props.className}` : ''
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -192,15 +199,15 @@ export const AddIcon = props => {
 			strokeWidth="2"
 			strokeLinecap="round"
 			strokeLinejoin="round"
-			className={"feather feather-plus" + addClass}
+			className={`feather feather-plus${addClass}`}
 		>
 			<line x1="12" y1="5" x2="12" y2="19" />
 			<line x1="5" y1="12" x2="19" y2="12" />
 		</svg>
 	)
 }
-export const CameraIcon = props => {
-	const addClass = props.className ? ' ' + props.className : ''
+export const CameraIcon = (props) => {
+	const addClass = props.className ? ` ${props.className}` : ''
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -212,15 +219,15 @@ export const CameraIcon = props => {
 			strokeWidth="2"
 			strokeLinecap="round"
 			strokeLinejoin="round"
-			className={"feather feather-camera" + addClass}
+			className={`feather feather-camera${addClass}`}
 		>
 			<path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
 			<circle cx="12" cy="13" r="4" />
 		</svg>
 	)
 }
-export const FileIcon = props => {
-	const addClass = props.className ? ' ' + props.className : ''
+export const FileIcon = (props) => {
+	const addClass = props.className ? ` ${props.className}` : ''
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -232,17 +239,18 @@ export const FileIcon = props => {
 			strokeWidth="2"
 			strokeLinecap="round"
 			strokeLinejoin="round"
-			className={"feather feather-file" + addClass}
+			className={`feather feather-file${addClass}`}
 		>
 			<path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" />
 			<polyline points="13 2 13 9 20 9" />
 		</svg>
 	)
 }
-export const ImageIcon = props => {
-	const addClass = props.className ? ' ' + props.className : ''
+export const ImageIcon = (props) => {
+	const addClass = props.className ? ` ${props.className}` : ''
 	return (
-		<svg xmlns="http://www.w3.org/2000/svg"
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
 			width="24"
 			height="24"
 			viewBox="0 0 24 24"
@@ -251,7 +259,7 @@ export const ImageIcon = props => {
 			strokeWidth="2"
 			strokeLinecap="round"
 			strokeLinejoin="round"
-			className={"feather feather-image" + addClass}
+			className={`feather feather-image${addClass}`}
 		>
 			<rect
 				x="3"
@@ -261,7 +269,8 @@ export const ImageIcon = props => {
 				rx="2"
 				ry="2"
 			/>
-			<circle cx="8.5"
+			<circle
+				cx="8.5"
 				cy="8.5"
 				r="1.5"
 			/>
@@ -269,8 +278,8 @@ export const ImageIcon = props => {
 		</svg>
 	)
 }
-export const GridIcon = props => {
-	const addClass = props.className ? ' ' + props.className : ''
+export const GridIcon = (props) => {
+	const addClass = props.className ? ` ${props.className}` : ''
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -282,7 +291,7 @@ export const GridIcon = props => {
 			strokeWidth="2"
 			strokeLinecap="round"
 			strokeLinejoin="round"
-			className={"feather feather-grid" + addClass}
+			className={`feather feather-grid${addClass}`}
 		>
 			<rect x="3" y="3" width="7" height="7" />
 			<rect x="14" y="3" width="7" height="7" />
@@ -291,8 +300,8 @@ export const GridIcon = props => {
 		</svg>
 	)
 }
-export const FilterIcon = props => {
-	const addClass = props.className ? ' ' + props.classname : ''
+export const FilterIcon = (props) => {
+	const addClass = props.className ? ` ${props.classname}` : ''
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -304,14 +313,14 @@ export const FilterIcon = props => {
 			strokeWidth="2"
 			strokeLinecap="round"
 			strokeLinejoin="round"
-			className={"feather feather-filter" + addClass}
+			className={`feather feather-filter${addClass}`}
 		>
 			<polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
 		</svg>
 	)
 }
-export const CancelIcon = props => {
-	const addClass = props.className ? ' ' + props.className : ''
+export const CancelIcon = (props) => {
+	const addClass = props.className ? ` ${props.className}` : ''
 	const addProps = { ...props, className: addClass }
 	return (
 		<svg
@@ -324,23 +333,30 @@ export const CancelIcon = props => {
 			strokeWidth="2"
 			strokeLinecap="round"
 			strokeLinejoin="round"
-			{...addProps}>
-			<circle cx="12"
+			{...addProps}
+		>
+			<circle
+				cx="12"
 				cy="12"
-				r="10" />
-			<line x1="15"
+				r="10"
+			/>
+			<line
+				x1="15"
 				y1="9"
 				x2="9"
-				y2="15" />
-			<line x1="9"
+				y2="15"
+			/>
+			<line
+				x1="9"
 				y1="9"
 				x2="15"
-				y2="15" />
+				y2="15"
+			/>
 		</svg>
 	)
 }
-export const DeleteIcon = props => {
-	const addClass = props.className ? ' ' + props.className : ''
+export const DeleteIcon = (props) => {
+	const addClass = props.className ? ` ${props.className}` : ''
 	const addProps = { ...props, className: addClass }
 	return (
 		<svg
@@ -356,19 +372,23 @@ export const DeleteIcon = props => {
 			{...addProps}
 		>
 			<path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z" />
-			<line x1="18"
+			<line
+				x1="18"
 				y1="9"
 				x2="12"
-				y2="15" />
-			<line x1="12"
+				y2="15"
+			/>
+			<line
+				x1="12"
 				y1="9"
 				x2="18"
-				y2="15" />
+				y2="15"
+			/>
 		</svg>
 	)
 }
-export const TrashIcon = props => {
-	const addClass = props.className ? ' ' + props.className : ''
+export const TrashIcon = (props) => {
+	const addClass = props.className ? ` ${props.className}` : ''
 	const addProps = { ...props, className: addClass }
 	return (
 		<svg
@@ -391,22 +411,22 @@ export const TrashIcon = props => {
 	)
 }
 
-export const LoadingCircle = props => {
-	const addClass = props.className ? ' ' + props.className : ''
-	const addProps = { ...props, className: "loading-circle" + addClass }
+export const LoadingCircle = (props) => {
+	const addClass = props.className ? ` ${props.className}` : ''
+	const addProps = { ...props, className: `loading-circle${addClass}` }
 	return (
 		<svg
-			xmlns="http://www.w3.org/2000/svg" 
+			xmlns="http://www.w3.org/2000/svg"
 			xmlnsXlink="http://www.w3.org/1999/xlink"
 			style={{
 				margin: 'auto',
-				//backgroundColor: '#fff',
+				// backgroundColor: '#fff',
 				display: 'block',
 				shapeRendering: 'auto',
 				animationPlayState: 'running',
 				animationDelay: 0,
 				backgroundPosition: 'initial initial',
-				backgroundRepeat: 'initial initial'
+				backgroundRepeat: 'initial initial',
 			}}
 			width="128px"
 			height="128px"
@@ -425,7 +445,8 @@ export const LoadingCircle = props => {
 				strokeLinecap="round"
 				style={{ animationPlayState: 'running', animationDelay: 0 }}
 			>
-				<animateTransform attributeName="transform"
+				<animateTransform
+					attributeName="transform"
 					type="rotate"
 					dur="1.4925373134328357s"
 					repeatCount="indefinite"

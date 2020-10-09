@@ -1,16 +1,18 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
 
 const Schema = (props) => {
 	const { places, photos } = props
-	if (!places.length) return ''
+	if (!places.length)
+		return ''
 
 	return (
 		<section id="Schema-org" style={{ visibility: 'hidden', pointerEvents: 'none' }}>
-			{places.map(place => {
-				const imgObj = photos.filter(photo => { return photo._id === place._id })
+			{places.map((place) => {
+				const imgObj = photos.filter((photo) => photo._id === place._id)
 				const pos = { lat: place.lat, lng: place.lng }
 				return (
-					<div key={"placeSchema-" + place._id} className="schemaPlace" itemScope itemType="https://schema.org/Place">
+					<div key={`placeSchema-${place._id}`} className="schemaPlace" itemScope itemType="https://schema.org/Place">
 						<meta itemProp="url" content={`${process.env.REACT_APP_IFO_URL}/places/${place._id}`} />
 						<meta itemProp="latitude" content={`${pos.lat}`} />
 						<meta itemProp="longitude" content={`${pos.lng}`} />
@@ -18,7 +20,7 @@ const Schema = (props) => {
 							<meta itemProp="author" content={place.author} />
 							<meta itemProp="url" content={`${process.env.REACT_APP_IFO_URL}/gallery/${place._id}`} />
 							<meta itemProp="embedUrl" content={imgObj.length && imgObj[0].img.src} />
-							<meta itemProp="thumbnailUrl" content={imgObj.length && imgObj[0].img.src + '?thumb=true'} />
+							<meta itemProp="thumbnailUrl" content={imgObj.length && `${imgObj[0].img.src}?thumb=true`} />
 						</span>
 					</div>
 				)

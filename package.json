@@ -17,13 +17,13 @@
 		"mapbox-gl": "^1.12.0",
 		"mapbox-gl-leaflet": "0.0.11",
 		"popper.js": "^1.16.1",
+		"prop-types": "^15.7.2",
 		"query-string": "^6.13.2",
 		"react": "^16.13.1",
 		"react-app-polyfill": "^1.0.6",
 		"react-device-detect": "^1.13.1",
 		"react-dom": "^16.13.1",
 		"react-helmet": "^5.2.1",
-		"react-https-redirect": "^1.1.0",
 		"react-image-webp": "^0.7.0",
 		"react-leaflet": "^2.7.0",
 		"react-leaflet-search": "^1.0.3",
@@ -38,7 +38,8 @@
 		"start": "BROWSER=NONE PORT=$IFO_PORT react-scripts start",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
-		"eject": "react-scripts eject"
+		"eject": "react-scripts eject",
+		"lint": "yarn eslint src --fix-dry-run"
 	},
 	"eslintConfig": {
 		"extends": "react-app"
@@ -54,5 +55,13 @@
 			"last 1 firefox version",
 			"last 1 safari version"
 		]
+	},
+	"devDependencies": {
+		"babel-eslint": "^10.1.0",
+		"eslint": "^7.11.0",
+		"eslint-config-airbnb": "^18.2.0",
+		"eslint-plugin-import": "^2.22.1",
+		"eslint-plugin-jsx-a11y": "^6.3.1",
+		"eslint-plugin-react": "^7.20.0"
 	}
 }
