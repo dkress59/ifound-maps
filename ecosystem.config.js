@@ -1,12 +1,8 @@
 module.exports = {
   apps : [{
 		name: 'ifound-maps',
-		script: 'npm',
-		args: 'run start',
-		watch: '.',
-		env_production: {
-			BROWSER: 'NONE',
-			PORT: process.env.IFO_PORT,
-		},
+		script: 'npx',
+		args: 'serve -s build -l ' + process.env.IFO_PORT,
+		watch: 'build',
 	}]
 }
