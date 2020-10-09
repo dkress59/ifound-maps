@@ -24,7 +24,7 @@ import HttpsRedirect from 'react-https-redirect'
 
 const App = () => {
 	const [auth, setAuth] = useState('false')
-	const startTheme = (window.matchMedia("(prefers-color-scheme: dark)").matches)
+	const startTheme = (window.matchMedia('(prefers-color-scheme: dark)').matches)
 		? 'black-translucent'
 		: 'default'
 	const [theme, setTheme] = useState(startTheme)
@@ -40,8 +40,8 @@ const App = () => {
 			? {}
 			: { className: 'zoomOut animated fast' }
 		return (
-			<div id="splash-screen" className={fade + "w-100 h-100 d-flex align-items-center justify-content-center bg-theme"}>
-				<img src={process.env.REACT_APP_IFO_URL + "/logo.svg"} alt="iFound.one lädt…" {...zoom} style={{ width: '100%', height: 'auto', maxWidth: '512px' }} />
+			<div id="splash-screen" className={fade + 'w-100 h-100 d-flex align-items-center justify-content-center bg-theme'}>
+				<img src={process.env.REACT_APP_IFO_URL + '/logo.svg'} alt="iFound.one lädt…" {...zoom} style={{ width: '100%', height: 'auto', maxWidth: '512px' }} />
 			</div>
 		)
 	}
@@ -52,7 +52,7 @@ const App = () => {
 	}, [auth])//eslint-disable-line
 
 	useEffect(() => {
-		const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
+		const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
 		if (isDarkMode && theme === 'default') setTheme('black-translucent')
 		if (!isDarkMode && theme !== 'default') setTheme('default')
 	}, [theme])
@@ -85,7 +85,7 @@ const App = () => {
 				<BrowserRouter>
 					<DataLayer isLoading={isLoading} setIsLoading={setIsLoading}>
 						<Header />
-						<main className={"mb-0" + (isMobile ? ' mobile' : '')}>
+						<main className={'mb-0' + (isMobile ? ' mobile' : '')}>
 
 							<Switch>
 								<Route exact path='/login' component={Login} />
