@@ -21,6 +21,7 @@ const Logo = (props) => (
 
 const Header = () => {
 	const align = isMobile ? 'text-right' : 'justify-content-end'
+
 	return (
 		<header className="my-2 navbar-expand-md">
 			<nav className="navbar navbar-expand-lg navbar-dark">
@@ -47,7 +48,8 @@ const Header = () => {
 										to="/"
 										isActive={(match, location) => {
 										// if (!match) return false
-											if (location.pathname === '/' || location.pathname.substr(0, 7) === '/places') return true
+											if (location.pathname === '/' || location.pathname.substr(0, 7) === '/map')
+												return true
 											return false
 										}}
 										className="nav-link"
@@ -61,7 +63,11 @@ const Header = () => {
 										to="/gallery/"
 										isActive={(match, location) => {
 											// if (!match) return false
-											if (location.pathname.substr(0, 8) === '/gallery') return true
+											if (
+												location.pathname.substr(0, 8) === '/gallery'
+												|| location.pathname.substr(0, 7) === '/places'
+											)
+												return true
 											return false
 										}}
 										className="nav-link"

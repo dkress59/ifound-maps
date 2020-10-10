@@ -1,0 +1,34 @@
+#places .col {
+	margin-bottom: 2em;
+}
+
+#places .card {
+	background-color: rgba(0,0,0,.05);
+}
+
+#places h3 {
+	word-wrap: break-word;
+	word-break: break-word;
+	overflow-wrap: break-word;
+}
+
+#places li {
+	padding-left: 0;
+}
+
+#places img {
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+	cursor: pointer;;
+}
+
+#places img[src=""], #place img:not([src]) {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--gray);
+	cursor: auto;
+	pointer-events: none;
+	background-color: rgba(0,0,0,.05);
+}

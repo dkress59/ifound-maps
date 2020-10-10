@@ -11,6 +11,7 @@ import React, {
 import { isMobile } from 'react-device-detect'
 
 import { Helmet } from 'react-helmet'
+import { useLocation, useParams } from 'react-router'
 import PlaceContext from '../context/PlaceContext'
 import MapContext from '../context/MapContext'
 
@@ -53,6 +54,8 @@ const getDistanceFromLatLonInKm = (lat1, lon1, lat2, lon2) => {
 
 const GalleryView = (props) => {
 	const { photos, places } = useContext(PlaceContext)
+	const { state } = useLocation()
+	const { photoID } = useParams()
 	// const [pinchScale, setPinchScale] = useState(1);//eslint-disable-line
 	// const [pinchCenter, setPinchCenter] = useState({ x: 'center', y: 'center' });//eslint-disable-line
 	const [pinchLevel, setPinchLevel] = useState((isMobile) ? 2 : 0)
@@ -63,11 +66,12 @@ const GalleryView = (props) => {
 	const selectedSet = (filtered.length) ? filtered : photos
 	const [collapsed, setCollapsed] = useState(isMobile)
 
-	const index = (Object.keys(props.match.params).length > 0)
-		? props.match.params.photoID
-		: (props.location && props.location.state && props.location.state.photo)
-			? props.location.state.photo
-			: 0
+	/* const index = (Object.keys(props.match.params).length)
+		? props.match.params.placeID : (props.location && props.location.state && props.location.state.place)
+			? props.location.state.place : 0 */
+	const index = photoID || (state && state.photo
+		? state.photo
+		: null)
 
 
 	const searchPlaces = (input) => {
@@ -92,14 +96,14 @@ const GalleryView = (props) => {
 		setFiltered(filterSet)
 	}
 
-	const title = ((Object.keys(props.match.params)).length && places.length)
-		? (props.location.state && props.location.state.photo)
-			? places.filter((p) => p._id === props.location.state.photo).length
-				&& places.filter((p) => p._id === props.location.state.photo)[0].name
-			: places.filter((p) => p._id === props.match.params.photoID).length
-				&& places.filter((p) => p._id === props.match.params.photoID)[0].name
+	const title = (photoID && places.length)
+		? state && state.photo
+			? places.filter((p) => p._id === state.photo).length
+				&& places.filter((p) => p._id === state.photo)[0].name
+			: places.filter((p) => p._id === photoID).length
+				&& places.filter((p) => p._id === photoID)[0].name
 		: null
-	console.log(props.match.params.photoID)
+	console.log(photoID)
 
 
 	useEffect(() => {
@@ -150,9 +154,7 @@ const GalleryView = (props) => {
 				/>
 				<lin
 					rel="canonical"
-					href={`https://www.ifound.one/gallery/${Object.keys(props.match.params).length
-						? props.match.params.photoID
-						: ''}`}
+					href={`https://www.ifound.one/gallery/${photoID || ''} `}
 				/>
 				<meta property="og:type" content="website" />
 				<meta property="og:title" content={`iFound.one${title ? ` – ${title}` : ''}`} />

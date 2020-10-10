@@ -105,15 +105,33 @@ const App = () => {
 						<main className={`mb-0${isMobile ? ' mobile' : ''}`}>
 
 							<Switch>
-								<Route exact path="/login" component={Login} />
-								<Route path="/gallery/:photoID" component={GalleryView} />
-								<Route path="/gallery" component={GalleryView} />
-								<Route path="/map/:placeID" component={FoundMap} />
-								<Route path="/places" component={PlaceView} />
-								<Route path="/places/:placeID" component={PlaceView} />
-								<Route exact path="/imprint" component={Imprint} />
-								<Route path="/" component={FoundMap} />
-								{/* <Route path='/' component={FourOhFour} /> */}
+								<Route exact path="/login">
+									<Login />
+								</Route>
+								<Route path="/gallery/:photoID">
+									<GalleryView />
+								</Route>
+								<Route path="/gallery">
+									<GalleryView />
+								</Route>
+								<Route path="/map/:placeID">
+									<FoundMap />
+								</Route>
+								<Route exact path="/places">
+									<PlaceView />
+								</Route>
+								<Route path="/places/:placeID">
+									<PlaceView />
+								</Route>
+								<Route exact path="/imprint">
+									<Imprint />
+								</Route>
+								<Route path="/">
+									<FoundMap />
+								</Route>
+								{/* <Route path='/'>
+								<FourOhFour />
+								</Route> */}
 							</Switch>
 
 						</main>

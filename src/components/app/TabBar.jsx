@@ -3,18 +3,21 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react'
 import './TabBar.css'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 
 const TabBar = (props) => {
 	const addClass = `btn-group ${props.className ? props.className : ''}`
 	const addProps = { ...props, className: addClass }
-	return (
+	const location = useLocation()
+
+	return location.pathname.indexOf('/places') < 0 ? (
 		<nav {...addProps} role="group" aria-label="Hauptmenü">
 			<NavLink
 				to="/"
 				isActive={(match, location) => {
 					// if (!match) return false
-					if (location.pathname === '/' || location.pathname.substr(0, 7) === '/places') return true
+					if (location.pathname === '/' || location.pathname.substr(0, 7) === '/places')
+						return true
 					return false
 				}}
 				className="btn btn-secondary"
@@ -26,7 +29,8 @@ const TabBar = (props) => {
 				to="/gallery/"
 				isActive={(match, location) => {
 					// if (!match) return false
-					if (location.pathname.substr(0, 8) === '/gallery') return true
+					if (location.pathname.substr(0, 8) === '/gallery')
+						return true
 					return false
 				}}
 				className="btn btn-secondary"
@@ -35,7 +39,7 @@ const TabBar = (props) => {
 				Suche
 			</NavLink>
 		</nav>
-	)
+	) : <></>
 }
 
 export default TabBar

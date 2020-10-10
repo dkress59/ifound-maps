@@ -14,7 +14,7 @@ import './Map.css'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import Image from 'react-image-webp'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useParams } from 'react-router-dom'
 
 import MapBoxSearch from 'react-leaflet-search'
 import { isMobile } from 'react-device-detect'
@@ -142,11 +142,16 @@ const FoundMap = (props) => {
 
 	const mapRef = useRef(null)
 	const indexRef = useRef(null)
+	const { state } = useLocation()
+	const { placeID } = useParams()
 	const tempRef = useRef(null)
 
-	const index = (Object.keys(props.match.params).length)
+	/* const index = (Object.keys(props.match.params).length)
 		? props.match.params.placeID : (props.location && props.location.state && props.location.state.place)
-			? props.location.state.place : 0
+			? props.location.state.place : 0 */
+	const index = placeID || (state && state.place
+		? state.place
+		: null)
 
 
 	useEffect(() => {
@@ -222,18 +227,14 @@ const FoundMap = (props) => {
 				/>
 				<link
 					rel="canonical"
-					href={`https://www.ifound.one/${Object.keys(props.match.params).length
-						? `places/${props.match.params.placeID}`
-						: ''}`}
+					href={`https://www.ifound.one/${placeID ? `places/${placeID}` : ''}`}
 				/>
 				<meta property="og:type" content="website" />
 				<meta property="og:title" content="iFound.one" />
 				<meta property="og:site_name" content="iFound.one" />
 				<meta
 					property="og:url"
-					content={`https://www.ifound.one/${Object.keys(props.match.params).length
-						? `places/${props.match.params.placeID}`
-						: ''}`}
+					content={`https://www.ifound.one/${placeID ? `places/${placeID}` : ''}`}
 				/>
 				{/* <meta property="og:description" content="A full geographical map of four-leaf clover,
 				found all across the world. Let the world know, where to get lucky and send us a photo
@@ -245,12 +246,11 @@ const FoundMap = (props) => {
 				/>
 				<meta
 					property="og:image"
-					content={(Object.keys(props.match.params).length
-						? (photos.filter((p) => p._id === props.match.params.placeID).length)
-							? `${photos.filter((p) => p._id === props.match.params.placeID)[0].img.src}?thumb=true`
+					content={placeID
+						? (photos.filter((p) => p._id === placeID).length)
+							? `${photos.filter((p) => p._id === placeID)[0].img.src}?thumb=true`
 							: 'https://www.ifound.one/logo.svg'
-						: 'https://www.ifound.one/logo.svg'
-					)}
+						: 'https://www.ifound.one/logo.svg'}
 				/>
 			</Helmet>
 			<Schema places={places} photos={photos} />
