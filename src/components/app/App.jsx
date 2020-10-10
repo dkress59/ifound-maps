@@ -18,6 +18,7 @@ import Imprint from '../Imprint'
 import AuthContext from '../../context/AuthContext'
 
 import PWAMeta from './PWAMeta'
+import PlaceView from '../place/PlaceView'
 
 
 const App = () => {
@@ -107,7 +108,9 @@ const App = () => {
 								<Route exact path="/login" component={Login} />
 								<Route path="/gallery/:photoID" component={GalleryView} />
 								<Route path="/gallery" component={GalleryView} />
-								<Route path="/places/:placeID" component={FoundMap} />
+								<Route path="/map/:placeID" component={FoundMap} />
+								<Route path="/places" component={PlaceView} />
+								<Route path="/places/:placeID" component={PlaceView} />
 								<Route exact path="/imprint" component={Imprint} />
 								<Route path="/" component={FoundMap} />
 								{/* <Route path='/' component={FourOhFour} /> */}

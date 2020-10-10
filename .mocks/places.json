@@ -1,0 +1,144 @@
+[
+	{
+		"_id": "5e39cefaa2bfb92c2f24d1f0",
+		"name": "Frankenplatz",
+		"author": "Erika",
+		"created": "2020-02-04T20:07:22.486Z",
+		"photos": [
+			"5e39cefaa2bfb92c2f24d1f1"
+		],
+		"lat": 51.24875413673195,
+		"lng": 6.776976585388184,
+		"range": 20,
+		"request": {
+			"type": "GET",
+			"url": "http://192.168.0.27:5034/places/5e39cefaa2bfb92c2f24d1f0"
+		}
+	},
+	{
+		"_id": "5e77d639f96e400017ebc6cf",
+		"name": "Heerdt",
+		"author": "Pete",
+		"created": "2020-03-22T21:18:49.307Z",
+		"photos": [
+			"5e77d639f96e400017ebc6d0"
+		],
+		"lat": 51.239368110916466,
+		"lng": 6.707110404968263,
+		"range": 0,
+		"request": {
+			"type": "GET",
+			"url": "http://192.168.0.27:5034/places/5e77d639f96e400017ebc6cf"
+		}
+	},
+	{
+		"_id": "5e77d6def96e400017ebc6d5",
+		"name": "Heerdt",
+		"author": "Pete",
+		"created": "2020-03-22T21:21:34.295Z",
+		"photos": [
+			"5e77d6def96e400017ebc6d6"
+		],
+		"lat": 51.239284148554304,
+		"lng": 6.707153320312501,
+		"range": 0,
+		"request": {
+			"type": "GET",
+			"url": "http://192.168.0.27:5034/places/5e77d6def96e400017ebc6d5"
+		}
+	},
+	{
+		"_id": "5e97bdb82e28e70017050338",
+		"name": "Kanadas Wildnis",
+		"author": "Felix und Fabi",
+		"created": "2020-04-16T02:06:48.285Z",
+		"photos": [
+			"5e97bdb82e28e70017050339"
+		],
+		"lat": 50.269380831016875,
+		"lng": -122.88333535194398,
+		"range": 62,
+		"request": {
+			"type": "GET",
+			"url": "http://192.168.0.27:5034/places/5e97bdb82e28e70017050338"
+		}
+	},
+	{
+		"_id": "5eb814ba98d4f10017a69db4",
+		"name": "Spielplatz",
+		"author": "Pete",
+		"created": "2020-05-10T14:50:34.685Z",
+		"photos": [
+			"5eb814ba98d4f10017a69db5"
+		],
+		"lat": 51.24233990888321,
+		"lng": 6.709695936829952,
+		"range": 0,
+		"request": {
+			"type": "GET",
+			"url": "http://192.168.0.27:5034/places/5eb814ba98d4f10017a69db4"
+		}
+	},
+	{
+		"_id": "5ebea047f386c30017f94f3d",
+		"name": "Düsseldorf",
+		"author": "Thomas",
+		"created": "2020-05-15T13:59:35.237Z",
+		"photos": [],
+		"lat": 51.242559602769546,
+		"lng": 6.788864135742188,
+		"range": 34,
+		"request": {
+			"type": "GET",
+			"url": "http://192.168.0.27:5034/places/5ebea047f386c30017f94f3d"
+		}
+	},
+	{
+		"_id": "5ec663a12a3d070017865dc6",
+		"name": "HSD Geb. 6",
+		"author": "Pete",
+		"created": "2020-05-21T11:18:57.114Z",
+		"photos": [
+			"5ec663a12a3d070017865dc7"
+		],
+		"lat": 51.24799862414685,
+		"lng": 6.791401505470277,
+		"range": 0,
+		"request": {
+			"type": "GET",
+			"url": "http://192.168.0.27:5034/places/5ec663a12a3d070017865dc6"
+		}
+	},
+	{
+		"_id": "5ec667be2a3d070017865dc9",
+		"name": "HSD Garten",
+		"author": "Pete",
+		"created": "2020-05-21T11:36:30.141Z",
+		"photos": [
+			"5ec667be2a3d070017865dca"
+		],
+		"lat": 51.24799526628543,
+		"lng": 6.791299581527711,
+		"range": 0,
+		"request": {
+			"type": "GET",
+			"url": "http://192.168.0.27:5034/places/5ec667be2a3d070017865dc9"
+		}
+	},
+	{
+		"_id": "5eedef312d07310017adcad2",
+		"name": "Cratzenbach",
+		"author": "Fabi",
+		"created": "2020-06-20T11:12:49.379Z",
+		"photos": [
+			"5eedef312d07310017adcad3"
+		],
+		"lat": 51.2432,
+		"lng": 6.7822,
+		"range": 0,
+		"request": {
+			"type": "GET",
+			"url": "http://192.168.0.27:5034/places/5eedef312d07310017adcad2"
+		}
+	}
+]

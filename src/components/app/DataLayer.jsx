@@ -18,30 +18,34 @@ const DataLayer = (props) => {
 
 	const updatePlaces = (res) => {
 		places.sort((a, b) => {
-			if (a.created > b.created) return -1
+			if (a.created > b.created)
+				return -1
 			return 1
 		})
 		res.sort((a, b) => {
-			if (a.created > b.created) return -1
+			if (a.created > b.created)
+				return -1
 			return 1
 		})
 
 		// eslint-disable-next-line no-plusplus
-		for (let i = 0; i < places.length; i++) {
+		for (let i = 0; i < places.length; i++)
 			if (Object.values(res)[i]._id !== Object.values(places)[i]._id || res.length !== places.length) {
 				console.log('Places updated:', { index: i, places: res })
 				setPlaces(res)
 				return
 			}
-		}
 	}
 
 
 	useEffect(() => {
-		if (isPWA) document.body.classList.add('pwa')
+		if (isPWA)
+			document.body.classList.add('pwa')
 
-		if (localStorage.getItem('places')) setPlaces(JSON.parse(localStorage.getItem('places')))
-		if (localStorage.getItem('photos')) setPhotos(JSON.parse(localStorage.getItem('photos')))
+		if (localStorage.getItem('places'))
+			setPlaces(JSON.parse(localStorage.getItem('places')))
+		if (localStorage.getItem('photos'))
+			setPhotos(JSON.parse(localStorage.getItem('photos')))
 
 		fetch(`${process.env.REACT_APP_IFO_API}/places/`)
 			.then(((res) => res.json()))
@@ -58,14 +62,14 @@ const DataLayer = (props) => {
 					thumb.className = 'thumbnail'
 					img.src = `${process.env.REACT_APP_IFO_MEDIA}/view/${plc.photos[0]}`
 					thumb.src = `${process.env.REACT_APP_IFO_MEDIA}/view/${plc.photos[0]}?thumb=true`
-					if (plc.photos.length > 0) {
+					if (plc.photos.length > 0)
 						return {
 							_id: plc._id,
 							img,
 							created: plc.created,
 							place: { lat: plc.lat, lng: plc.lng },
 						}
-					}
+
 					return false
 				})
 
@@ -74,7 +78,8 @@ const DataLayer = (props) => {
 					localStorage.setItem('photos', JSON.stringify(preloaded))
 				}
 
-				if ((isLoading && res.places.length) || (isLoading && localStorage.getItem('places'))) setIsLoading(0)
+				if ((isLoading && res.places.length) || (isLoading && localStorage.getItem('places')))
+					setIsLoading(0)
 			})
 	}, [])
 
@@ -94,7 +99,8 @@ const DataLayer = (props) => {
 	})
 
 	useEffect(() => {
-		if (localStorage.getItem('photos')) setPhotos(JSON.parse(localStorage.getItem('photos')))
+		if (localStorage.getItem('photos'))
+			setPhotos(JSON.parse(localStorage.getItem('photos')))
 		const preloaded = places.map((plc) => {
 			const img = new Image()
 			const thumb = new Image()
@@ -104,21 +110,22 @@ const DataLayer = (props) => {
 			thumb.className = 'thumbnail'
 			img.src = `${process.env.REACT_APP_IFO_MEDIA}/view/${plc.photos[0]}`
 			thumb.src = `${process.env.REACT_APP_IFO_MEDIA}/view/${plc.photos[0]}?thumb=true`
-			if (plc.photos.length > 0) {
+			if (plc.photos.length > 0)
 				return {
 					_id: plc._id,
 					img,
 					created: plc.created,
 					place: { lat: plc.lat, lng: plc.lng },
 				}
-			}
+
 			return false
 		})
 		if (preloaded.length) {
 			setPhotos(preloaded)
 			localStorage.setItem('photos', JSON.stringify(preloaded))
 		}
-		if ((isLoading && places.length) || (isLoading && localStorage.getItem('places'))) setIsLoading(0)
+		if ((isLoading && places.length) || (isLoading && localStorage.getItem('places')))
+			setIsLoading(0)
 	}, [places])
 
 	/* if (!isLoading) */
