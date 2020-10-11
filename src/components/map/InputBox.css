@@ -25,7 +25,7 @@
 	transition: transform .6s ease, width .4s ease, height .4s ease, padding .4s ease, margin .4s ease;
 }
 
-.card-body {
+#mapInputBox .card-body {
 	width: 16rem;
 	max-width: 100%;
 	transform: scale(1);

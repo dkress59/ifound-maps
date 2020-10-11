@@ -1,14 +1,22 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
 import './InputBox.css'
-import React, { useState, useRef, useContext, useEffect } from 'react'
-import MapContext from '../../context/MapContext'
-import PlaceContext from '../../context/PlaceContext'
+import React, {
+	useState, useRef, useContext, useEffect,
+} from 'react'
 import ReactDOM from 'react-dom'
 import { isMobile } from 'react-device-detect'
+import MapContext from '../../context/MapContext'
+import PlaceContext from '../../context/PlaceContext'
 import './InputRange.css'
-//import fetch from 'cross-fetch'
+// import fetch from 'cross-fetch'
 
 
-import { UserIcon, NameIcon, MinimiseIcon, AddIcon, CameraIcon, FileIcon } from '../app/Icons'
+import {
+	UserIcon, NameIcon, MinimiseIcon, AddIcon, CameraIcon, FileIcon,
+} from '../app/Icons'
 
 
 const InputBox = (props) => {
@@ -16,7 +24,9 @@ const InputBox = (props) => {
 	const cameraRef = useRef(null)
 	const formRef = useRef(null)
 	const { places, setPlaces } = useContext(PlaceContext)
-	const { setCenter, coords, setCoords, range, setRange } = useContext(MapContext)
+	const {
+		setCenter, coords, setCoords, range, setRange,
+	} = useContext(MapContext)
 	const [isSending, setIsSending] = useState(0)
 	const [pickGPS, setPickGPS] = useState({})
 
@@ -25,9 +35,15 @@ const InputBox = (props) => {
 	const [isCollapsed, collapse] = useState(props.collapsed || false)
 
 
+	const calcGPS = ({ GPSLatitude, GPSLongitude }) => ({
+		lat: GPSLatitude[0] + (GPSLatitude[1] / 60) + (GPSLatitude[2] / 3600),
+		lng: GPSLongitude[0] + (GPSLongitude[1] / 60) + (GPSLongitude[2] / 3600),
+	})
+
 	const handleSubmit = (e) => {
 		e.preventDefault()
-		if (isSending) return false
+		if (isSending)
+			return false
 		const formBody = new FormData()
 		formBody.append('name', e.target.name.value)
 		formBody.append('author', e.target.author.value)
@@ -38,12 +54,12 @@ const InputBox = (props) => {
 		formBody.append('photoData', cameraRef.current.files[0])
 		setIsSending(1)
 
-		fetch(process.env.REACT_APP_IFO_API + '/places', {
+		fetch(`${process.env.REACT_APP_IFO_API}/places`, {
 			method: 'post',
-			body: formBody
+			body: formBody,
 		})
-			.then(res => { return res.json() })
-			.then(res => {
+			.then((res) => res.json())
+			.then((res) => {
 				console.log(res)
 				// prerender the new photo
 				new Image().src = (res.php) ? res.php.url : ''
@@ -53,18 +69,24 @@ const InputBox = (props) => {
 						...res.newPlace,
 						photos: [
 							...res.newPlace.photos,
-							res.php.url.substr(-24, 24)
-						]
+							res.php.url.substr(-24, 24),
+						],
 					}
 					: res.newPlace
-				if (places) setPlaces([...places, newPlace])
-				else setPlaces([newPlace])
+				if (places)
+					setPlaces([...places, newPlace])
+				else
+					setPlaces([newPlace])
 				setIsSending(0)
 				formRef.current.reset()
 				setRange(0)
-				if (res.newPlace.gps && res.newPlace.gps.GPSLatitude) setPickGPS({ ...calcGPS(res.newPlace.gps), placeID: res.newPlace._id })
+				if (res.newPlace.gps && res.newPlace.gps.GPSLatitude)
+					setPickGPS({
+						...calcGPS(res.newPlace.gps),
+						placeID: res.newPlace._id,
+					})
 			})
-			.catch(err => {
+			.catch((err) => {
 				console.error(err)
 				setIsSending(0)
 			})
@@ -78,63 +100,57 @@ const InputBox = (props) => {
 	}
 
 	const getGeo = () => {
-		if (navigator.geolocation) {
+		if (navigator.geolocation)
 			navigator.geolocation.getCurrentPosition((pos) => {
 				setCenter({
 					lat: pos.coords.latitude,
-					lng: pos.coords.longitude
+					lng: pos.coords.longitude,
 				})
 				setCoords({
 					lat: pos.coords.latitude,
-					lng: pos.coords.longitude
+					lng: pos.coords.longitude,
 				})
 			})
-		}
-	}
-
-	const calcGPS = ({ GPSLatitude, GPSLongitude }) => {
-		return {
-			lat: GPSLatitude[0] + (GPSLatitude[1] / 60) + (GPSLatitude[2] / 3600),
-			lng: GPSLongitude[0] + (GPSLongitude[1] / 60) + (GPSLongitude[2] / 3600)
-		}
 	}
 
 	const photoGPS = (nuGPS) => {
 		setPickGPS({})
 		setCoords(nuGPS)
 		setCenter(nuGPS)
-		fetch(process.env.REACT_APP_IFO_API + '/places/' + nuGPS.placeID, {
+		fetch(`${process.env.REACT_APP_IFO_API}/places/${nuGPS.placeID}`, {
 			method: 'PATCH',
 			headers: {
 				'Content-Type': 'application/json',
-				//'Authorization': 'Bearer ' + token
+				// 'Authorization': 'Bearer ' + token
 			},
-			body: JSON.stringify({ //...nuGPS.newPlace,
+			body: JSON.stringify({ // ...nuGPS.newPlace,
 				lat: nuGPS.lat,
-				lng: nuGPS.lng
-			})
+				lng: nuGPS.lng,
+			}),
 		})
-			.then(res => {
+			.then((res) => {
 				console.log('PATCH', [...places, res.updatedPlace])
-				//setPlaces([ ...places, res.updatedPlace ])
+				// setPlaces([ ...places, res.updatedPlace ])
 			})
-			.catch(err => console.error(err))
+			.catch((err) => console.error(err))
 	}
 
 	const setSize = () => {
 		if (!isCollapsed && boxSize.h && boxSize.w)
-			return { width: boxSize.w + 'px', height: boxSize.h + 'px' }
+			return { width: `${boxSize.w}px`, height: `${boxSize.h}px` }
 	}
 
 
 	useEffect(() => {
 		const w = ReactDOM.findDOMNode(bodyRef.current).clientWidth
 		const h = ReactDOM.findDOMNode(bodyRef.current).clientHeight
-		if (boxSize.w < w || boxSize.h < h) setBoxSize({ w: w, h: h })
+		if (boxSize.w < w || boxSize.h < h)
+			setBoxSize({ w, h })
 	}, [boxSize.w, boxSize.h])
 
 	useEffect(() => {
-		if (isMobile) collapse(true)
+		if (isMobile)
+			collapse(true)
 		window.$('#nameInputPrepend').tooltip()
 	}, [])
 
@@ -174,10 +190,10 @@ const InputBox = (props) => {
 						</div>
 						<input
 							required
-							onInput={e => { e.target.setCustomValidity('') }}
-							onInvalid={e => { e.target.setCustomValidity('Gib\' deinem Fundort einen Namen!') }}
+							onInput={(e) => { e.target.setCustomValidity('') }}
+							onInvalid={(e) => { e.target.setCustomValidity('Gib\' deinem Fundort einen Namen!') }}
 							type="text"
-							className={"form-control"}
+							className="form-control"
 							disabled={isSending || pickGPS.lat}
 							aria-label="Dein Fundort"
 							placeholder="Fundort"
@@ -196,10 +212,10 @@ const InputBox = (props) => {
 						</div>
 						<input
 							required
-							onInput={e => { e.target.setCustomValidity('') }}
-							onInvalid={e => { e.target.setCustomValidity('Wie heißt du?') }}
+							onInput={(e) => { e.target.setCustomValidity('') }}
+							onInvalid={(e) => { e.target.setCustomValidity('Wie heißt du?') }}
 							type="text"
-							className={"form-control"}
+							className="form-control"
 							disabled={isSending || pickGPS.lat}
 							aria-label="Dein Name"
 							placeholder="Name"
@@ -211,25 +227,27 @@ const InputBox = (props) => {
 					</div>
 
 					<label htmlFor="formControlRange" className="text-center w-100 subtitle">
-						Umkreis{range > 0 ? ': ' + range + 'm' : null}
+						Umkreis
+						{range > 0 ? `: ${range}m` : null}
 					</label>
 					<input
 						type="range"
-						className={"form-control-range mb-2 mt-2"}
+						className="form-control-range mb-2 mt-2"
 						disabled={isSending || pickGPS.lat}
 						id="formControlRange"
 						initial="20"
-						onChange={e => { setRange(e.target.value) }}
+						onChange={(e) => { setRange(e.target.value) }}
 					/>
 
 					{(() => {
-						if (isMobile && !pickGPS.lat) return (
-							<label htmlFor="cameraData" style={{ width: 'calc(50% - .125em)' }} className="mr-1">
-								<span className={"btn btn-primary mt-2 pb-2 mb-1 w-100" + ((isSending || pickGPS.lat) ? ' disabled' : '')}>
-									<CameraIcon />
-								</span>
-							</label>
-						)
+						if (isMobile && !pickGPS.lat)
+							return (
+								<label htmlFor="cameraData" style={{ width: 'calc(50% - .125em)' }} className="mr-1">
+									<span className={`btn btn-primary mt-2 pb-2 mb-1 w-100${(isSending || pickGPS.lat) ? ' disabled' : ''}`}>
+										<CameraIcon />
+									</span>
+								</label>
+							)
 					})()}
 					<input
 						type="file"
@@ -243,21 +261,23 @@ const InputBox = (props) => {
 						style={{ display: 'none' }}
 					/>
 					{(() => {
-						if (isMobile && !pickGPS.lat) return (
-							<label htmlFor="photoData" style={{ width: 'calc(50% - .125em)' }}>
-								<span className={"btn btn-primary mt-2 mb-1 w-100" + ((isSending || pickGPS.lat) ? ' disabled' : '')}><FileIcon /></span>
-							</label>
-						)
+						if (isMobile && !pickGPS.lat)
+							return (
+								<label htmlFor="photoData" style={{ width: 'calc(50% - .125em)' }}>
+									<span className={`btn btn-primary mt-2 mb-1 w-100${(isSending || pickGPS.lat) ? ' disabled' : ''}`}><FileIcon /></span>
+								</label>
+							)
 					})()}
 					{(() => {
-						if (!isMobile && !pickGPS.lat) return (
-							<label htmlFor="photoData" className="">
-								<span className={"btn btn-primary mt-0 mb-1 mr-2" + ((isSending || pickGPS.lat) ? ' disabled' : '')}>
-									<FileIcon className="mb-1" />
-								</span>
-								<span className="mt-2 ml-2">Foto auswählen</span>
-							</label>
-						)
+						if (!isMobile && !pickGPS.lat)
+							return (
+								<label htmlFor="photoData" className="">
+									<span className={`btn btn-primary mt-0 mb-1 mr-2${(isSending || pickGPS.lat) ? ' disabled' : ''}`}>
+										<FileIcon className="mb-1" />
+									</span>
+									<span className="mt-2 ml-2">Foto auswählen</span>
+								</label>
+							)
 					})()}
 					<input
 						type="file"
@@ -271,24 +291,37 @@ const InputBox = (props) => {
 					/>
 
 					{(() => {
-						if (pickGPS.lat) return (<>
-							<label htmlFor="GPSgroup" className="text-center w-100 subtitle">
-								GPS-Quelle
-							</label>
-							<div id="GPSgroup" className="btn-group w-100 mt-1 mb-2" role="group" aria-label="Pick the GPS source">
-								<button type="button" className="btn btn-sm btn-primary" onClick={e => { setPickGPS({}) }}><NameIcon className="mb-1" /> Position</button>
-								<button type="button" className="btn btn-sm btn-secondary" onClick={e => { photoGPS(pickGPS) }}><CameraIcon className="mb-1 mr-1" />Foto&shy;daten</button>
-							</div>
-						</>)
+						if (pickGPS.lat)
+							return (
+								<>
+									<label htmlFor="GPSgroup" className="text-center w-100 subtitle">
+										GPS-Quelle
+									</label>
+									<div id="GPSgroup" className="btn-group w-100 mt-1 mb-2" role="group" aria-label="Pick the GPS source">
+										<button type="button" className="btn btn-sm btn-primary" onClick={(e) => { setPickGPS({}) }}>
+											<NameIcon className="mb-1" />
+											{' '}
+											Position
+										</button>
+										<button type="button" className="btn btn-sm btn-secondary" onClick={(e) => { photoGPS(pickGPS) }}>
+											<CameraIcon className="mb-1 mr-1" />
+											Foto&shy;daten
+										</button>
+									</div>
+								</>
+							)
 					})()}
 
-					<button type="submit" className={"btn btn-dark btn-sm mt-2 w-100" + ((isSending || pickGPS.lat) ? ' disabled' : '')}>{isSending ? <span className="spinner-border spinner-border-sm text-white mr-2" role="status" aria-hidden="true" /> : null}Senden{isSending ? '…' : null}</button>
+					<button type="submit" className={`btn btn-dark btn-sm mt-2 w-100${(isSending || pickGPS.lat) ? ' disabled' : ''}`}>
+						{isSending ? <span className="spinner-border spinner-border-sm text-white mr-2" role="status" aria-hidden="true" /> : null}
+						Senden
+						{isSending ? '…' : null}
+					</button>
 				</form>
 
 			</div>
 		</section>
 	)
-
 }
 
 export default InputBox

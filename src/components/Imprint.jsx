@@ -1,9 +1,11 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable max-len */
 import React, { useRef, useState } from 'react'
 import { Helmet } from 'react-helmet'
 import './Imprint.css'
 
 
-const ImprintHTML = (props) => {
+const ImprintHTML = () => {
 	const impRef = useRef(null)
 	const priRef = useRef(null)
 
@@ -29,29 +31,48 @@ const ImprintHTML = (props) => {
 
 				<article
 					id="disclaimer"
-					className="text-center mt-5 pb-2 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3 text-flip-more">
+					className="text-center mt-5 pb-2 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3 text-flip-more"
+				>
 					<h1 className="display-1">Wir speichern gar nichts.</h1>
-					<h2 className="h5">iFound.one gibt sich größte Mühe, keine Nutzerdaten aufzuzeichnen. Bis auf den angegeben Namen und deine Angaben zum Fundort werden keine Daten übermittelt. Fotos werden beim Abspeichern auf unseren Servern von allen Metainformationen bereinigt und mit einer Creative Commons Lizenz versehen. Weitere Informationen dazu findest du <a href="http://creativecommons.org/licenses/by-nc/4.0/" rel="noopener noreferrer">hier</a>.</h2>
+					<h2 className="h5">
+						iFound.one gibt sich größte Mühe, keine Nutzerdaten aufzuzeichnen. Bis auf den angegeben Namen und deine Angaben zum Fundort werden keine Daten übermittelt. Fotos werden beim Abspeichern auf unseren Servern von allen Metainformationen bereinigt und mit einer Creative Commons Lizenz versehen. Weitere Informationen dazu findest du
+						{' '}
+						<a href="http://creativecommons.org/licenses/by-nc/4.0/" rel="noopener noreferrer">hier</a>
+						.
+					</h2>
 				</article>
 
 				<article
 					ref={impRef}
 					id="imprint"
-					className={'my-3 col-lg-8 offset-lg-2 rounded bg-primary bg-secondary text-white' + ((!impIsOpen) ? ' collapsed' : '')}
+					className={`my-3 col-lg-8 offset-lg-2 rounded bg-primary bg-secondary text-white${(!impIsOpen) ? ' collapsed' : ''}`}
 				>
 
-					<h1 onClick={() => { openImp(!impIsOpen) }}>Impressum</h1>
+					<h1
+						onClick={() => openImp(!impIsOpen)}
+						onKeyPress={(e) => (e.key === 'Enter' ? openImp(!impIsOpen) : null)}
+					>
+						Impressum
+
+					</h1>
 
 					<div>
 
 						<h2>Angaben gemäß § 5 TMG</h2>
-						<p>Peter Thoma<br />
-						Böhlerweg 52<br />
-						40549 Düsseldorf</p>
+						<p>
+							Peter Thoma
+							<br />
+							Böhlerweg 52
+							<br />
+							40549 Düsseldorf
+						</p>
 
 						<h2>Kontakt</h2>
-						<p>Telefon: ‭+49 151 51587143‬<br />
-						E-Mail: pete@ifound.one</p>
+						<p>
+							Telefon: ‭+49 151 51587143‬
+							<br />
+							E-Mail: pete@ifound.one
+						</p>
 
 						<h3>Haftung für Inhalte</h3>
 						<p>Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.</p>
@@ -84,10 +105,16 @@ const ImprintHTML = (props) => {
 				<article
 					ref={priRef}
 					id="privacyPolicy"
-					className={'my-3 col-lg-8 offset-lg-2 rounded bg-primary bg-secondary text-white' + ((!priIsOpen) ? ' collapsed' : '')}
+					className={`my-3 col-lg-8 offset-lg-2 rounded bg-primary bg-secondary text-white${(!priIsOpen) ? ' collapsed' : ''}`}
 				>
 
-					<h1 onClick={() => { openPri(!priIsOpen) }}>Daten&shy;schutz&shy;erklärung</h1>
+					<h1
+						onClick={() => openPri(!priIsOpen)}
+						onKeyPress={(e) => (e.key === 'Enter' ? openPri(!priIsOpen) : null)}
+					>
+						Daten&shy;schutz&shy;erklärung
+
+					</h1>
 
 					<div>
 
@@ -117,7 +144,12 @@ const ImprintHTML = (props) => {
 						<p>Cloudflare bietet ein weltweit verteiltes Content Delivery Network mit DNS an. Dabei wird technisch der Informationstransfer zwischen Ihrem Browser und unserer Webseite über das Netzwerk von Cloudflare geleitet. Das versetzt Cloudflare in die Lage, den Datenverkehr zwischen Ihrem Browser und unserer Webseite zu analysieren und als Filter zwischen unseren Servern und potenziell bösartigem Datenverkehr aus dem Internet zu dienen. Hierbei kann Cloudflare auch Cookies einsetzen, die jedoch allein zum hier beschriebenen Zweck eingesetzt werden.</p>
 						<p>Wir haben mit Cloudflare einen Vertrag über Auftragsverarbeitung abgeschlossen. Cloudflare ist zudem zertifizierter Teilnehmer des „EU-US Privacy Shield Frameworks“. Cloudflare hat sich dazu verpflichtet, sämtliche aus den Mitgliedstaaten der Europäischen Union (EU) erhaltenen personenbezogenen Daten gemäß dem „Privacy Shield Framework“ zu handhaben.</p>
 						<p>Der Einsatz von Cloudflare beruht auf unserem berechtigten Interesse an einer möglichst fehlerfreien und sicheren Bereitstellung unseres Webangebotes (Art. 6 Abs. 1 lit. f DSGVO).</p>
-						<p>Weitere Informationen zum Thema Sicherheit und Datenschutz bei Cloudflare finden Sie hier: <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer">https://www.cloudflare.com/privacypolicy/</a>.</p>
+						<p>
+							Weitere Informationen zum Thema Sicherheit und Datenschutz bei Cloudflare finden Sie hier:
+							{' '}
+							<a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer">https://www.cloudflare.com/privacypolicy/</a>
+							.
+						</p>
 						<h2>3. Allgemeine Hinweise und Pflichtinformationen</h2>
 						<h3>Datenschutz</h3>
 						<p>Die Betreiber dieser Seiten nehmen den Schutz Ihrer persönlichen Daten sehr ernst. Wir behandeln Ihre personenbezogenen Daten vertraulich und entsprechend der gesetzlichen Datenschutzvorschriften sowie dieser Datenschutzerklärung.</p>
@@ -125,12 +157,19 @@ const ImprintHTML = (props) => {
 						<p>Wir weisen darauf hin, dass die Datenübertragung im Internet (z. B. bei der Kommunikation per E-Mail) Sicherheitslücken aufweisen kann. Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht möglich.</p>
 						<h3>Hinweis zur verantwortlichen Stelle</h3>
 						<p>Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:</p>
-						<p>Peter Thoma<br />
-Böhlerweg 52<br />
-40549 Düsseldorf</p>
+						<p>
+							Peter Thoma
+							<br />
+							Böhlerweg 52
+							<br />
+							40549 Düsseldorf
+						</p>
 
-						<p>Telefon: ‭+49 151 51587143‬<br />
-E-Mail: pete@ifound.one</p>
+						<p>
+							Telefon: ‭+49 151 51587143‬
+							<br />
+							E-Mail: pete@ifound.one
+						</p>
 						<p>Verantwortliche Stelle ist die natürliche oder juristische Person, die allein oder gemeinsam mit anderen über die Zwecke und Mittel der Verarbeitung von personenbezogenen Daten (z. B. Namen, E-Mail-Adressen o. Ä.) entscheidet.</p>
 						<h3>Widerruf Ihrer Einwilligung zur Datenverarbeitung</h3>
 						<p>Viele Datenverarbeitungsvorgänge sind nur mit Ihrer ausdrücklichen Einwilligung möglich. Sie können eine bereits erteilte Einwilligung jederzeit widerrufen. Dazu reicht eine formlose Mitteilung per E-Mail an uns. Die Rechtmäßigkeit der bis zum Widerruf erfolgten Datenverarbeitung bleibt vom Widerruf unberührt.</p>
@@ -179,7 +218,12 @@ E-Mail: pete@ifound.one</p>
 						<h3>OpenStreetMap</h3>
 						<p>Wir nutzen den Kartendienst von OpenStreetMap (OSM). Anbieterin ist die Open-Street-Map Foundation (OSMF), 132 Maney Hill Road, Sutton Coldfield, West Midlands, B72 1JU, United Kingdom.</p>
 						<p>Wenn Sie eine Website besuchen, auf der OpenStreetMap eingebunden ist, werden u. a. Ihre IP-Adresse und weitere Informationen über Ihr Verhalten auf dieser Website an die OSMF weitergeleitet. OpenStreetMap speichert hierzu unter Umständen Cookies in Ihrem Browser. Das sind Textdateien, die auf Ihrem Computer gespeichert werden und die eine Analyse der Benutzung der Website durch Sie ermöglichen. Sie können die Speicherung der Cookies durch eine entsprechende Einstellung Ihrer Browser-Software verhindern; wir weisen Sie jedoch darauf hin, dass Sie in diesem Fall gegebenenfalls nicht sämtliche Funktionen dieser Website vollumfänglich werden nutzen können.</p>
-						<p>Ferner kann Ihr Standort erfasst werden, wenn Sie dies in Ihren Geräteeinstellungen – z. B. auf Ihrem Handy – zugelassen haben. Der Anbieter dieser Seite hat keinen Einfluss auf diese Datenübertragung. Details entnehmen Sie der Datenschutzerklärung von OpenStreetMap unter folgendem Link: <a href="https://wiki.osmfoundation.org/wiki/Privacy_Policy" target="_blank" rel="noopener noreferrer">https://wiki.osmfoundation.org/wiki/Privacy_Policy</a>.</p>
+						<p>
+							Ferner kann Ihr Standort erfasst werden, wenn Sie dies in Ihren Geräteeinstellungen – z. B. auf Ihrem Handy – zugelassen haben. Der Anbieter dieser Seite hat keinen Einfluss auf diese Datenübertragung. Details entnehmen Sie der Datenschutzerklärung von OpenStreetMap unter folgendem Link:
+							{' '}
+							<a href="https://wiki.osmfoundation.org/wiki/Privacy_Policy" target="_blank" rel="noopener noreferrer">https://wiki.osmfoundation.org/wiki/Privacy_Policy</a>
+							.
+						</p>
 						<p>Die Nutzung von OpenStreetMap erfolgt im Interesse einer ansprechenden Darstellung unserer Online-Angebote und einer leichten Auffindbarkeit der von uns auf der Website angegebenen Orte. Dies stellt ein berechtigtes Interesse im Sinne von Art. 6 Abs. 1 lit. f DSGVO dar. Sofern eine entsprechende Einwilligung abgefragt wurde (z. B. eine Einwilligung zur Speicherung von Cookies), erfolgt die Verarbeitung ausschließlich auf Grundlage von Art. 6 Abs. 1 lit. a DSGVO; die Einwilligung ist jederzeit widerrufbar.</p>
 
 
@@ -211,14 +255,21 @@ E-mail: pete@ifound.one</p>
 						<h3>Cookies</h3> <p>Our websites and pages use what the industry refers to as “cookies.” Cookies are small text files that do not cause any damage to your device. They are either stored temporarily for the duration of a session (session cookies) or they are permanently archived on your device (permanent cookies). Session cookies are automatically deleted once you terminate your visit. Permanent cookies remain archived on your device until you actively delete them or they are automatically eradicated by your web browser.</p> <p>In some cases it is possible that third party cookies are stored on your device once you enter our site (third party cookies). These cookies enable you or us to take advantage of certain services offered by the third party (e.g. cookies for the processing of payment services).</p> <p>Cookies have a variety of functions. Many cookies are technically essential since certain website functions would not work in the absence of the cookies (e.g. the shopping cart function or the display of videos). The purpose of other cookies may be the analysis of user patterns or the display of promotional messages.</p> <p>Cookies, which are required for the performance of electronic communication transactions (required cookies) or for the provision of certain functions you want to use (functional cookies, e.g. for the shopping cart function) or those that are necessary for the optimization of the website (e.g. cookies that provide measurable insights into the web audience), shall be stored on the basis of Art. 6 Sect. 1 lit. f GDPR, unless a different legal basis is cited. The operator of the website has a legitimate interest in the storage of cookies to ensure the technically error free and optimized provision of the operator’s services. If your consent to the storage of the cookies has been requested, the respective cookies are stored exclusively on the basis of the consent obtained (Art. 6 Sect. 1 lit. a GDPR); this consent may be revoked at any time.</p> <p>You have the option to set up your browser in such a manner that you will be notified any time cookies are placed and to permit the acceptance of cookies only in specific cases. You may also exclude the acceptance of cookies in certain cases or in general or activate the delete function for the automatic eradication of cookies when the browser closes. If cookies are deactivated, the functions of this website may be limited.</p> <p>In the event that third party cookies are used or if cookies are used for analytical purposes, we will separately notify you in conjunction with this Data Protection Policy and, if applicable, ask for your consent.</p>
 						<h3>Server log files</h3> <p>The provider of this website and its pages automatically collects and stores information in so-called server log files, which your browser communicates to us automatically. The information comprises:</p> <ul> <li>The type and version of browser used</li> <li>The used operating system</li> <li>Referrer URL</li> <li>The hostname of the accessing computer</li> <li>The time of the server inquiry</li> <li>The IP address</li> </ul> <p>This data is not merged with other data sources.</p> <p>This data is recorded on the basis of Art. 6 Sect. 1 lit. f GDPR. The operator of the website has a legitimate interest in the technically error free depiction and the optimization of the operator’s website. In order to achieve this, server log files must be recorded.</p>
 						<h2>5. Plug-ins and Tools</h2>
-						<h3>OpenStreetMap</h3> <p>We are using the mapping service provided by OpenStreetMap (OSM). The provider of this service is the Open-Street-Map Foundation (OSMF), 132 Maney Hill Road, Sutton Coldfield, West Midlands, B72 1JU, United Kingdom.</p> <p>When you visit any website, into which OpenStreetMap has been embedded, your IP address and other information concerning your behavior patterns on this website will be transferred to the OSMF. Under certain circumstances, OpenStreetMap will save cookies in your browser. Cookies are text files that are stored on your computer and that make it possible to conduct an analysis of your website use. You have the option to prevent the storage of cookies by making pertinent changes to the settings of your browser software. However, we have to point out that doing so may make it impossible for you to use all of the functions of this website to their fullest extent.</p> <p>Furthermore, your location may be recorded if you have permitted this in your device settings, for instance on your cell phone. The provider of this website has no control over this type of data transfer. For details, please consult the Data Privacy Policy of OpenStreetMap under the following link: <a href="https://wiki.osmfoundation.org/wiki/Privacy_Policy" target="_blank" rel="noopener noreferrer">https://wiki.osmfoundation.org/wiki/Privacy_Policy</a>.</p> <p>We use OpenStreetMap with the objective of ensuring the attractive presentation of our online offers and to make it easy for visitors to find the locations we specify on our website. This establishes legitimate grounds as defined in Art. 6 Sect. 1 lit. f GDPR. If a corresponding agreement has been requested (e.g. an agreement to the storage of cookies), the processing takes place exclusively on the basis of Art. 6 para. 1 lit. a GDPR; the agreement can be revoked at any time.</p>*/}
+						<h3>OpenStreetMap</h3> <p>We are using the mapping service provided by OpenStreetMap (OSM). The provider of this service is the Open-Street-Map Foundation (OSMF), 132 Maney Hill Road, Sutton Coldfield, West Midlands, B72 1JU, United Kingdom.</p> <p>When you visit any website, into which OpenStreetMap has been embedded, your IP address and other information concerning your behavior patterns on this website will be transferred to the OSMF. Under certain circumstances, OpenStreetMap will save cookies in your browser. Cookies are text files that are stored on your computer and that make it possible to conduct an analysis of your website use. You have the option to prevent the storage of cookies by making pertinent changes to the settings of your browser software. However, we have to point out that doing so may make it impossible for you to use all of the functions of this website to their fullest extent.</p> <p>Furthermore, your location may be recorded if you have permitted this in your device settings, for instance on your cell phone. The provider of this website has no control over this type of data transfer. For details, please consult the Data Privacy Policy of OpenStreetMap under the following link: <a href="https://wiki.osmfoundation.org/wiki/Privacy_Policy" target="_blank" rel="noopener noreferrer">https://wiki.osmfoundation.org/wiki/Privacy_Policy</a>.</p> <p>We use OpenStreetMap with the objective of ensuring the attractive presentation of our online offers and to make it easy for visitors to find the locations we specify on our website. This establishes legitimate grounds as defined in Art. 6 Sect. 1 lit. f GDPR. If a corresponding agreement has been requested (e.g. an agreement to the storage of cookies), the processing takes place exclusively on the basis of Art. 6 para. 1 lit. a GDPR; the agreement can be revoked at any time.</p> */}
 
 					</div>
 
 				</article>
 
 				<article id="credits" className="mt-4 mb-3 col-lg-8 offset-lg-2 text-center">
-					Clover (marker) icon made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik" rel="noopener noreferrer">Freepik</a> from <a href="https://www.flaticon.com/free-icon/clover_1530866" title="Flaticon" rel="noopener noreferrer">www.flaticon.com</a><br />
+					Clover (marker) icon made by
+					{' '}
+					<a href="https://www.flaticon.com/authors/freepik" title="Freepik" rel="noopener noreferrer">Freepik</a>
+					{' '}
+					from
+					{' '}
+					<a href="https://www.flaticon.com/free-icon/clover_1530866" title="Flaticon" rel="noopener noreferrer">www.flaticon.com</a>
+					<br />
 					<br />
 					non-profit driven & open-source powered
 				</article>

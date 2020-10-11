@@ -1,0 +1,38 @@
+#places {
+
+	.col {
+		margin-bottom: 2em;
+	}
+
+	.card {
+		background-color: rgba(0,0,0,.05);
+	}
+
+	h3 {
+		word-wrap: break-word;
+		word-break: break-word;
+		overflow-wrap: break-word;
+	}
+
+	li {
+		padding-left: 0;
+	}
+
+	img {
+		height: 100%;
+		object-fit: cover;
+		object-position: center;
+		cursor: pointer;;
+	}
+
+	img[src=""], #place img:not([src]) {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: var(--gray);
+		cursor: auto;
+		pointer-events: none;
+		background-color: rgba(0,0,0,.05);
+	}
+
+}

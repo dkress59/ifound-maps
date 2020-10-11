@@ -1,6 +1,11 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable max-len */
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
+
+const logo = require('../../assets/logo.svg')
 
 const Logo = (props) => (
 	<svg className={props.className} style={props.style} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
@@ -14,55 +19,70 @@ const Logo = (props) => (
 	</svg>
 )
 
-const Header = (props) => {
+const Header = () => {
 	const align = isMobile ? 'text-right' : 'justify-content-end'
+
 	return (
 		<header className="my-2 navbar-expand-md">
 			<nav className="navbar navbar-expand-lg navbar-dark">
 				<a className="navbar-brand" href="/">
 					<h1 className="h3">
-						<Logo src={require('../../assets/logo.svg')} alt="iFound.one Logo" style={{
-							height: '2em',
-							width: 'auto', margin: '-.55em -.55em -.55em -.35em'
-						}} />
+						<Logo
+							src={logo}
+							alt="iFound.one Logo"
+							style={{
+								height: '2em',
+								width: 'auto',
+								margin: '-.55em -.55em -.55em -.35em',
+							}}
+						/>
 						iFound.one!
 					</h1>
 				</a>
-				<ul className={"navbar-nav mr-auto " + align + " flex-grow-1"} id="navbarSupportedContent">
+				<ul className={`navbar-nav mr-auto ${align} flex-grow-1`} id="navbarSupportedContent">
 					{!isMobile // || isMobile
-						? <><li className="nav-item">
-								<NavLink
-									to="/"
-									isActive={(match, location) => {
-										//if (!match) return false
-										if (location.pathname === '/' || location.pathname.substr(0, 7) === '/places') return true
-										else return false
-									}}
-									className="nav-link"
-									activeClassName="active"
-								>
-									Karte
-								</NavLink>
-							</li>
-							<li className="nav-item">
-								<NavLink
-									to="/gallery/"
-									isActive={(match, location) => {
-										//if (!match) return false
-										if (location.pathname.substr(0, 8) === '/gallery') return true
-										else return false
-									}}
-									className="nav-link"
-									activeClassName="active"
-								>
-									Suche
-								</NavLink>
-							</li></>
-						 : ''
-					}
-					{window.matchMedia('(display-mode: standalone)').matches && <li className="nav-item">
-						<NavLink exact to="/login" className="nav-link" activeClassName="active">Login</NavLink>
-					</li>}
+						? (
+							<>
+								<li className="nav-item">
+									<NavLink
+										to="/"
+										isActive={(match, location) => {
+										// if (!match) return false
+											if (location.pathname === '/' || location.pathname.substr(0, 4) === '/map')
+												return true
+											return false
+										}}
+										className="nav-link"
+										activeClassName="active"
+									>
+										Karte
+									</NavLink>
+								</li>
+								<li className="nav-item">
+									<NavLink
+										to="/gallery/"
+										isActive={(match, location) => {
+											// if (!match) return false
+											if (
+												location.pathname.substr(0, 8) === '/gallery'
+												|| location.pathname.substr(0, 7) === '/places'
+											)
+												return true
+											return false
+										}}
+										className="nav-link"
+										activeClassName="active"
+									>
+										Suche
+									</NavLink>
+								</li>
+							</>
+						) : null}
+					{window.matchMedia('(display-mode: standalone)').matches && (
+						<li className="nav-item">
+							<NavLink exact to="/login" className="nav-link" activeClassName="active">Login</NavLink>
+						</li>
+					)}
 				</ul>
 			</nav>
 		</header>

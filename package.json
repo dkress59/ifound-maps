@@ -1,58 +1,84 @@
 {
-	"name": "ifound-one",
-	"version": "0.1.5",
-	"private": true,
-	"dependencies": {
-		"@testing-library/jest-dom": "^4.2.4",
-		"@testing-library/react": "^9.5.0",
-		"@testing-library/user-event": "^7.2.1",
-		"animate.css": "^3.7.2",
-		"bootstrap": "^4.5.2",
-		"es5-shim": "^4.5.14",
-		"es6-shim": "^0.35.5",
-		"es7-shim": "^6.0.0",
-		"jquery": "^3.5.1",
-		"js-cookie": "^2.2.1",
-		"leaflet": "^1.7.1",
-		"mapbox-gl": "^1.12.0",
-		"mapbox-gl-leaflet": "0.0.11",
-		"popper.js": "^1.16.1",
-		"query-string": "^6.13.2",
-		"react": "^16.13.1",
-		"react-app-polyfill": "^1.0.6",
-		"react-device-detect": "^1.13.1",
-		"react-dom": "^16.13.1",
-		"react-helmet": "^5.2.1",
-		"react-https-redirect": "^1.1.0",
-		"react-image-webp": "^0.7.0",
-		"react-leaflet": "^2.7.0",
-		"react-leaflet-search": "^1.0.3",
-		"react-router": "^5.2.0",
-		"react-router-dom": "^5.2.0",
-		"react-scripts": "3.4.3",
-		"react-tippy": "^1.4.0",
-		"sass": "^1.26.11",
-		"universal-cookie": "^4.0.3"
-	},
-	"scripts": {
-		"start": "BROWSER=NONE PORT=$IFO_PORT react-scripts start",
-		"build": "react-scripts build",
-		"test": "react-scripts test",
-		"eject": "react-scripts eject"
-	},
-	"eslintConfig": {
-		"extends": "react-app"
-	},
-	"browserslist": {
-		"production": [
-			">0.2%",
-			"not dead",
-			"not op_mini all"
-		],
-		"development": [
-			"last 1 chrome version",
-			"last 1 firefox version",
-			"last 1 safari version"
-		]
-	}
+  "name": "ifound-one",
+  "version": "0.1.6",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "animate.css": "^3.7.2",
+    "bootstrap": "^4.5.2",
+    "es5-shim": "^4.5.14",
+    "es6-shim": "^0.35.5",
+    "es7-shim": "^6.0.0",
+    "jquery": "^3.5.1",
+    "js-cookie": "^2.2.1",
+    "leaflet": "^1.7.1",
+    "mapbox-gl": "^1.12.0",
+    "mapbox-gl-leaflet": "0.0.11",
+    "popper.js": "^1.16.1",
+    "prop-types": "^15.7.2",
+    "query-string": "^6.13.2",
+    "react": "^16.13.1",
+    "react-app-polyfill": "^1.0.6",
+    "react-device-detect": "^1.13.1",
+    "react-dom": "^16.13.1",
+    "react-helmet": "^5.2.1",
+    "react-image-webp": "^0.7.0",
+    "react-leaflet": "^2.7.0",
+    "react-leaflet-search": "^1.0.3",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.4.3",
+    "react-tippy": "^1.4.0",
+    "sass": "^1.26.11",
+    "universal-cookie": "^4.0.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "dev": "BROWSER=NONE yarn start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint": "yarn eslint src --fix-dry-run",
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.6",
+    "@babel/plugin-proposal-throw-expressions": "^7.10.4",
+    "@babel/plugin-syntax-throw-expressions": "^7.10.4",
+    "@babel/preset-react": "^7.10.4",
+    "@storybook/addon-actions": "^6.0.26",
+    "@storybook/addon-essentials": "^6.0.26",
+    "@storybook/addon-links": "^6.0.26",
+    "@storybook/node-logger": "^6.0.26",
+    "@storybook/preset-create-react-app": "^3.1.4",
+    "@storybook/react": "^6.0.26",
+    "@svgr/webpack": "^5.4.0",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.1.0",
+    "eslint": "6.6.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-react": "^7.20.0",
+    "history": "^5.0.0",
+    "react-is": "^16.13.1"
+  }
 }
