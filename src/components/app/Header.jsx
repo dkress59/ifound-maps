@@ -48,7 +48,7 @@ const Header = () => {
 										to="/"
 										isActive={(match, location) => {
 										// if (!match) return false
-											if (location.pathname === '/' || location.pathname.substr(0, 7) === '/map')
+											if (location.pathname === '/' || location.pathname.substr(0, 4) === '/map')
 												return true
 											return false
 										}}

@@ -11,12 +11,13 @@ const TabBar = (props) => {
 	const location = useLocation()
 
 	return location.pathname.indexOf('/places') < 0 ? (
+	// return -1 < 0 ? (
 		<nav {...addProps} role="group" aria-label="Hauptmenü">
 			<NavLink
 				to="/"
-				isActive={(match, location) => {
+				isActive={() => {
 					// if (!match) return false
-					if (location.pathname === '/' || location.pathname.substr(0, 7) === '/places')
+					if (location.pathname === '/' || location.pathname.substr(0, 4) === '/map')
 						return true
 					return false
 				}}
@@ -27,9 +28,9 @@ const TabBar = (props) => {
 			</NavLink>
 			<NavLink
 				to="/gallery/"
-				isActive={(match, location) => {
+				isActive={() => {
 					// if (!match) return false
-					if (location.pathname.substr(0, 8) === '/gallery')
+					if (location.pathname.substr(0, 8) === '/gallery' || location.pathname.substr(0, 7) === '/places')
 						return true
 					return false
 				}}

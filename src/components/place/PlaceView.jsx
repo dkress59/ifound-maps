@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable no-nested-ternary */
-import './PlaceView.css'
+import './PlaceView.scss'
 import React, { useContext } from 'react'
 import {
 	Redirect, useHistory, useLocation, useParams,

@@ -64,20 +64,20 @@ const Place = ({ place, detail }) => {
 										<li className="list-group-item bg-transparent text-muted">Route</li>
 										<ul className="list-group bg-transparent list-group-flush">
 											<li className="list-group-item bg-transparent">
-												<Link
+												<a
 													rel="noopener noreferrer"
-													to={`http://maps.apple.com/?daddr=${lat},${lng}`}
+													href={`http://maps.apple.com/?daddr=${lat},${lng}`}
 												>
 													Maps
-												</Link>
+												</a>
 											</li>
 											<li className="list-group-item bg-transparent">
-												<Link
+												<a
 													rel="noopener noreferrer"
-													to={`https://waze.com/ul?ll=${lat},${lng}`}
+													href={`https://waze.com/ul?ll=${lat},${lng}`}
 												>
 													Waze
-												</Link>
+												</a>
 											</li>
 										</ul>
 									</ul>

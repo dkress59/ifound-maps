@@ -125,17 +125,12 @@ const GalleryView = (props) => {
 			if (places.filter((p) => p._id === index).length)
 				setPinchLevel(4)
 			// console.log(places)
+		} else {
+			searchPlaces('')
+			setPinchLevel((isMobile) ? 2 : 0)
+			// setSearchInput('')
 		}
-	}, [photos])//eslint-disable-line
-
-	useEffect(() => {
-		if (index)
-			return () => {}
-
-		searchPlaces('')
-		setPinchLevel((isMobile) ? 2 : 0)
-		// setSearchInput('')
-	}, [pathname])
+	}, [photos, pathname])
 
 
 	if (!photos.length)
