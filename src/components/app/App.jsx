@@ -8,16 +8,16 @@ import Cookies from 'universal-cookie'
 import { Helmet } from 'react-helmet'
 import Header from './Header'
 import Footer from './Footer'
-import DataLayer from './DataLayer'
+import DataLayer from '../data/DataLayer'
 
-import FoundMap from '../Map'
+import MapView from '../map/MapView'
 import Login from '../Login'
-import GalleryView from '../Gallery'
+import GalleryView from '../gallery/GalleryView'
 import Imprint from '../Imprint'
 
 import AuthContext from '../../context/AuthContext'
 
-import PWAMeta from './PWAMeta'
+import PWAMeta from '../data/PWAMeta'
 import PlaceView from '../place/PlaceView'
 
 
@@ -115,7 +115,7 @@ const App = () => {
 									<GalleryView />
 								</Route>
 								<Route path="/map/:placeID">
-									<FoundMap />
+									<MapView />
 								</Route>
 								<Route exact path="/places">
 									<PlaceView />
@@ -127,7 +127,7 @@ const App = () => {
 									<Imprint />
 								</Route>
 								<Route path="/">
-									<FoundMap />
+									<MapView />
 								</Route>
 								{/* <Route path='/'>
 								<FourOhFour />

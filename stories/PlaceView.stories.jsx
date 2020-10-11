@@ -6,16 +6,10 @@ import '../src/components/app/App.css'
 import React from 'react'
 import { Router, Route } from 'react-router-dom'
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { createMemoryHistory } from 'history'
+import { mockHistory } from '../.mocks/history'
 import places from '../.mocks/places.json'
 import PlaceView from '../src/components/place/PlaceView'
 import PlaceContext from '../src/context/PlaceContext'
-
-const mockHistory = (path) => {
-	const history = createMemoryHistory()
-	history.push(path)
-	return history
-}
 
 export default {
 	title: 'PlaceView',

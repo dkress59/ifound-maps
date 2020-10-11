@@ -2,6 +2,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
 import { useHistory } from 'react-router'
+import { Link } from 'react-router-dom'
 
 const Place = ({ place, detail }) => {
 	const history = useHistory()
@@ -63,12 +64,20 @@ const Place = ({ place, detail }) => {
 										<li className="list-group-item bg-transparent text-muted">Route</li>
 										<ul className="list-group bg-transparent list-group-flush">
 											<li className="list-group-item bg-transparent">
-												<a href={`http://maps.apple.com/?daddr=${lat},${lng}`}>
+												<Link
+													rel="noopener noreferrer"
+													to={`http://maps.apple.com/?daddr=${lat},${lng}`}
+												>
 													Maps
-												</a>
+												</Link>
 											</li>
 											<li className="list-group-item bg-transparent">
-												<a href={`https://waze.com/ul?ll=${lat},${lng}`}>Waze</a>
+												<Link
+													rel="noopener noreferrer"
+													to={`https://waze.com/ul?ll=${lat},${lng}`}
+												>
+													Waze
+												</Link>
 											</li>
 										</ul>
 									</ul>

@@ -4,7 +4,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable no-nested-ternary */
-import './Gallery.scss'
+import './GalleryView.scss'
 import React, {
 	useState, useContext, useEffect, Suspense, lazy,
 } from 'react'
@@ -12,15 +12,15 @@ import { isMobile } from 'react-device-detect'
 
 import { Helmet } from 'react-helmet'
 import { useLocation, useParams } from 'react-router'
-import PlaceContext from '../context/PlaceContext'
-import MapContext from '../context/MapContext'
+import PlaceContext from '../../context/PlaceContext'
+import MapContext from '../../context/MapContext'
 
 import {
 	ImageIcon, GridIcon, FilterIcon, DeleteIcon, LoadingCircle,
-} from './app/Icons'
+} from '../app/Icons'
 
 
-const GalleryItems = lazy(() => import('./gallery/GalleryItems'))//eslint-disable-line
+const GalleryItems = lazy(() => import('./GalleryItems'))//eslint-disable-line
 
 
 const shuffle = (a) => {//eslint-disable-line
@@ -54,7 +54,7 @@ const getDistanceFromLatLonInKm = (lat1, lon1, lat2, lon2) => {
 
 const GalleryView = (props) => {
 	const { photos, places } = useContext(PlaceContext)
-	const { state } = useLocation()
+	const { state, pathname } = useLocation()
 	const { photoID } = useParams()
 	// const [pinchScale, setPinchScale] = useState(1);//eslint-disable-line
 	// const [pinchCenter, setPinchCenter] = useState({ x: 'center', y: 'center' });//eslint-disable-line
@@ -108,7 +108,7 @@ const GalleryView = (props) => {
 
 	useEffect(() => {
 		const filterSet = photos.filter((photo) => {
-			if (!distInput)
+			if (!distInput || !photo.place)
 				return false
 			const dist = getDistanceFromLatLonInKm(coords.lat, coords.lng, photo.place.lat, photo.place.lng) * 25
 			if (dist <= distInput)
@@ -127,6 +127,15 @@ const GalleryView = (props) => {
 			// console.log(places)
 		}
 	}, [photos])//eslint-disable-line
+
+	useEffect(() => {
+		if (index)
+			return () => {}
+
+		searchPlaces('')
+		setPinchLevel((isMobile) ? 2 : 0)
+		// setSearchInput('')
+	}, [pathname])
 
 
 	if (!photos.length)
@@ -277,4 +286,4 @@ const GalleryView = (props) => {
 	)
 }
 
-export default GalleryView
+export default React.memo(GalleryView)

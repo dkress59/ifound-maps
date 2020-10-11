@@ -10,7 +10,7 @@ import React, {
 import {
 	Map, Marker, Popup, Circle,
 } from 'react-leaflet'
-import './Map.css'
+import './MapView.css'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import Image from 'react-image-webp'
@@ -19,16 +19,16 @@ import { Link, useLocation, useParams } from 'react-router-dom'
 import MapBoxSearch from 'react-leaflet-search'
 import { isMobile } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
-import AuthContext from '../context/AuthContext'
+import AuthContext from '../../context/AuthContext'
 
-import MapBoxGLLayer from './map/GLLayerBox'
+import MapBoxGLLayer from './GLLayerBox'
 
-import MapInputBox from './map/InputBox'
+import MapInputBox from './InputBox'
 
-import MapContext from '../context/MapContext'
-import PlaceContext from '../context/PlaceContext'
+import MapContext from '../../context/MapContext'
+import PlaceContext from '../../context/PlaceContext'
 
-import Schema from './app/Schema'
+import Schema from '../data/Schema'
 
 
 const coordIcon = L.icon({
@@ -130,7 +130,7 @@ const cloverIcon = L.icon({
 	})
 }
 
-const FoundMap = (props) => {
+const MapView = (props) => {
 	const { token } = useContext(AuthContext)
 	const [zoomX, setZoomX] = useState(16)
 	const {
@@ -300,4 +300,4 @@ const FoundMap = (props) => {
 }
 
 
-export default FoundMap
+export default MapView
