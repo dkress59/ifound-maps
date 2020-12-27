@@ -12,7 +12,7 @@ module.exports = {
 		name: 'ifound-maps',
 		// watch: 'build',
 		script: 'yarn',
-		args: 'serve -s -l $PORT',
+		args: 'serve-static',
 		interpreter: '/bin/bash',
 		env_development: {
 			...env,
