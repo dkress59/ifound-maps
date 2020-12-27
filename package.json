@@ -44,7 +44,7 @@
 		"lint": "yarn eslint src --fix-dry-run",
 		"storybook": "start-storybook -p 6006 -s public",
 		"build-storybook": "build-storybook -s public",
-		"serve-static": "yarn serve -s -l $PORT"
+		"serve-static": "yarn serve -s build -l $PORT"
 	},
 	"eslintConfig": {
 		"extends": "react-app"
