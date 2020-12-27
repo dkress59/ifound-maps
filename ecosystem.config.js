@@ -5,7 +5,7 @@ const env = {
 	REACT_APP_IFO_URL: process.env.REACT_APP_IFO_URL,
 	REACT_APP_IFO_MEDIA: process.env.REACT_APP_IFO_MEDIA,
 
-},
+}
 
 module.exports = {
 	apps: [{
