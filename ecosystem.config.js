@@ -12,17 +12,17 @@ module.exports = {
 		name: 'ifound-maps',
 		// watch: 'build',
 		script: 'yarn',
-		args: 'serve-static',
+		args: 'start',
 		interpreter: '/bin/bash',
 		env_development: {
 			...env,
 		},
 		env_production: {
 			...env,
-			HTTPS: true,
+			// HTTPS: true,
 			BROWSER: 'NONE',
-			SSL_CRT_FILE: '/etc/letsencrypt/live/ifound.one/cert.pem',
-			SSL_KEY_FILE: '/etc/letsencrypt/live/ifound.one/privkey.pem',
+			// SSL_CRT_FILE: '/etc/letsencrypt/live/ifound.one/cert.pem',
+			// SSL_KEY_FILE: '/etc/letsencrypt/live/ifound.one/privkey.pem',
 		},
 	}],
 }
