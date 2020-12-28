@@ -1,4 +1,3 @@
 /usr/bin/git checkout -- .
-/usr/bin/git pull origin master
-yarn
-#yarn build
+/usr/bin/git pull
+yarn --pure-lockfile
