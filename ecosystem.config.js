@@ -21,7 +21,7 @@ module.exports = {
 	apps: [{
 		name: 'ifound-maps',
 		script: 'yarn',
-		args: 'start',
+		args: 'serve',
 		interpreter: '/bin/bash',
 		env,
 		env_development,
